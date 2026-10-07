@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pedroprovadelli.vercel.app/sitemap.xml
