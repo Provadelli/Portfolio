@@ -14,7 +14,7 @@
     n1_k: "now", n1: "studying APIs and AI", n2_k: "base", n2: "Electronics, circuits and Arduino", n3_k: "always", n3: "learning by doing",
     log_label: "Short history", g1: "Electronics technician (FAETEC)", g2: "first websites live", g3: "founded NP Code Solutions", g4: "Software Engineering (FIAP)",
     hero_pill: "FIAP · Software Engineering · Web Development",
-    hero_lede: "Turning ideas into digital solutions and high-impact software, one commit at a time.",
+    hero_lede: "Turning ideas into working digital solutions, one commit at a time.",
     hero_cta1: "Start a conversation", hero_cta2: "See projects",
     stat_projects: "Published projects", stat_edu: "Programs", stat_langs: "Languages",
 
@@ -87,6 +87,8 @@
     err_name: "Enter your name.", err_email: "Enter a valid e-mail.", err_msg: "Write a message with at least 10 characters.", err_consent: "You must agree before sending the message.",
     form_mail: "Opening your e-mail app to finish sending.", form_sending: "Sending...", form_ok: "Message sent! I will reply soon.",
     form_fail: "Could not send. Try again or write to pedroprovadelli@gmail.com.",
+    tag_live: "Live site", tag_acad: "Academic", access_system: "Access system",
+    car_prev: "Previous project", car_next: "Next project", car_goto: "Go to group {n}", car_dots: "Choose project group", car_hint2: "Drag to browse. Rotation pauses when you interact.",
     car_pause: "Pause automatic rotation", car_resume: "Resume automatic rotation",
     menu_open: "Open menu", menu_close: "Close menu",
 
@@ -119,7 +121,7 @@
     ac_l2: "Full keyboard navigation with a visible focus indicator; the mobile menu closes with the Esc key.",
     ac_l3: "Semantic structure with landmarks (header, nav, main, footer) and a heading hierarchy.",
     ac_l4: "Colors with a minimum contrast of 4.5:1 for text and 3:1 for interface components.",
-    ac_l5: "Project carousel with a pause button; it pauses on hover and focus. Automatic motion is off for users who prefer reduced motion.",
+    ac_l5: "Project carousel that can be dragged with the mouse, swiped by touch or operated with arrow buttons, dots and the keyboard; it has a pause button and also pauses on hover and focus. Automatic motion is off for users who prefer reduced motion.",
     ac_l6: "Animations respect <code>prefers-reduced-motion</code>.",
     ac_l7: "Form with associated labels, error messages announced by screen readers and required-field indication.",
     ac_l8: "Alternative text on images and a notice for links that open in a new tab.",

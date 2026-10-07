@@ -3,7 +3,6 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const T = (k, d) => (window.i18n ? window.i18n.t(k, d) : d);
-  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
   /* ---------------------------------------------
      HEADER: blur + shrink on scroll, progress thread
@@ -46,6 +45,7 @@
   if (burger && mobileMenu){
     burger.addEventListener("click", () => setMenu(!mobileMenu.classList.contains("is-open")));
     mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setMenu(false)));
+    window.matchMedia("(min-width: 981px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && mobileMenu.classList.contains("is-open")){
         setMenu(false);
@@ -148,62 +148,178 @@
   }
 
   /* ---------------------------------------------
-     MAGNETIC BUTTONS
-  --------------------------------------------- */
-  if (!isTouch && !reduceMotion){
-    document.querySelectorAll(".magnetic").forEach(el => {
-      el.addEventListener("mousemove", (e) => {
-        const rect = el.getBoundingClientRect();
-        const relX = e.clientX - rect.left - rect.width / 2;
-        const relY = e.clientY - rect.top - rect.height / 2;
-        el.style.transform = `translate(${relX * 0.22}px, ${relY * 0.32}px)`;
-      });
-      el.addEventListener("mouseleave", () => { el.style.transform = "translate(0,0)"; });
-    });
-  }
-
-  /* ---------------------------------------------
-     CARROSSEL CONTÍNUO DE PROJETOS (faixa infinita)
+     CARROSSEL DE PROJETOS
+     faixa contínua e lenta (rolagem por rAF) que pode ser
+     arrastada com o mouse, deslizada no toque ou navegada por teclado
   --------------------------------------------- */
   const track = document.getElementById("carouselTrack");
   if (track){
     const carousel = document.getElementById("carousel");
-    const toggleBtn = document.getElementById("carToggle");
+    const btnToggle = document.getElementById("carToggle");
+    const SPEED = 60;            // px por segundo (calmo, porém fluido)
+    const RESUME_MS = 2200;      // retoma após interação de toque/roda
 
-    // Duplica os cards para o loop contínuo; as cópias ficam fora da árvore de acessibilidade
-    Array.from(track.children).forEach(li => {
+    const originals = Array.from(track.children);
+
+    // Laço sem começo nem fim: [cópias][originais][cópias]. As cópias saem do foco e da leitura, mas continuam clicáveis
+    const makeClone = (li) => {
       const clone = li.cloneNode(true);
       clone.setAttribute("aria-hidden", "true");
-      clone.setAttribute("inert", "");
       clone.classList.add("is-clone");
-      track.appendChild(clone);
-    });
+      clone.querySelectorAll("a, button").forEach(el => el.setAttribute("tabindex", "-1"));
+      return clone;
+    };
+    const first = originals[0];
+    originals.forEach(li => track.insertBefore(makeClone(li), first));
+    originals.forEach(li => track.appendChild(makeClone(li)));
 
-    // Fade entre as imagens de cada projeto, uma a uma
-    track.querySelectorAll(".card__media").forEach((media, n) => {
-      const imgs = media.querySelectorAll("img");
-      if (imgs.length < 2 || reduceMotion) return;
-      let cur = 0;
-      setTimeout(() => {
-        setInterval(() => {
-          if (carousel.classList.contains("is-paused")) return;
-          imgs[cur].classList.remove("is-on");
-          cur = (cur + 1) % imgs.length;
-          imgs[cur].classList.add("is-on");
-        }, 3500);
-      }, (n % 5) * 700);
-    });
+    let pos = 0, userPaused = reduceMotion;
+    let hovering = false, focusing = false, dragging = false, pressing = false, onScreen = false;
+    let lastUser = 0, velocity = 0, lastFrame = 0, programmatic = 0;
 
-    let userPaused = reduceMotion;
-    function sync(){
-      carousel.classList.toggle("is-paused", userPaused);
-      toggleBtn.setAttribute("aria-pressed", String(userPaused));
-      toggleBtn.setAttribute("aria-label", userPaused ? T("car_resume", "Retomar rotação automática") : T("car_pause", "Pausar rotação automática"));
-      toggleBtn.textContent = userPaused ? "▶" : "❚❚";
+    // largura de um ciclo completo; a posição vive sempre em [w, 2w)
+    const loopWidth = () => {
+      const after = track.children[originals.length * 2];
+      return after ? after.offsetLeft - originals[0].offsetLeft : 0;
+    };
+    const wrap = (x) => {
+      const w = loopWidth();
+      if (!w) return x;
+      while (x >= 2 * w) x -= w;
+      while (x < w) x += w;
+      return x;
+    };
+    const setPos = (x) => { pos = wrap(x); track.scrollLeft = pos; };
+
+    // mantém `pos` em sincronia quando o usuário rola (toque, roda, teclado)
+    track.addEventListener("scroll", () => {
+      if (performance.now() < programmatic) return;
+      pos = track.scrollLeft;
+      const w = loopWidth();
+      if (w && (pos >= 2 * w || pos < w)){ setPos(pos); }
+    }, { passive: true });
+
+    function touchedByUser(){ lastUser = performance.now(); }
+    track.addEventListener("touchstart", touchedByUser, { passive: true });
+    track.addEventListener("touchmove", touchedByUser, { passive: true });
+    track.addEventListener("touchend", touchedByUser, { passive: true });
+    track.addEventListener("wheel", touchedByUser, { passive: true });
+
+    /* ---- arrastar com o mouse ---- */
+    let startX = 0, lastX = 0, lastT = 0, suppressClick = false;
+
+    track.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      pressing = true; dragging = false; velocity = 0;
+      startX = lastX = e.clientX; lastT = e.timeStamp;
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!pressing) return;
+      const dx = e.clientX - startX;
+      if (!dragging){
+        if (Math.abs(dx) < 6) return;
+        dragging = true;
+        track.classList.add("is-dragging");
+        try { track.setPointerCapture(e.pointerId); } catch (err) { /* ignora */ }
+      }
+      const dt = Math.max(e.timeStamp - lastT, 1);
+      const d = lastX - e.clientX;
+      velocity = d / dt * 1000;                     // px/s
+      lastX = e.clientX; lastT = e.timeStamp;
+      programmatic = performance.now() + 50;
+      setPos(pos + d);
+    });
+    function endDrag(e){
+      if (!pressing) return;
+      pressing = false;
+      if (!dragging) return;
+      dragging = false;
+      suppressClick = true;
+      setTimeout(() => { suppressClick = false; }, 0);
+      try { track.releasePointerCapture(e.pointerId); } catch (err) { /* ignora */ }
+      track.classList.remove("is-dragging");
+      if (performance.now() - lastT > 90) velocity = 0;
     }
-    toggleBtn.addEventListener("click", () => { userPaused = !userPaused; sync(); });
-    document.addEventListener("langchange", sync);
-    sync();
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("click", (e) => { if (suppressClick){ e.preventDefault(); e.stopPropagation(); } }, true);
+    track.addEventListener("dragstart", (e) => e.preventDefault());
+
+    /* ---- rolagem por card (botões e teclado) ---- */
+    function step(dir){
+      const card = originals[0].offsetWidth + parseFloat(getComputedStyle(track).columnGap || 0);
+      touchedByUser();
+      const from = track.scrollLeft;
+      programmatic = performance.now() + 700;
+      if (reduceMotion){ setPos(from + dir * card); return; }
+      track.scrollTo({ left: from + dir * card, behavior: "smooth" });
+      setTimeout(() => { programmatic = 0; pos = track.scrollLeft; setPos(pos); }, 720);
+    }
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight"){ e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft"){ e.preventDefault(); step(-1); }
+    });
+
+    /* ---- laço de animação ---- */
+    const canPlay = () => !userPaused && !hovering && !focusing && !dragging && onScreen && !document.hidden
+      && performance.now() - lastUser > RESUME_MS;
+
+    function frame(t){
+      const dt = Math.min((t - (lastFrame || t)) / 1000, 0.25);
+      lastFrame = t;
+      if (dragging){
+        // posição controlada pelo ponteiro
+      } else if (Math.abs(velocity) > 8){
+        // inércia após soltar
+        velocity *= Math.pow(0.0035, dt);
+        programmatic = performance.now() + 50;
+        setPos(pos + velocity * dt);
+      } else if (canPlay()){
+        velocity = 0;
+        programmatic = performance.now() + 50;
+        setPos(pos + SPEED * dt);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    carousel.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovering = true; });
+    carousel.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hovering = false; });
+    carousel.addEventListener("focusin", () => { focusing = true; });
+    carousel.addEventListener("focusout", () => { focusing = false; });
+
+    function syncToggle(){
+      btnToggle.setAttribute("aria-pressed", String(userPaused));
+      btnToggle.setAttribute("aria-label", userPaused ? T("car_resume", "Retomar rotação automática") : T("car_pause", "Pausar rotação automática"));
+      btnToggle.textContent = userPaused ? "▶" : "❚❚";
+    }
+    btnToggle.addEventListener("click", () => { userPaused = !userPaused; syncToggle(); });
+    document.addEventListener("langchange", syncToggle);
+    syncToggle();
+
+    /* ---- troca de imagens dentro de cada card ---- */
+    const fades = Array.from(track.querySelectorAll(".card__media")).map(m => ({ imgs: Array.from(m.querySelectorAll("img")), cur: 0 })).filter(f => f.imgs.length > 1);
+    if (fades.length && !reduceMotion){
+      setInterval(() => {
+        if (!onScreen || document.hidden) return;
+        fades.forEach(f => {
+          f.imgs[f.cur].classList.remove("is-on");
+          f.cur = (f.cur + 1) % f.imgs.length;
+          f.imgs[f.cur].classList.add("is-on");
+        });
+      }, 3800);
+    }
+
+    if ("IntersectionObserver" in window){
+      new IntersectionObserver((entries) => { onScreen = entries[0].isIntersecting; }, { threshold: 0.2 }).observe(carousel);
+    } else { onScreen = true; }
+
+    // começa no meio do laço, com margem de sobra dos dois lados
+    const start = () => { programmatic = performance.now() + 50; setPos(loopWidth()); };
+    start();
+    window.addEventListener("load", start);
+    if ("ResizeObserver" in window) new ResizeObserver(() => { const w = loopWidth(); if (w) setPos(pos < w ? w : pos); }).observe(track);
+
+    if (!reduceMotion) requestAnimationFrame(frame);
   }
 
   /* ---------------------------------------------

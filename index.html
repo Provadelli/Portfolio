@@ -14,7 +14,13 @@
 <meta property="og:description" content="Projetos, tecnologias e contato de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP." />
 <meta property="og:url" content="https://pedroprovadelli.vercel.app/" />
 <meta property="og:locale" content="pt_BR" />
+<meta property="og:image" content="https://pedroprovadelli.vercel.app/assets/pedro.png" />
+<meta property="og:image:alt" content="Retrato de Pedro Lucas Provadelli" />
 <meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="https://pedroprovadelli.vercel.app/assets/pedro.png" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Pedro Lucas Provadelli","url":"https://pedroprovadelli.vercel.app/","image":"https://pedroprovadelli.vercel.app/assets/pedro.png","jobTitle":"Desenvolvedor de software","email":"mailto:pedroprovadelli@gmail.com","alumniOf":[{"@type":"CollegeOrUniversity","name":"FIAP"},{"@type":"EducationalOrganization","name":"FAETEC"}],"sameAs":["https://github.com/Provadelli","https://linkedin.com/in/pedroprovadellidev/"]}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,6 +79,8 @@
   <span id="top"></span>
 
   <!-- HERO -->
+  <div class="hero-wrap">
+  <div class="hero__bg" aria-hidden="true"><span class="hero__grid"></span><span class="hero__orb hero__orb--1"></span><span class="hero__orb hero__orb--2"></span><span class="hero__orb hero__orb--3"></span></div>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__inner">
       <p class="hero__status reveal"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero_status">Aberto a novos projetos</span></p>
@@ -90,7 +98,7 @@
         <li data-i18n="ty4">alguém que aprende construindo.</li>
       </ul>
 
-      <p class="hero__lede reveal reveal--4" data-i18n="hero_lede">Transformando ideias em soluções digitais e software de alto impacto, um commit de cada vez.</p>
+      <p class="hero__lede reveal reveal--4" data-i18n="hero_lede">Transformando ideias em soluções digitais funcionais, um commit de cada vez.</p>
 
       <div class="hero__actions reveal reveal--5">
         <a href="#contato" class="btn btn--gold"><span data-i18n="hero_cta1">Iniciar conversa</span></a>
@@ -125,9 +133,10 @@
       <li><span class="gitlog__tag gitlog__tag--wip">wip</span><span data-i18n="g4">Engenharia de Software (FIAP)</span></li>
     </ol>
   </section>
+  </div>
 
   <!-- SOBRE -->
-  <section class="section about-sec" id="sobre" aria-labelledby="sobre-title">
+  <section class="section section--light about-sec" id="sobre" aria-labelledby="sobre-title">
     <div class="section__inner about">
       <div class="about__aside" aria-hidden="true"><div class="about__slot" id="aboutSlot"></div></div>
 
@@ -170,98 +179,112 @@
   </section>
 
   <!-- PROJETOS -->
-  <section class="section section--light" id="projetos" aria-labelledby="projetos-title">
+  <section class="section section--mid" id="projetos" aria-labelledby="projetos-title">
     <div class="section__inner">
       <div class="section__head">
         <p class="eyebrow reveal" data-i18n="proj_eyebrow">02 — Projetos selecionados</p>
         <h2 class="section__title reveal" id="projetos-title" data-i18n="proj_title">Do repositório<br><em>para o mundo real.</em></h2>
       </div>
+    </div>
 
-      <div class="carousel" id="carousel" role="region" aria-roledescription="carrossel" aria-label="Projetos selecionados" data-i18n-attr="aria-label:proj_region;aria-roledescription:carousel_word">
-        <div class="carousel__viewport">
-          <ul class="carousel__track" id="carouselTrack" aria-label="Lista de projetos" data-i18n-attr="aria-label:proj_list">
+    <div class="carousel" id="carousel" role="region" aria-roledescription="carrossel" aria-label="Projetos selecionados" data-i18n-attr="aria-label:proj_region;aria-roledescription:carousel_word">
+      <ul class="carousel__track" id="carouselTrack" tabindex="0" aria-label="Lista de projetos" data-i18n-attr="aria-label:proj_list">
 
             <li class="carousel__slide">
-              <article class="card card--project">
+              <article class="card card--project" aria-labelledby="proj-1">
                 <div class="card__media">
-                  <img class="is-on" src="assets/pelenextgen.png" alt="Tela inicial da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt1" width="1200" height="750" loading="lazy" />
-                  <img src="assets/pelenextgen2.png" alt="Outra tela da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt2" width="1200" height="750" loading="lazy" />
+                  <img class="is-on" src="assets/pelenextgen.png" alt="Tela inicial da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt1" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                  <img src="assets/pelenextgen2.png" alt="Outra tela da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt2" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
                 </div>
                 <div class="card__body">
-                  <h3 class="card__title">Pelé Next Gen</h3>
+                  <div class="card__head">
+                    <h3 class="card__title" id="proj-1">Pelé Next Gen</h3>
+                    <span class="card__host">pelenextgen.vercel.app</span>
+                  </div>
                   <p class="card__desc" data-i18n="pele_desc">Plataforma esportiva que conecta atletas, clubes e oportunidades, democratizando o acesso a peneiras e processos de avaliação.</p>
-                  <a href="https://pelenextgen.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Pelé Next Gen<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                  <a href="https://pelenextgen.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__cta"><span data-i18n="access_system">Acessar sistema</span> <span aria-hidden="true">↗</span><span class="sr-only"> Pelé Next Gen<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
                 </div>
               </article>
             </li>
 
             <li class="carousel__slide">
-              <article class="card card--project">
+              <article class="card card--project" aria-labelledby="proj-2">
                 <div class="card__media">
-                  <img class="is-on" src="assets/atelier.png" alt="Tela inicial do site Atelier Residences" data-i18n-attr="alt:atelier_alt1" width="1200" height="750" loading="lazy" />
-                  <img src="assets/atelier2.png" alt="Outra tela do site Atelier Residences" data-i18n-attr="alt:atelier_alt2" width="1200" height="750" loading="lazy" />
+                  <img class="is-on" src="assets/atelier.png" alt="Tela inicial do site Atelier Residences" data-i18n-attr="alt:atelier_alt1" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                  <img src="assets/atelier2.png" alt="Outra tela do site Atelier Residences" data-i18n-attr="alt:atelier_alt2" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
                 </div>
                 <div class="card__body">
-                  <h3 class="card__title">Atelier Residences</h3>
+                  <div class="card__head">
+                    <h3 class="card__title" id="proj-2">Atelier Residences</h3>
+                    <span class="card__host">imobiliaria-atelier.vercel.app</span>
+                  </div>
                   <p class="card__desc" data-i18n="atelier_desc">Site de uma imobiliária de alto padrão: apresentação do empreendimento, portfólio de residências, diferenciais, depoimentos, FAQ e formulário de contato.</p>
-                  <a href="https://imobiliaria-atelier.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Atelier Residences<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                  <a href="https://imobiliaria-atelier.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__cta"><span data-i18n="access_system">Acessar sistema</span> <span aria-hidden="true">↗</span><span class="sr-only"> Atelier Residences<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
                 </div>
               </article>
             </li>
 
             <li class="carousel__slide">
-              <article class="card card--project">
+              <article class="card card--project" aria-labelledby="proj-3">
                 <div class="card__media">
-                  <img class="is-on" src="assets/circuito.jpeg" alt="Circuito eletrônico do projeto Space Guardian montado em Arduino" data-i18n-attr="alt:space_alt" width="1200" height="750" loading="lazy" />
+                  <img class="is-on" src="assets/shinatal.webp" alt="Tela inicial da experiência digital Shinatal" data-i18n-attr="alt:shin_alt1" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                  <img src="assets/shinatal2.png" alt="Outra tela da experiência digital Shinatal" data-i18n-attr="alt:shin_alt2" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
                 </div>
                 <div class="card__body">
-                  <h3 class="card__title">Space Guardian</h3>
-                  <p class="card__desc" data-i18n="space_desc">Projeto acadêmico de sistemas embarcados, voltado para monitoramento e autonomia de bordo.</p>
-                  <a href="https://github.com/Provadelli/GS--Sistema-de-Autonomia-de-Bordo" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_repo">Ver repositório</span> <span aria-hidden="true">↗</span><span class="sr-only"> Space Guardian<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
-                </div>
-              </article>
-            </li>
-
-            <li class="carousel__slide">
-              <article class="card card--project">
-                <div class="card__media">
-                  <img class="is-on" src="assets/npcode.png" alt="Tela inicial do site NP Code Solutions" data-i18n-attr="alt:np_alt1" width="1200" height="750" loading="lazy" />
-                  <img src="assets/npcode2.png" alt="Outra tela do site NP Code Solutions" data-i18n-attr="alt:np_alt2" width="1200" height="750" loading="lazy" />
-                </div>
-                <div class="card__body">
-                  <h3 class="card__title">NP Code Solutions</h3>
-                  <p class="card__desc" data-i18n="np_desc">Desenvolvimento de sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
-                  <a href="https://www.npcodesolutions.com.br/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> NP Code Solutions<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
-                </div>
-              </article>
-            </li>
-
-            <li class="carousel__slide">
-              <article class="card card--project">
-                <div class="card__media">
-                  <img class="is-on" src="assets/shinatal.webp" alt="Tela inicial da experiência digital Shinatal" data-i18n-attr="alt:shin_alt1" width="1200" height="750" loading="lazy" />
-                  <img src="assets/shinatal2.png" alt="Outra tela da experiência digital Shinatal" data-i18n-attr="alt:shin_alt2" width="1200" height="750" loading="lazy" />
-                </div>
-                <div class="card__body">
-                  <h3 class="card__title">Shinatal</h3>
+                  <div class="card__head">
+                    <h3 class="card__title" id="proj-3">Shinatal</h3>
+                    <span class="card__host">shinatal.shinerio.com</span>
+                  </div>
                   <p class="card__desc" data-i18n="shin_desc">Experiência digital que traz sucesso de cada contrato transformado em recompensa para a equipe e impacto para a sociedade.</p>
-                  <a href="https://shinatal.shinerio.com" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Shinatal<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                  <a href="https://shinatal.shinerio.com" target="_blank" rel="noopener noreferrer" class="card__cta"><span data-i18n="access_system">Acessar sistema</span> <span aria-hidden="true">↗</span><span class="sr-only"> Shinatal<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
                 </div>
               </article>
             </li>
 
-          </ul>
-        </div>
+            <li class="carousel__slide">
+              <article class="card card--project" aria-labelledby="proj-4">
+                <div class="card__media">
+                  <img class="is-on" src="assets/npcode.png" alt="Tela inicial do site NP Code Solutions" data-i18n-attr="alt:np_alt1" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                  <img src="assets/npcode2.png" alt="Outra tela do site NP Code Solutions" data-i18n-attr="alt:np_alt2" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                </div>
+                <div class="card__body">
+                  <div class="card__head">
+                    <h3 class="card__title" id="proj-4">NP Code Solutions</h3>
+                    <span class="card__host">npcodesolutions.com.br</span>
+                  </div>
+                  <p class="card__desc" data-i18n="np_desc">Desenvolvimento de sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
+                  <a href="https://www.npcodesolutions.com.br/" target="_blank" rel="noopener noreferrer" class="card__cta"><span data-i18n="access_system">Acessar sistema</span> <span aria-hidden="true">↗</span><span class="sr-only"> NP Code Solutions<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
 
-        <div class="carousel__controls">
-          <button type="button" class="carousel__btn" id="carToggle" aria-label="Pausar rotação automática" aria-pressed="false">❚❚</button>
-        </div>
+            <li class="carousel__slide">
+              <article class="card card--project" aria-labelledby="proj-5">
+                <div class="card__media">
+                  <img class="is-on" src="assets/circuito.jpeg" alt="Circuito eletrônico do projeto Space Guardian montado em Arduino" data-i18n-attr="alt:space_alt" width="1200" height="750" loading="lazy" decoding="async" draggable="false" />
+                </div>
+                <div class="card__body">
+                  <div class="card__head">
+                    <h3 class="card__title" id="proj-5">Space Guardian</h3>
+                    <span class="card__host">github.com/Provadelli</span>
+                  </div>
+                  <p class="card__desc" data-i18n="space_desc">Projeto acadêmico de sistemas embarcados, voltado para monitoramento e autonomia de bordo.</p>
+                  <a href="https://github.com/Provadelli/GS--Sistema-de-Autonomia-de-Bordo" target="_blank" rel="noopener noreferrer" class="card__cta"><span data-i18n="see_repo">Ver repositório</span> <span aria-hidden="true">↗</span><span class="sr-only"> Space Guardian<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
+
+      </ul>
+
+      <div class="carousel__controls" id="carControls">
+        <button type="button" class="carousel__btn" id="carToggle" aria-label="Pausar rotação automática" aria-pressed="false">❚❚</button>
+        <p class="carousel__hint" data-i18n="car_hint2">Arraste para navegar. A rotação pausa quando você interage.</p>
       </div>
     </div>
   </section>
 
   <!-- SERVIÇOS -->
-  <section class="section" id="servicos" aria-labelledby="serv-title">
+  <section class="section section--white section--light" id="servicos" aria-labelledby="serv-title">
     <div class="section__inner">
       <div class="section__head">
         <p class="eyebrow reveal" data-i18n="serv_eyebrow">03 — O que eu faço</p>
@@ -341,7 +364,7 @@
   </section>
 
   <!-- TRAJETORIA -->
-  <section class="section" id="trajetoria" aria-labelledby="traj-title">
+  <section class="section section--mid" id="trajetoria" aria-labelledby="traj-title">
     <div class="section__inner">
       <div class="section__head">
         <p class="eyebrow reveal" data-i18n="path_eyebrow">05 — Trajetória</p>
@@ -378,7 +401,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section section--light" id="faq" aria-labelledby="faq-title">
+  <section class="section section--white section--light" id="faq" aria-labelledby="faq-title">
     <div class="section__inner section__inner--narrow">
       <div class="section__head">
         <p class="eyebrow reveal" data-i18n="faq_eyebrow">06 — Perguntas frequentes</p>
@@ -431,23 +454,23 @@
           <div class="field">
             <label for="f-nome"><span data-i18n="f_name">Nome</span> <span aria-hidden="true">*</span></label>
             <input id="f-nome" name="name" type="text" autocomplete="name" required aria-describedby="e-nome" />
-            <p class="field__error" id="e-nome" role="alert"></p>
+            <p class="field__error" id="e-nome" aria-live="polite"></p>
           </div>
           <div class="field">
             <label for="f-email"><span data-i18n="email_lbl">E-mail</span> <span aria-hidden="true">*</span></label>
             <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
-            <p class="field__error" id="e-email" role="alert"></p>
+            <p class="field__error" id="e-email" aria-live="polite"></p>
           </div>
           <div class="field">
             <label for="f-msg"><span data-i18n="f_msg">Mensagem</span> <span aria-hidden="true">*</span></label>
             <textarea id="f-msg" name="message" rows="5" required minlength="10" aria-describedby="e-msg"></textarea>
-            <p class="field__error" id="e-msg" role="alert"></p>
+            <p class="field__error" id="e-msg" aria-live="polite"></p>
           </div>
 
           <div class="field field--check">
             <input id="f-lgpd" name="consent" type="checkbox" required aria-describedby="e-lgpd" />
             <label for="f-lgpd" data-i18n="f_consent">Li e concordo com o tratamento dos meus dados para responder a esta mensagem, conforme a <a href="privacidade.html">Política de Privacidade</a> (LGPD).</label>
-            <p class="field__error" id="e-lgpd" role="alert"></p>
+            <p class="field__error" id="e-lgpd" aria-live="polite"></p>
           </div>
 
           <button type="submit" class="btn btn--gold" id="formSubmit"><span data-i18n="f_send">Enviar mensagem</span></button>
