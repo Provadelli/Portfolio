@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#1A120C" />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<title>Página não encontrada — Pedro Provadelli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css" />
+<style>
+  .nf{ min-height: 100svh; display:flex; align-items:center; padding: 120px 32px 80px; }
+  .nf__inner{ max-width: 760px; margin: 0 auto; width: 100%; }
+  .nf__code{ font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 14px; color: var(--ink-soft); margin: 0 0 28px; }
+  .nf__code b{ color: var(--gold-deep); }
+  .nf__num{ font-family: var(--font-display); font-weight: 500; font-size: clamp(110px, 24vw, 260px); line-height: .85; letter-spacing: -.04em; margin: 0; color: var(--ink); }
+  .nf__num em{ font-style: italic; font-weight: 400; color: var(--gold-deep); }
+  .nf__title{ font-family: var(--font-display); font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 32px 0 14px; }
+  .nf__text{ font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 540px; margin: 0 0 36px; }
+  .nf__links{ display:flex; flex-wrap:wrap; gap: 14px; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link" data-i18n="skip">Pular para o conteúdo</a>
+
+<header class="header is-scrolled">
+  <div class="header__inner">
+    <a href="/" class="header__mark">Pedro Provadelli</a>
+    <div class="header__tools">
+      <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang_group">
+        <button type="button" class="lang__btn" data-lang="pt" aria-pressed="true" lang="pt-BR">PT</button>
+        <button type="button" class="lang__btn" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="nf">
+  <div class="nf__inner">
+    <p class="nf__code"><b>HTTP</b> 404 · <span data-i18n="nf_code">arquivo não encontrado</span></p>
+    <p class="nf__num" aria-hidden="true">4<em>0</em>4</p>
+    <h1 class="nf__title" data-i18n="nf_title">Essa página não existe, ou mudou de lugar.</h1>
+    <p class="nf__text" data-i18n="nf_text">O endereço que você tentou abrir não foi encontrado. Pode ter sido digitado errado ou a página foi movida. Vamos voltar para o caminho certo?</p>
+    <div class="nf__links">
+      <a href="/" class="btn btn--gold"><span data-i18n="nf_home">Voltar ao início</span></a>
+      <a href="/#projetos" class="btn btn--ghost"><span data-i18n="nf_projects">Ver projetos</span></a>
+      <a href="/#contato" class="btn btn--ghost"><span data-i18n="nf_contact">Falar comigo</span></a>
+    </div>
+  </div>
+</main>
+
+<script src="/i18n.js"></script>
+</body>
+</html>
