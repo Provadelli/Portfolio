@@ -3,311 +3,455 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<meta name="theme-color" content="#1A120C" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 <title>Pedro Provadelli — Software Engineer in Progress</title>
-<meta name="description" content="Portfólio de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP e desenvolvedor em formação." />
+<meta name="description" content="Portfólio de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP e desenvolvedor em formação." data-i18n-attr="content:meta_desc" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Pedro Provadelli — Software Engineer in Progress" />
+<meta property="og:description" content="Projetos, tecnologias e contato de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP." />
+<meta property="og:locale" content="pt_BR" />
+<meta name="twitter:card" content="summary" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
-<div class="grain" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
+<a href="#main" class="skip-link" data-i18n="skip">Pular para o conteúdo</a>
+
 <div class="progress-thread" aria-hidden="true"><span class="progress-thread__fill"></span></div>
 
 <header class="header" id="header">
   <div class="header__inner">
     <a href="#top" class="header__mark">Pedro Provadelli</a>
 
-    <nav class="header__nav" id="nav">
-      <a href="#sobre" class="header__link"><span>01</span>Sobre</a>
-      <a href="#projetos" class="header__link"><span>02</span>Projetos</a>
-      <a href="#tecnologias" class="header__link"><span>03</span>Tecnologias</a>
-      <a href="#contato" class="header__link"><span>05</span>Contato</a>
-      <a href="https://github.com/Provadelli" target="_blank" rel="noopener" class="header__github">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.06 11.06 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .32.21.67.8.56C20.21 21.38 23.5 17.07 23.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg>
+    <nav class="header__nav" id="nav" aria-label="Navegação principal" data-i18n-attr="aria-label:nav_main">
+      <a href="#sobre" class="header__link"><span>01</span><b data-i18n="nav_about">Sobre</b></a>
+      <a href="#projetos" class="header__link"><span>02</span><b data-i18n="nav_projects">Projetos</b></a>
+      <a href="#servicos" class="header__link"><span>03</span><b data-i18n="nav_services">Serviços</b></a>
+      <a href="#tecnologias" class="header__link"><span>04</span><b data-i18n="nav_tech">Tecnologias</b></a>
+      <a href="#trajetoria" class="header__link"><span>05</span><b data-i18n="nav_path">Trajetória</b></a>
+      <a href="#contato" class="header__link"><span>06</span><b data-i18n="nav_contact">Contato</b></a>
+      <a href="https://github.com/Provadelli" target="_blank" rel="noopener noreferrer" class="header__github" aria-label="GitHub de Pedro (abre em nova aba)" data-i18n-attr="aria-label:gh_label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.06 11.06 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .32.21.67.8.56C20.21 21.38 23.5 17.07 23.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg>
       </a>
     </nav>
 
-    <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="header__tools">
+      <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang_group">
+        <button type="button" class="lang__btn" data-lang="pt" aria-pressed="true" lang="pt-BR">PT</button>
+        <button type="button" class="lang__btn" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#sobre" class="mobile-menu__link">Sobre</a>
-  <a href="#projetos" class="mobile-menu__link">Projetos</a>
-  <a href="#tecnologias" class="mobile-menu__link">Tecnologias</a>
-  <a href="#trajetoria" class="mobile-menu__link">Trajetória</a>
-  <a href="#contato" class="mobile-menu__link">Contato</a>
-  <a href="https://github.com/Provadelli" target="_blank" rel="noopener" class="mobile-menu__link mobile-menu__link--gold">GitHub ↗</a>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert>
+  <nav aria-label="Menu móvel" data-i18n-attr="aria-label:nav_mobile">
+    <a href="#sobre" class="mobile-menu__link" data-i18n="nav_about">Sobre</a>
+    <a href="#projetos" class="mobile-menu__link" data-i18n="nav_projects">Projetos</a>
+    <a href="#servicos" class="mobile-menu__link" data-i18n="nav_services">Serviços</a>
+    <a href="#tecnologias" class="mobile-menu__link" data-i18n="nav_tech">Tecnologias</a>
+    <a href="#trajetoria" class="mobile-menu__link" data-i18n="nav_path">Trajetória</a>
+    <a href="#contato" class="mobile-menu__link" data-i18n="nav_contact">Contato</a>
+    <a href="https://github.com/Provadelli" target="_blank" rel="noopener noreferrer" class="mobile-menu__link mobile-menu__link--gold">GitHub ↗<span class="sr-only" data-i18n="newtab_p"> (abre em nova aba)</span></a>
+  </nav>
 </div>
 
-<main id="top">
+<main id="main">
+  <span id="top"></span>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero__field" aria-hidden="true">
-      <svg class="hero__grid" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M 8 0 L 0 0 0 8" fill="none" stroke="currentColor" stroke-width="0.08"/></pattern></defs><rect width="100" height="100" fill="url(#grid)"/></svg>
-      <span class="hero__blob hero__blob--1"></span>
-      <span class="hero__blob hero__blob--2"></span>
-    </div>
-
+  <section class="hero" aria-labelledby="hero-title">
     <div class="hero__inner">
-      <p class="eyebrow reveal">FIAP · Engenharia de Software · Web Development</p>
+      <p class="hero__status reveal"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero_status">Aberto a novos projetos</span></p>
 
-      <h1 class="hero__title">
-        <span class="reveal reveal--1">Software</span>
-        <span class="reveal reveal--2">Engineer</span>
-        <span class="hero__title-italic reveal reveal--3">in progress.</span>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__hi reveal reveal--1" data-i18n="hero_hi">Oi, eu sou o</span>
+        <span class="hero__name reveal reveal--2">Pedro <span class="hero__last">Provadelli<svg class="hero__squiggle" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 15 C 30 3, 52 3, 78 13 S 130 23, 158 11 S 214 3, 240 13 S 280 18, 297 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span></span>
       </h1>
 
-      <p class="hero__lede reveal reveal--4">Transformando ideias em soluções digitais e software de alto impacto, um commit de cada vez.</p>
+      <p class="hero__typed reveal reveal--3" aria-hidden="true"><span class="typed" id="typed"></span><span class="caret"></span></p>
+      <ul id="typedSrc" hidden>
+        <li data-i18n="ty1">estudante de Engenharia de Software na FIAP.</li>
+        <li data-i18n="ty2">técnico em Eletrônica pela FAETEC.</li>
+        <li data-i18n="ty3">fundador da NP Code Solutions.</li>
+        <li data-i18n="ty4">alguém que aprende construindo.</li>
+      </ul>
+
+      <p class="hero__lede reveal reveal--4" data-i18n="hero_lede">Transformando ideias em soluções digitais e software de alto impacto, um commit de cada vez.</p>
 
       <div class="hero__actions reveal reveal--5">
-        <a href="#projetos" class="btn btn--gold magnetic"><span>Ver projetos</span></a>
-        <a href="https://github.com/Provadelli" target="_blank" rel="noopener" class="btn btn--ghost magnetic"><span>GitHub</span></a>
+        <a href="#contato" class="btn btn--gold"><span data-i18n="hero_cta1">Iniciar conversa</span></a>
+        <a href="#projetos" class="btn btn--ghost"><span data-i18n="hero_cta2">Ver projetos</span></a>
       </div>
     </div>
 
-    <div class="hero__portrait reveal reveal--6">
-      <div class="hero__portrait-frame" id="portraitFrame">
-        <img src="assets/pedro.png" alt="Retrato de Pedro Lucas Provadelli" />
-        <span class="hero__ring"></span>
+    <div class="hero__scene">
+      <div class="hero__slot" id="heroSlot">
+        <figure class="founder" id="founder">
+          <div class="founder__photo">
+            <img src="assets/pedro.png" alt="Retrato de Pedro Lucas Provadelli" data-i18n-attr="alt:photo_alt" width="595" height="744" fetchpriority="high" />
+            <span class="founder__badge">Founder</span>
+            <span class="founder__no" aria-hidden="true">NP / 001</span>
+          </div>
+          <figcaption class="founder__info">
+            <strong class="founder__name" data-i18n="founder_role">Fundador · NP Code Solutions</strong>
+            <span class="founder__role" data-i18n="founder_sub">Engenharia de Software · FIAP</span>
+            <blockquote class="founder__quote">
+              <p data-i18n="quote">“O começo é a parte mais importante do trabalho.”</p>
+              <footer data-i18n="quote_by">— Platão</footer>
+            </blockquote>
+          </figcaption>
+        </figure>
       </div>
-      <span class="hero__caption">Pedro Lucas<br><em>Provadelli</em></span>
     </div>
 
-    <a href="#sobre" class="hero__scroll">
-      <span class="hero__scroll-line"></span>
-      role scroll
-    </a>
+    <ol class="gitlog reveal reveal--6" aria-label="Histórico resumido" data-i18n-attr="aria-label:log_label">
+      <li><span class="gitlog__tag">feat</span><span data-i18n="g1">técnico em Eletrônica (FAETEC)</span></li>
+      <li><span class="gitlog__tag">feat</span><span data-i18n="g2">primeiros sites no ar</span></li>
+      <li><span class="gitlog__tag">feat</span><span data-i18n="g3">fundou a NP Code Solutions</span></li>
+      <li><span class="gitlog__tag gitlog__tag--wip">wip</span><span data-i18n="g4">Engenharia de Software (FIAP)</span></li>
+    </ol>
   </section>
 
   <!-- SOBRE -->
-  <section class="section" id="sobre">
-    <div class="section__inner">
-      <p class="eyebrow reveal">01 — Sobre</p>
-      <div class="about">
+  <section class="section about-sec" id="sobre" aria-labelledby="sobre-title">
+    <div class="section__inner about">
+      <div class="about__aside" aria-hidden="true"><div class="about__slot" id="aboutSlot"></div></div>
+
+      <div class="about__content">
+        <p class="eyebrow reveal" data-i18n="about_eyebrow">01 — Sobre · Quem está por trás</p>
+        <h2 class="about__name reveal" id="sobre-title" data-i18n="about_title">Um pouco <em>sobre mim.</em></h2>
+
         <div class="about__text reveal">
-          <p>Sou estudante de Engenharia de Software na FIAP, interessado em desenvolvimento web, Python, automação e criação de soluções digitais.</p>
-          <p>Além da trajetória acadêmica, projeto e executo aplicações próprias para transformar desafios reais em produtos funcionais, cobrindo todo o ciclo do primeiro commit ao deploy.</p>
+          <p data-i18n="about_p1">Sou estudante de Engenharia de Software na <strong>FIAP</strong> e Técnico em Eletrônica pela <strong>FAETEC</strong>. Minha trajetória na tecnologia envolve desenvolvimento web, programação e criação de soluções digitais, sempre buscando transformar ideias em projetos funcionais e relevantes.</p>
+          <p data-i18n="about_p2">Tenho experiência com tecnologias como HTML, CSS, JavaScript, Python e C++, além de interesse em IA, automação e desenvolvimento de sistemas. Gosto de aprender na prática, explorar novas tecnologias e transformar desafios em oportunidades para criar.</p>
         </div>
 
-        <div class="about__grid">
-          <div class="stat reveal">
-            <span class="stat__label">FIAP</span>
-            <span class="stat__value">Engenharia de Software</span>
-          </div>
-          <div class="stat reveal">
-            <span class="stat__label">Web</span>
-            <span class="stat__value">Desenvolvimento</span>
-          </div>
-          <div class="stat reveal">
-            <span class="stat__label">Python</span>
-            <span class="stat__value">Programação</span>
-          </div>
-          <div class="stat reveal">
-            <span class="stat__label">Build</span>
-            <span class="stat__value">Projetos próprios</span>
-          </div>
-        </div>
+        <ul class="about__edu reveal">
+          <li class="edu">
+            <span class="edu__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg></span>
+            <span><span class="edu__label" data-i18n="edu1_label">FIAP · Em andamento</span><span class="edu__title" data-i18n="edu1_title">Engenharia de Software</span></span>
+          </li>
+          <li class="edu">
+            <span class="edu__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>
+            <span><span class="edu__label" data-i18n="edu2_label">FAETEC · Técnico</span><span class="edu__title" data-i18n="edu2_title">Eletrônica</span></span>
+          </li>
+        </ul>
+
+        <h3 class="about__label reveal" data-i18n="lbl_tech">Tecnologias</h3>
+        <ul class="chips reveal"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Python</li><li>C++</li></ul>
+
+        <h3 class="about__label reveal" data-i18n="lbl_interests">Interesses</h3>
+        <ul class="chips reveal"><li data-i18n="int1">Desenvolvimento web</li><li data-i18n="int2">Inteligência Artificial</li><li data-i18n="int3">Automação</li><li data-i18n="int4">Sistemas embarcados</li><li data-i18n="int5">Desenvolvimento de sistemas</li></ul>
+
+        <h3 class="about__label reveal" data-i18n="lbl_facts">Resumo rápido</h3>
+        <dl class="facts reveal">
+          <div><dt data-i18n="f1_t">Formação</dt><dd data-i18n="f1_d">Engenharia de Software (FIAP, em andamento) e Técnico em Eletrônica (FAETEC)</dd></div>
+          <div><dt data-i18n="f2_t">Atuação</dt><dd data-i18n="f2_d">Founder e desenvolvedor na NP Code Solutions</dd></div>
+          <div><dt data-i18n="f3_t">Foco</dt><dd data-i18n="f3_d">Web, automação com Python e sistemas embarcados</dd></div>
+          <div><dt data-i18n="f4_t">Projetos</dt><dd data-i18n="f4_d">5 projetos publicados neste portfólio</dd></div>
+          <div><dt data-i18n="f5_t">Contato</dt><dd><a href="mailto:pedroprovadelli@gmail.com">pedroprovadelli@gmail.com</a></dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
   <!-- PROJETOS -->
-  <section class="section section--alt" id="projetos">
+  <section class="section section--light" id="projetos" aria-labelledby="projetos-title">
     <div class="section__inner">
       <div class="section__head">
-        <p class="eyebrow reveal">02 — Projetos selecionados</p>
-        <h2 class="section__title reveal">Do repositório<br><em>para o mundo real.</em></h2>
+        <p class="eyebrow reveal" data-i18n="proj_eyebrow">02 — Projetos selecionados</p>
+        <h2 class="section__title reveal" id="projetos-title" data-i18n="proj_title">Do repositório<br><em>para o mundo real.</em></h2>
       </div>
 
-      <div class="projects">
+      <div class="carousel" id="carousel" role="region" aria-roledescription="carrossel" aria-label="Projetos selecionados" data-i18n-attr="aria-label:proj_region;aria-roledescription:carousel_word">
+        <div class="carousel__viewport">
+          <ul class="carousel__track" id="carouselTrack" aria-label="Lista de projetos" data-i18n-attr="aria-label:proj_list">
 
-        <article class="card card--project reveal" data-tilt>
-          <div class="card__glow" aria-hidden="true"></div>
-          <div class="card__media card__media--pelescout">
-            <img src="assets/pelenextgen.webp" alt="Imagem do projeto Pelé Next Gen" />
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">Pelé Next Gen</h3>
-            <p class="card__desc">Plataforma esportiva que conecta atletas, clubes e oportunidades, democratizando o acesso a peneiras e processos de avaliação.</p>
-            <div class="card__tags">
-              <span>Web</span><span>TypeScript</span><span>UI/UX</span>
-            </div>
-            <div class="card__actions">
-              <a href="https://pelenextgen.vercel.app/" target="_blank" rel="noopener" class="card__link">Ver Projeto ↗</a>
-            </div>
-          </div>
-        </article>
+            <li class="carousel__slide">
+              <article class="card card--project">
+                <div class="card__media">
+                  <img class="is-on" src="assets/pelenextgen.png" alt="Tela inicial da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt1" width="1200" height="750" loading="lazy" />
+                  <img src="assets/pelenextgen2.png" alt="Outra tela da plataforma Pelé Next Gen" data-i18n-attr="alt:pele_alt2" width="1200" height="750" loading="lazy" />
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title">Pelé Next Gen</h3>
+                  <p class="card__desc" data-i18n="pele_desc">Plataforma esportiva que conecta atletas, clubes e oportunidades, democratizando o acesso a peneiras e processos de avaliação.</p>
+                  <a href="https://pelenextgen.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Pelé Next Gen<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
 
-        <article class="card card--project reveal" data-tilt>
-          <div class="card__glow" aria-hidden="true"></div>
-          <div class="card__media card__media--space">
-            <img src="assets/circuito.jpeg" alt="Imagem do projeto Space Guardian" />
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">Space Guardian</h3>
-            <p class="card__desc">Projeto acadêmico de sistemas embarcados, voltado para monitoramento e autonomia de bordo.</p>
-            <div class="card__tags">
-              <span>C++</span><span>Arduino</span><span>Tinkercad</span>
-            </div>
-            <div class="card__actions">
-              <a href="https://github.com/Provadelli/GS--Sistema-de-Autonomia-de-Bordo" target="_blank" rel="noopener" class="card__link">Ver repositório ↗</a>
-            </div>
-          </div>
-        </article>
+            <li class="carousel__slide">
+              <article class="card card--project">
+                <div class="card__media">
+                  <img class="is-on" src="assets/atelier.png" alt="Tela inicial do site Atelier Residences" data-i18n-attr="alt:atelier_alt1" width="1200" height="750" loading="lazy" />
+                  <img src="assets/atelier2.png" alt="Outra tela do site Atelier Residences" data-i18n-attr="alt:atelier_alt2" width="1200" height="750" loading="lazy" />
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title">Atelier Residences</h3>
+                  <p class="card__desc" data-i18n="atelier_desc">Site de uma imobiliária de alto padrão: apresentação do empreendimento, portfólio de residências, diferenciais, depoimentos, FAQ e formulário de contato.</p>
+                  <a href="https://imobiliaria-atelier.vercel.app/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Atelier Residences<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
 
-        <article class="card card--project reveal" data-tilt>
-          <div class="card__glow" aria-hidden="true"></div>
-          <div class="card__media card__media--np">
-            <img src="assets/npcode.webp" alt="Imagem do projeto NP Code Solutions" />
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">NP Code Solutions</h3>
-            <p class="card__desc">Desenvolvimento de sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
-            <div class="card__tags">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Vercel</span>
-            </div>
-            <div class="card__actions">
-              <a href="https://np-code-solutions.vercel.app/" target="_blank" rel="noopener" class="card__link">Ver Projeto ↗</a>
-            </div>
-          </div>
-        </article>
+            <li class="carousel__slide">
+              <article class="card card--project">
+                <div class="card__media">
+                  <img class="is-on" src="assets/circuito.jpeg" alt="Circuito eletrônico do projeto Space Guardian montado em Arduino" data-i18n-attr="alt:space_alt" width="1200" height="750" loading="lazy" />
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title">Space Guardian</h3>
+                  <p class="card__desc" data-i18n="space_desc">Projeto acadêmico de sistemas embarcados, voltado para monitoramento e autonomia de bordo.</p>
+                  <a href="https://github.com/Provadelli/GS--Sistema-de-Autonomia-de-Bordo" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_repo">Ver repositório</span> <span aria-hidden="true">↗</span><span class="sr-only"> Space Guardian<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
 
-        <article class="card card--project reveal" data-tilt>
-          <div class="card__glow" aria-hidden="true"></div>
-          <div class="card__media card__media--shine">
-            <img src="assets/shinatal.webp" alt="Imagem do projeto Shinatal" />
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">Shinatal</h3>
-            <p class="card__desc">Experiência digital que traz sucesso de cada contrato transformado em recompensa para a equipe e impacto para a sociedade.</p>
-            <div class="card__tags">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span>
-            </div>
-            <div class="card__actions">
-              <a href="https://shinatal.shinerio.com" target="_blank" rel="noopener" class="card__link">Ver Projeto ↗</a>
-            </div>
-          </div>
-        </article>
+            <li class="carousel__slide">
+              <article class="card card--project">
+                <div class="card__media">
+                  <img class="is-on" src="assets/npcode.png" alt="Tela inicial do site NP Code Solutions" data-i18n-attr="alt:np_alt1" width="1200" height="750" loading="lazy" />
+                  <img src="assets/npcode2.png" alt="Outra tela do site NP Code Solutions" data-i18n-attr="alt:np_alt2" width="1200" height="750" loading="lazy" />
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title">NP Code Solutions</h3>
+                  <p class="card__desc" data-i18n="np_desc">Desenvolvimento de sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
+                  <a href="https://www.npcodesolutions.com.br/" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> NP Code Solutions<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
 
+            <li class="carousel__slide">
+              <article class="card card--project">
+                <div class="card__media">
+                  <img class="is-on" src="assets/shinatal.webp" alt="Tela inicial da experiência digital Shinatal" data-i18n-attr="alt:shin_alt1" width="1200" height="750" loading="lazy" />
+                  <img src="assets/shinatal2.png" alt="Outra tela da experiência digital Shinatal" data-i18n-attr="alt:shin_alt2" width="1200" height="750" loading="lazy" />
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title">Shinatal</h3>
+                  <p class="card__desc" data-i18n="shin_desc">Experiência digital que traz sucesso de cada contrato transformado em recompensa para a equipe e impacto para a sociedade.</p>
+                  <a href="https://shinatal.shinerio.com" target="_blank" rel="noopener noreferrer" class="card__link"><span data-i18n="see_project">Ver projeto</span> <span aria-hidden="true">↗</span><span class="sr-only"> Shinatal<span data-i18n="newtab_p"> (abre em nova aba)</span></span></a>
+                </div>
+              </article>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="carousel__controls">
+          <button type="button" class="carousel__btn" id="carToggle" aria-label="Pausar rotação automática" aria-pressed="false">❚❚</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TECNOLOGIAS -->
-  <section class="section" id="tecnologias">
+  <!-- SERVIÇOS -->
+  <section class="section" id="servicos" aria-labelledby="serv-title">
     <div class="section__inner">
-      <p class="eyebrow reveal">03 — Tecnologias</p>
+      <div class="section__head">
+        <p class="eyebrow reveal" data-i18n="serv_eyebrow">03 — O que eu faço</p>
+        <h2 class="section__title reveal" id="serv-title" data-i18n="serv_title">Da ideia ao <em>deploy.</em></h2>
+        <p class="section__lede reveal" data-i18n="serv_lede">Cuido de todo o ciclo: entender o problema, desenhar, programar, publicar e evoluir. Estas são as frentes em que atuo hoje.</p>
+      </div>
+
+      <ul class="services">
+        <li class="service reveal">
+          <span class="service__no" aria-hidden="true">01</span>
+          <h3 class="service__title" data-i18n="s1_t">Sites e landing pages</h3>
+          <p data-i18n="s1_d">Páginas rápidas, responsivas e otimizadas para busca, do briefing ao ar. Foco em performance, acessibilidade e identidade visual.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__no" aria-hidden="true">02</span>
+          <h3 class="service__title" data-i18n="s2_t">Aplicações web</h3>
+          <p data-i18n="s2_d">Interfaces e plataformas com HTML, CSS, JavaScript e TypeScript, como o Pelé Next Gen e o Shinatal.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__no" aria-hidden="true">03</span>
+          <h3 class="service__title" data-i18n="s3_t">Automação com Python</h3>
+          <p data-i18n="s3_d">Scripts e rotinas que eliminam tarefas repetitivas e deixam processos mais confiáveis.</p>
+        </li>
+        <li class="service reveal">
+          <span class="service__no" aria-hidden="true">04</span>
+          <h3 class="service__title" data-i18n="s4_t">Sistemas embarcados</h3>
+          <p data-i18n="s4_d">Protótipos com Arduino e C++ voltados a monitoramento e autonomia, herança da formação técnica em Eletrônica.</p>
+        </li>
+      </ul>
+
+      <a href="#contato" class="btn btn--gold btn--lg reveal"><span data-i18n="start_project">Iniciar projeto</span></a>
+    </div>
+  </section>
+
+  <!-- TECNOLOGIAS -->
+  <section class="section section--light" id="tecnologias" aria-labelledby="tec-title">
+    <div class="section__inner">
+      <div class="section__head">
+        <p class="eyebrow reveal" data-i18n="tech_eyebrow">04 — Tecnologias</p>
+        <h2 class="section__title reveal" id="tec-title" data-i18n="tech_title">Ferramentas do <em>ofício.</em></h2>
+      </div>
 
       <div class="tech">
-        <div class="tech__col reveal">
-          <h3 class="tech__heading">Development</h3>
-          <div class="tech__badges">
-            <span class="badge">HTML</span>
-            <span class="badge">CSS</span>
-            <span class="badge">JavaScript</span>
-            <span class="badge">Python</span>
-            <span class="badge">C++</span>
-          </div>
+        <div class="tech__group reveal">
+          <h3 class="tech__heading" data-i18n="tech_dev">Desenvolvimento</h3>
+          <ul class="tech__grid">
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">&lt;/&gt;</span><span class="tech__name">HTML</span><span class="tech__level" data-i18n="lv_daily">Dia a dia</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">{ }</span><span class="tech__name">CSS</span><span class="tech__level" data-i18n="lv_daily">Dia a dia</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">JS</span><span class="tech__name">JavaScript</span><span class="tech__level" data-i18n="lv_daily">Dia a dia</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">Py</span><span class="tech__name">Python</span><span class="tech__level" data-i18n="lv_mid">Intermediário</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">C++</span><span class="tech__name">C++</span><span class="tech__level" data-i18n="lv_acad">Acadêmico</span></li>
+          </ul>
         </div>
-        <div class="tech__col reveal">
-          <h3 class="tech__heading">Tools</h3>
-          <div class="tech__badges">
-            <span class="badge">Git</span>
-            <span class="badge">GitHub</span>
-            <span class="badge">VS Code</span>
-            <span class="badge">Vercel</span>
-          </div>
-        </div>
-        <div class="tech__col reveal">
-          <h3 class="tech__heading">Currently learning</h3>
-          <div class="tech__badges">
-            <span class="badge badge--gold">Estruturas de Dados</span>
-            <span class="badge badge--gold">Banco de Dados</span>
-            <span class="badge badge--gold">Engenharia de Software</span>
-            <span class="badge badge--gold">APIs</span>
-            <span class="badge badge--gold">Inteligência Artificial</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>HTML</span><span>·</span><span>CSS</span><span>·</span><span>JavaScript</span><span>·</span><span>Python</span><span>·</span><span>C++</span><span>·</span><span>Git</span><span>·</span><span>GitHub</span><span>·</span><span>Vercel</span><span>·</span>
-        <span>HTML</span><span>·</span><span>CSS</span><span>·</span><span>JavaScript</span><span>·</span><span>Python</span><span>·</span><span>C++</span><span>·</span><span>Git</span><span>·</span><span>GitHub</span><span>·</span><span>Vercel</span><span>·</span>
+        <div class="tech__group reveal">
+          <h3 class="tech__heading" data-i18n="tech_tools">Ferramentas</h3>
+          <ul class="tech__grid">
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">⎇</span><span class="tech__name">Git</span><span class="tech__level" data-i18n="lv_git">Versionamento</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">◐</span><span class="tech__name">GitHub</span><span class="tech__level" data-i18n="lv_gh">Colaboração</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">▤</span><span class="tech__name">VS Code</span><span class="tech__level" data-i18n="lv_ed">Editor</span></li>
+            <li class="tech__card"><span class="tech__icon" aria-hidden="true">▲</span><span class="tech__name">Vercel</span><span class="tech__level" data-i18n="lv_dep">Deploy</span></li>
+          </ul>
+        </div>
+
+        <div class="tech__group tech__group--learning reveal">
+          <h3 class="tech__heading" data-i18n="tech_learning">Estudando agora</h3>
+          <ul class="tech__grid">
+            <li class="tech__card tech__card--gold"><span class="tech__icon" aria-hidden="true">◇</span><span class="tech__name" data-i18n="l1">Estruturas de Dados</span></li>
+            <li class="tech__card tech__card--gold"><span class="tech__icon" aria-hidden="true">▦</span><span class="tech__name" data-i18n="l2">Banco de Dados</span></li>
+            <li class="tech__card tech__card--gold"><span class="tech__icon" aria-hidden="true">△</span><span class="tech__name" data-i18n="l3">Engenharia de Software</span></li>
+            <li class="tech__card tech__card--gold"><span class="tech__icon" aria-hidden="true">⇄</span><span class="tech__name">APIs</span></li>
+            <li class="tech__card tech__card--gold"><span class="tech__icon" aria-hidden="true">✦</span><span class="tech__name" data-i18n="l5">Inteligência Artificial</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- TRAJETORIA -->
-  <section class="section section--alt" id="trajetoria">
+  <section class="section" id="trajetoria" aria-labelledby="traj-title">
     <div class="section__inner">
-      <p class="eyebrow reveal">04 — Trajetória</p>
+      <div class="section__head">
+        <p class="eyebrow reveal" data-i18n="path_eyebrow">05 — Trajetória</p>
+        <h2 class="section__title reveal" id="traj-title" data-i18n="path_title">Um caminho <em>em construção.</em></h2>
+      </div>
 
       <div class="timeline">
-        <svg class="timeline__thread" viewBox="0 0 4 400" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="timeline__thread" viewBox="0 0 4 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <line x1="2" y1="0" x2="2" y2="400" />
         </svg>
 
         <div class="timeline__item reveal">
-          <span class="timeline__dot"></span>
+          <span class="timeline__dot" aria-hidden="true"></span>
           <h3 class="timeline__title">FAETEC</h3>
-          <p class="timeline__desc">Técnico em Eletrônica</p>
+          <p class="timeline__desc" data-i18n="t1">Técnico em Eletrônica. Base em circuitos, lógica e sistemas embarcados, que influencia meus projetos com Arduino e C++.</p>
         </div>
         <div class="timeline__item reveal">
-          <span class="timeline__dot"></span>
-          <h3 class="timeline__title">Desenvolvimento Web</h3>
-          <p class="timeline__desc">Primeiros projetos e experiências com criação de sites.</p>
+          <span class="timeline__dot" aria-hidden="true"></span>
+          <h3 class="timeline__title" data-i18n="t2_t">Desenvolvimento Web</h3>
+          <p class="timeline__desc" data-i18n="t2">Primeiros projetos e experiências com criação de sites, aprendendo na prática com HTML, CSS e JavaScript.</p>
         </div>
         <div class="timeline__item reveal">
-          <span class="timeline__dot"></span>
+          <span class="timeline__dot" aria-hidden="true"></span>
           <h3 class="timeline__title">NP Code Solutions</h3>
-          <p class="timeline__desc">Desenvolvimento de sites e soluções digitais.</p>
+          <p class="timeline__desc" data-i18n="t3">Founder e desenvolvedor. Sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
         </div>
         <div class="timeline__item reveal">
-          <span class="timeline__dot"></span>
+          <span class="timeline__dot" aria-hidden="true"></span>
           <h3 class="timeline__title">FIAP</h3>
-          <p class="timeline__desc">Engenharia de Software.</p>
+          <p class="timeline__desc" data-i18n="t4">Cursando Engenharia de Software, com estudos em estruturas de dados, bancos de dados, APIs e inteligência artificial.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTATO -->
-  <section class="section contact" id="contato">
-    <div class="section__inner">
-      <p class="eyebrow reveal">05 — Vamos construir algo?</p>
-      <h2 class="contact__title reveal">Tem uma ideia, projeto<br>ou oportunidade? <em>Vamos conversar.</em></h2>
-
-      <div class="contact__rows reveal">
-        <a href="https://github.com/Provadelli" target="_blank" rel="noopener" class="contact__row magnetic">
-          <span class="contact__row-label">GitHub</span>
-          <span class="contact__row-value">github.com/Provadelli</span>
-          <span class="contact__row-arrow">↗</span>
-        </a>
-        <a href="https://linkedin.com/in/pedroprovadellidev/" target="_blank" rel="noopener" class="contact__row magnetic">
-          <span class="contact__row-label">LinkedIn</span>
-          <span class="contact__row-value">in/pedroprovadellidev</span>
-          <span class="contact__row-arrow">↗</span>
-        </a>
-        <a href="mailto:pedroprovadelli@gmail.com" class="contact__row magnetic">
-          <span class="contact__row-label">Email</span>
-          <span class="contact__row-value">pedroprovadelli@gmail.com</span>
-          <span class="contact__row-arrow">↗</span>
-        </a>
+  <!-- FAQ -->
+  <section class="section section--light" id="faq" aria-labelledby="faq-title">
+    <div class="section__inner section__inner--narrow">
+      <div class="section__head">
+        <p class="eyebrow reveal" data-i18n="faq_eyebrow">06 — Perguntas frequentes</p>
+        <h2 class="section__title reveal" id="faq-title" data-i18n="faq_title">Ficou com <em>alguma dúvida?</em></h2>
       </div>
+      <div class="faq reveal">
+        <details><summary data-i18n="q1">Quem é Pedro Provadelli?</summary><p data-i18n="a1">Estudante de Engenharia de Software na FIAP, Técnico em Eletrônica pela FAETEC e founder da NP Code Solutions, onde desenvolve sites e soluções digitais.</p></details>
+        <details><summary data-i18n="q2">Com o que você trabalha?</summary><p data-i18n="a2">Desenvolvimento web (HTML, CSS, JavaScript e TypeScript), Python para automação e C++ com Arduino para sistemas embarcados.</p></details>
+        <details><summary data-i18n="q3">Que tipo de projeto você aceita?</summary><p data-i18n="a3">Sites institucionais, landing pages, aplicações web e automações. Conte sua ideia pelo formulário e eu respondo com os próximos passos.</p></details>
+        <details><summary data-i18n="q4">Já tem projetos publicados?</summary><p data-i18n="a4">Sim. Na seção Projetos há cinco trabalhos, entre sites no ar (Pelé Next Gen, Atelier Residences, NP Code Solutions e Shinatal) e um projeto acadêmico de sistemas embarcados (Space Guardian).</p></details>
+        <details><summary data-i18n="q5">Como entro em contato?</summary><p data-i18n="a5">Pelo formulário nesta página, pelo e-mail pedroprovadelli@gmail.com ou pelo LinkedIn e GitHub.</p></details>
+        <details><summary data-i18n="q6">O que acontece com os dados que envio?</summary><p data-i18n="a6">Eles são usados apenas para responder sua mensagem, conforme a LGPD. Veja a <a href="privacidade.html">Política de Privacidade</a>.</p></details>
+      </div>
+    </div>
+  </section>
 
-      <a href="mailto:pedroprovadelli@gmail.com" class="btn btn--gold btn--lg magnetic reveal"><span>Entrar em contato</span></a>
+  <!-- CONTATO -->
+  <section class="section contact" id="contato" aria-labelledby="contato-title">
+    <div class="section__inner">
+      <p class="eyebrow reveal" data-i18n="contact_eyebrow">07 — Contato</p>
+      <h2 class="contact__title reveal" id="contato-title" data-i18n="contact_title">Tem uma ideia, projeto<br>ou oportunidade? <em>Vamos conversar.</em></h2>
+
+      <div class="contact__grid">
+        <div class="contact__rows reveal">
+          <a href="https://github.com/Provadelli" target="_blank" rel="noopener noreferrer" class="contact__row">
+            <span class="contact__row-label">GitHub</span>
+            <span class="contact__row-value">github.com/Provadelli</span>
+            <span class="contact__row-arrow" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="newtab_b">(abre em nova aba)</span>
+          </a>
+          <a href="https://linkedin.com/in/pedroprovadellidev/" target="_blank" rel="noopener noreferrer" class="contact__row">
+            <span class="contact__row-label">LinkedIn</span>
+            <span class="contact__row-value">in/pedroprovadellidev</span>
+            <span class="contact__row-arrow" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="newtab_b">(abre em nova aba)</span>
+          </a>
+          <a href="mailto:pedroprovadelli@gmail.com" class="contact__row">
+            <span class="contact__row-label" data-i18n="email_lbl">E-mail</span>
+            <span class="contact__row-value">pedroprovadelli@gmail.com</span>
+            <span class="contact__row-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <form class="form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate aria-labelledby="form-title">
+          <h3 class="form__title" id="form-title" data-i18n="form_title">Envie uma mensagem</h3>
+          <input type="hidden" name="access_key" value="SUA_CHAVE_WEB3FORMS" />
+          <input type="hidden" name="subject" value="Contato pelo portfólio" />
+          <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <div class="field">
+            <label for="f-nome"><span data-i18n="f_name">Nome</span> <span aria-hidden="true">*</span></label>
+            <input id="f-nome" name="name" type="text" autocomplete="name" required aria-describedby="e-nome" />
+            <p class="field__error" id="e-nome" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-email"><span data-i18n="email_lbl">E-mail</span> <span aria-hidden="true">*</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
+            <p class="field__error" id="e-email" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-msg"><span data-i18n="f_msg">Mensagem</span> <span aria-hidden="true">*</span></label>
+            <textarea id="f-msg" name="message" rows="5" required minlength="10" aria-describedby="e-msg"></textarea>
+            <p class="field__error" id="e-msg" role="alert"></p>
+          </div>
+
+          <div class="field field--check">
+            <input id="f-lgpd" name="consent" type="checkbox" required aria-describedby="e-lgpd" />
+            <label for="f-lgpd" data-i18n="f_consent">Li e concordo com o tratamento dos meus dados para responder a esta mensagem, conforme a <a href="privacidade.html">Política de Privacidade</a> (LGPD).</label>
+            <p class="field__error" id="e-lgpd" role="alert"></p>
+          </div>
+
+          <button type="submit" class="btn btn--gold" id="formSubmit"><span data-i18n="f_send">Enviar mensagem</span></button>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+          <p class="form__note" data-i18n="f_note">Campos marcados com * são obrigatórios.</p>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -315,18 +459,45 @@
 
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__brand">
-      <span class="footer__name">Pedro Provadelli</span>
-      <span class="footer__role">Software Engineering · FIAP</span>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="footer__name">Pedro Provadelli</span>
+        <p class="footer__bio" data-i18n="foot_bio">Estudante de Engenharia de Software na FIAP, construindo soluções digitais do primeiro commit ao deploy.</p>
+      </div>
+
+      <nav class="footer__col" aria-label="Rodapé: navegação" data-i18n-attr="aria-label:foot_nav_l">
+        <h2 class="footer__heading" data-i18n="foot_nav">Navegação</h2>
+        <a href="#sobre" data-i18n="nav_about">Sobre</a>
+        <a href="#projetos" data-i18n="nav_projects">Projetos</a>
+        <a href="#servicos" data-i18n="nav_services">Serviços</a>
+        <a href="#tecnologias" data-i18n="nav_tech">Tecnologias</a>
+        <a href="#trajetoria" data-i18n="nav_path">Trajetória</a>
+        <a href="#faq" data-i18n="foot_faq">Perguntas frequentes</a>
+        <a href="#contato" data-i18n="nav_contact">Contato</a>
+      </nav>
+
+      <div class="footer__col">
+        <h2 class="footer__heading" data-i18n="nav_contact">Contato</h2>
+        <a href="mailto:pedroprovadelli@gmail.com">pedroprovadelli@gmail.com</a>
+        <a href="https://github.com/Provadelli" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only" data-i18n="newtab_p"> (abre em nova aba)</span></a>
+        <a href="https://linkedin.com/in/pedroprovadellidev/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only" data-i18n="newtab_p"> (abre em nova aba)</span></a>
+      </div>
+
+      <nav class="footer__col" aria-label="Rodapé: legal" data-i18n-attr="aria-label:foot_legal_l">
+        <h2 class="footer__heading" data-i18n="foot_legal">Legal</h2>
+        <a href="privacidade.html" data-i18n="privacy">Política de Privacidade</a>
+        <a href="acessibilidade.html" data-i18n="a11y">Acessibilidade</a>
+      </nav>
     </div>
-    <div class="footer__links">
-      <a href="https://github.com/Provadelli" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/pedroprovadellidev/" target="_blank" rel="noopener">LinkedIn</a>
+
+    <div class="footer__bottom">
+      <span class="footer__copy" data-i18n="copy">© 2026 Pedro Lucas Provadelli. Todos os direitos reservados.</span>
+      <a href="#top" class="footer__top-link" data-i18n="to_top">Voltar ao topo ↑</a>
     </div>
-    <span class="footer__copy">© 2026 Pedro Lucas</span>
   </div>
 </footer>
 
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

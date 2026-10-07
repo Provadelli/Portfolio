@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#1A120C" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<title>Acessibilidade — Pedro Provadelli</title>
+<meta name="description" content="Declaração de acessibilidade do portfólio de Pedro Provadelli." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<a href="#main" class="skip-link" data-i18n="skip">Pular para o conteúdo</a>
+<header class="header is-scrolled"><div class="header__inner"><a href="index.html" class="header__mark">Pedro Provadelli</a><a href="index.html" class="header__link" data-i18n="back">← Voltar ao portfólio</a><div class="header__tools"><div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang_group"><button type="button" class="lang__btn" data-lang="pt" aria-pressed="true" lang="pt-BR">PT</button><button type="button" class="lang__btn" data-lang="en" aria-pressed="false" lang="en">EN</button></div></div></div></header>
+
+<main id="main" class="doc">
+  <h1 data-i18n="ac_title">Declaração de Acessibilidade</h1>
+  <p class="doc__meta" data-i18n="ac_meta">Última atualização: 7 de outubro de 2026.</p>
+
+  <p data-i18n="ac_p1">Este portfólio busca atender às Diretrizes de Acessibilidade para Conteúdo Web (WCAG) 2.2, nível AA, e aos princípios da Lei Brasileira de Inclusão (Lei nº 13.146/2015).</p>
+
+  <h2 data-i18n="ac_h1">Recursos disponíveis</h2>
+  <ul>
+    <li data-i18n="ac_l1">Link “Pular para o conteúdo” no início de cada página.</li>
+    <li data-i18n="ac_l2">Navegação completa por teclado, com indicador de foco visível; o menu móvel fecha com a tecla Esc.</li>
+    <li data-i18n="ac_l3">Estrutura semântica com marcos (<em>header</em>, <em>nav</em>, <em>main</em>, <em>footer</em>) e hierarquia de títulos.</li>
+    <li data-i18n="ac_l4">Cores com contraste mínimo de 4,5:1 para textos e 3:1 para componentes de interface.</li>
+    <li data-i18n="ac_l5">Carrossel de projetos com botão de pausa; ele para ao passar o mouse ou focar com o teclado. O movimento automático fica desligado para quem prefere movimento reduzido.</li>
+    <li data-i18n="ac_l6">Animações respeitam <code>prefers-reduced-motion</code>.</li>
+    <li data-i18n="ac_l7">Formulário com rótulos associados, mensagens de erro anunciadas por leitores de tela e indicação de campos obrigatórios.</li>
+    <li data-i18n="ac_l8">Textos alternativos nas imagens e aviso de links que abrem em nova aba.</li>
+    <li data-i18n="ac_l9">Alternância de idioma entre português e inglês.</li>
+  </ul>
+
+  <h2 data-i18n="ac_h2">Limitações conhecidas</h2>
+  <p data-i18n="ac_p2">Os sites externos listados nos projetos (como Pelé Next Gen e Atelier Residences) são mantidos separadamente e podem não atender integralmente aos mesmos critérios.</p>
+
+  <h2 data-i18n="ac_h3">Relate um problema</h2>
+  <p data-i18n="ac_p3">Encontrou uma barreira de acesso? Escreva para <a href="mailto:pedroprovadelli@gmail.com">pedroprovadelli@gmail.com</a> informando a página e o problema. Buscamos responder em até 5 dias úteis.</p>
+</main>
+<script src="i18n.js"></script>
+</body>
+</html>
