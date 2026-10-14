@@ -87,6 +87,8 @@
     err_name: "Enter your name.", err_email: "Enter a valid e-mail.", err_msg: "Write a message with at least 10 characters.", err_consent: "You must agree before sending the message.",
     form_mail: "Opening your e-mail app to finish sending.", form_sending: "Sending...", form_ok: "Message sent! I will reply soon.",
     form_fail: "Could not send. Try again or write to pedroprovadelli@gmail.com.",
+    err_captcha: "Confirm that you are not a robot.",
+    cf_title: "Message sent!", cf_text: "Thank you for reaching out. Your message has landed in my inbox and I will reply soon.", cf_close: "Close",
     tag_live: "Live site", tag_acad: "Academic", access_system: "Access system",
     car_prev: "Previous project", car_next: "Next project", car_goto: "Go to group {n}", car_dots: "Choose project group", car_hint2: "Drag to browse. Rotation pauses when you interact.",
     car_pause: "Pause automatic rotation", car_resume: "Resume automatic rotation",

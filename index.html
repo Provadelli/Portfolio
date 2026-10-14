@@ -447,7 +447,7 @@
 
         <form class="form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate aria-labelledby="form-title">
           <h3 class="form__title" id="form-title" data-i18n="form_title">Envie uma mensagem</h3>
-          <input type="hidden" name="access_key" value="SUA_CHAVE_WEB3FORMS" />
+          <input type="hidden" name="access_key" value="1a7666bd-79d0-4d7a-b03a-b0717e991a75" />
           <input type="hidden" name="subject" value="Contato pelo portfólio" />
           <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -473,10 +473,23 @@
             <p class="field__error" id="e-lgpd" aria-live="polite"></p>
           </div>
 
+          <div class="field field--captcha">
+            <div class="h-captcha" data-captcha="true"></div>
+            <p class="field__error" id="e-captcha" aria-live="polite"></p>
+          </div>
+
           <button type="submit" class="btn btn--gold" id="formSubmit"><span data-i18n="f_send">Enviar mensagem</span></button>
           <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
           <p class="form__note" data-i18n="f_note">Campos marcados com * são obrigatórios.</p>
         </form>
+
+        <dialog class="confirm" id="confirmDialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+          <div class="confirm__icon" aria-hidden="true">✓</div>
+          <h3 class="confirm__title" id="confirm-title" data-i18n="cf_title">Mensagem enviada!</h3>
+          <p class="confirm__text" id="confirm-text" data-i18n="cf_text">Obrigado pelo contato. Sua mensagem já chegou na minha caixa de e-mail e responderei em breve.</p>
+          <button type="button" class="btn btn--gold" id="confirmClose"><span data-i18n="cf_close">Fechar</span></button>
+        </dialog>
+        <script src="https://web3forms.com/client/script.js" async defer></script>
       </div>
     </div>
   </section>

@@ -564,6 +564,16 @@ html[data-lang="en"] .hero__typed::before{ content: "I'm "; }
 .form__status[data-state="ok"]{ color: var(--success); }
 .form__status[data-state="error"]{ color: var(--danger); }
 .form__note{ font-size: 12px; color: var(--ink-soft); margin: 10px 0 0; }
+.field--captcha{ max-width: 100%; overflow-x: auto; }
+
+.confirm{ border: 1px solid var(--gold); border-radius: 24px; background: var(--surface); color: var(--ink); padding: 40px 32px; max-width: 420px; width: calc(100% - 32px); text-align: center; }
+.confirm::backdrop{ background: rgba(0,0,0,.6); }
+.confirm[open]{ animation: confirmIn .4s var(--ease) both; }
+.confirm__icon{ width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; display:grid; place-items:center; font-size: 32px; font-weight: 800; background: var(--gold-btn); color: var(--btn-ink); }
+.confirm__title{ font-family: var(--font-display); font-weight: 500; font-size: 26px; margin: 0 0 10px; }
+.confirm__text{ font-size: 15px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 24px; }
+@keyframes confirmIn{ from{ opacity:0; transform: translateY(16px) scale(.97); } to{ opacity:1; transform: none; } }
+@media (prefers-reduced-motion: reduce){ .confirm[open]{ animation: none; } }
 
 /* ============================================
    RODAPÉ

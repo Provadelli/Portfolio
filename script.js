@@ -330,6 +330,12 @@
     const statusEl = document.getElementById("formStatus");
     const submitBtn = document.getElementById("formSubmit");
     const MAIL = "pedroprovadelli@gmail.com";
+    const dialog = document.getElementById("confirmDialog");
+    const closeBtn = document.getElementById("confirmClose");
+    if (dialog && closeBtn){
+      closeBtn.addEventListener("click", () => dialog.close());
+      dialog.addEventListener("click", (ev) => { if (ev.target === dialog) dialog.close(); });
+    }
 
     const rules = {
       name: v => v.trim().length >= 2 ? "" : T("err_name", "Informe seu nome."),
@@ -364,9 +370,18 @@
 
       const data = new FormData(form);
       const key = data.get("access_key");
+      const hasKey = key && key !== "SUA_CHAVE_WEB3FORMS";
+
+      // "Não sou um robô" (hCaptcha do Web3Forms) — só exigido quando o envio é automático
+      const capErr = document.getElementById("e-captcha");
+      if (capErr) capErr.textContent = "";
+      if (hasKey && !data.get("h-captcha-response")){
+        if (capErr) capErr.textContent = T("err_captcha", "Confirme que você não é um robô.");
+        return;
+      }
 
       // Sem chave configurada: abre o app de e-mail com a mensagem preenchida
-      if (!key || key === "SUA_CHAVE_WEB3FORMS"){
+      if (!hasKey){
         const body = `${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`;
         window.location.href = `mailto:${MAIL}?subject=${encodeURIComponent("Contato pelo portfólio")}&body=${encodeURIComponent(body)}`;
         statusEl.dataset.state = "ok";
@@ -387,6 +402,8 @@
         statusEl.dataset.state = "ok";
         statusEl.textContent = T("form_ok", "Mensagem enviada! Responderei em breve.");
         form.reset();
+        if (window.hcaptcha) try { window.hcaptcha.reset(); } catch (_) {}
+        if (dialog && dialog.showModal) dialog.showModal();
         fields.forEach(f => { f.removeAttribute("aria-invalid"); f.closest(".field").dataset.invalid = "false"; });
       } catch (err){
         statusEl.dataset.state = "error";
