@@ -7,11 +7,13 @@
 <meta name="google-site-verification" content="8B7v2AZ4nAn4hYupG0ftbxG3kS5an6nL5yj6rCqhlgE" />
 <link rel="canonical" href="https://pedroprovadelli.vercel.app/" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-<title>Pedro Provadelli — Software Engineer in Progress</title>
-<meta name="description" content="Portfólio de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP e desenvolvedor em formação." data-i18n-attr="content:meta_desc" />
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<title>Pedro Provadelli | Software Engineer</title>
+<meta name="description" content="Pedro Lucas Provadelli, engenheiro de software em formação na FIAP. Desenvolvimento web, automação com Python e sistemas embarcados. Código que vira resultado." data-i18n-attr="content:meta_desc" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Pedro Provadelli — Software Engineer in Progress" />
-<meta property="og:description" content="Projetos, tecnologias e contato de Pedro Lucas Provadelli, estudante de Engenharia de Software na FIAP." />
+<meta property="og:title" content="Pedro Provadelli | Software Engineer" />
+<meta property="og:description" content="Código que vira resultado. Projetos, tecnologias e contato de Pedro Lucas Provadelli, engenheiro de software em formação na FIAP." />
 <meta property="og:url" content="https://pedroprovadelli.vercel.app/" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:image" content="https://pedroprovadelli.vercel.app/assets/pedro.png" />
@@ -24,12 +26,72 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<script>document.documentElement.classList.add("is-loading");</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.loader{display:none!important}</style></noscript>
 </head>
 <body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <span class="loader__grid"></span>
+  <span class="loader__scan"></span>
+  <div class="loader__art">
+      <svg class="loader__pisa" viewBox="-40 0 300 420" focusable="false">
+        <path class="pz pz--ground" style="--i:24" d="M-30 392H240" pathLength="1"/><path class="pz pz--dash" style="--i:25" d="M-10 400H20M40 400H70M130 400H160M180 400H210" pathLength="1"/>
+        <path class="pz pz--plumb" style="--i:26" d="M100 392V41" pathLength="1"/>
+        <g transform="rotate(4 100 392)"><path class="pz " style="--i:0" d="M58 392V330H142V392" pathLength="1"/><path class="pz " style="--i:1" d="M64 392V344.33A4.33 4.33 0 0 1 72.67 344.33V392M76.67 392V344.33A4.33 4.33 0 0 1 85.33 344.33V392M89.33 392V344.33A4.33 4.33 0 0 1 98 344.33V392M102 392V344.33A4.33 4.33 0 0 1 110.67 344.33V392M114.67 392V344.33A4.33 4.33 0 0 1 123.33 344.33V392M127.33 392V344.33A4.33 4.33 0 0 1 136 344.33V392" pathLength="1"/><path class="pz " style="--i:2" d="M55 330H145M55 326H145" pathLength="1"/><path class="pz " style="--i:3" d="M58 326V290H142V326" pathLength="1"/><path class="pz " style="--i:4" d="M61.6 323V300.4A3.4 3.4 0 0 1 68.4 300.4V323M71.6 323V300.4A3.4 3.4 0 0 1 78.4 300.4V323M81.6 323V300.4A3.4 3.4 0 0 1 88.4 300.4V323M91.6 323V300.4A3.4 3.4 0 0 1 98.4 300.4V323M101.6 323V300.4A3.4 3.4 0 0 1 108.4 300.4V323M111.6 323V300.4A3.4 3.4 0 0 1 118.4 300.4V323M121.6 323V300.4A3.4 3.4 0 0 1 128.4 300.4V323M131.6 323V300.4A3.4 3.4 0 0 1 138.4 300.4V323" pathLength="1"/><path class="pz " style="--i:5" d="M55 290H145" pathLength="1"/><path class="pz " style="--i:6" d="M58 290V254H142V290" pathLength="1"/><path class="pz " style="--i:7" d="M61.6 287V264.4A3.4 3.4 0 0 1 68.4 264.4V287M71.6 287V264.4A3.4 3.4 0 0 1 78.4 264.4V287M81.6 287V264.4A3.4 3.4 0 0 1 88.4 264.4V287M91.6 287V264.4A3.4 3.4 0 0 1 98.4 264.4V287M101.6 287V264.4A3.4 3.4 0 0 1 108.4 264.4V287M111.6 287V264.4A3.4 3.4 0 0 1 118.4 264.4V287M121.6 287V264.4A3.4 3.4 0 0 1 128.4 264.4V287M131.6 287V264.4A3.4 3.4 0 0 1 138.4 264.4V287" pathLength="1"/><path class="pz " style="--i:8" d="M55 254H145" pathLength="1"/><path class="pz " style="--i:9" d="M58 254V218H142V254" pathLength="1"/><path class="pz " style="--i:10" d="M61.6 251V228.4A3.4 3.4 0 0 1 68.4 228.4V251M71.6 251V228.4A3.4 3.4 0 0 1 78.4 228.4V251M81.6 251V228.4A3.4 3.4 0 0 1 88.4 228.4V251M91.6 251V228.4A3.4 3.4 0 0 1 98.4 228.4V251M101.6 251V228.4A3.4 3.4 0 0 1 108.4 228.4V251M111.6 251V228.4A3.4 3.4 0 0 1 118.4 228.4V251M121.6 251V228.4A3.4 3.4 0 0 1 128.4 228.4V251M131.6 251V228.4A3.4 3.4 0 0 1 138.4 228.4V251" pathLength="1"/><path class="pz " style="--i:11" d="M55 218H145" pathLength="1"/><path class="pz " style="--i:12" d="M58 218V182H142V218" pathLength="1"/><path class="pz " style="--i:13" d="M61.6 215V192.4A3.4 3.4 0 0 1 68.4 192.4V215M71.6 215V192.4A3.4 3.4 0 0 1 78.4 192.4V215M81.6 215V192.4A3.4 3.4 0 0 1 88.4 192.4V215M91.6 215V192.4A3.4 3.4 0 0 1 98.4 192.4V215M101.6 215V192.4A3.4 3.4 0 0 1 108.4 192.4V215M111.6 215V192.4A3.4 3.4 0 0 1 118.4 192.4V215M121.6 215V192.4A3.4 3.4 0 0 1 128.4 192.4V215M131.6 215V192.4A3.4 3.4 0 0 1 138.4 192.4V215" pathLength="1"/><path class="pz " style="--i:14" d="M55 182H145" pathLength="1"/><path class="pz " style="--i:15" d="M58 182V146H142V182" pathLength="1"/><path class="pz " style="--i:16" d="M61.6 179V156.4A3.4 3.4 0 0 1 68.4 156.4V179M71.6 179V156.4A3.4 3.4 0 0 1 78.4 156.4V179M81.6 179V156.4A3.4 3.4 0 0 1 88.4 156.4V179M91.6 179V156.4A3.4 3.4 0 0 1 98.4 156.4V179M101.6 179V156.4A3.4 3.4 0 0 1 108.4 156.4V179M111.6 179V156.4A3.4 3.4 0 0 1 118.4 156.4V179M121.6 179V156.4A3.4 3.4 0 0 1 128.4 156.4V179M131.6 179V156.4A3.4 3.4 0 0 1 138.4 156.4V179" pathLength="1"/><path class="pz " style="--i:17" d="M55 146H145" pathLength="1"/><path class="pz " style="--i:18" d="M58 146V110H142V146" pathLength="1"/><path class="pz " style="--i:19" d="M61.6 143V120.4A3.4 3.4 0 0 1 68.4 120.4V143M71.6 143V120.4A3.4 3.4 0 0 1 78.4 120.4V143M81.6 143V120.4A3.4 3.4 0 0 1 88.4 120.4V143M91.6 143V120.4A3.4 3.4 0 0 1 98.4 120.4V143M101.6 143V120.4A3.4 3.4 0 0 1 108.4 120.4V143M111.6 143V120.4A3.4 3.4 0 0 1 118.4 120.4V143M121.6 143V120.4A3.4 3.4 0 0 1 128.4 120.4V143M131.6 143V120.4A3.4 3.4 0 0 1 138.4 120.4V143" pathLength="1"/><path class="pz " style="--i:20" d="M55 110H145" pathLength="1"/><path class="pz " style="--i:21" d="M70 110V70H130V110" pathLength="1"/><path class="pz " style="--i:22" d="M74.6 106V79.8A3.8 3.8 0 0 1 82.2 79.8V106M85.4 106V79.8A3.8 3.8 0 0 1 93 79.8V106M96.2 106V79.8A3.8 3.8 0 0 1 103.8 79.8V106M107 106V79.8A3.8 3.8 0 0 1 114.6 79.8V106M117.8 106V79.8A3.8 3.8 0 0 1 125.4 79.8V106" pathLength="1"/><path class="pz " style="--i:23" d="M67 70H133M78 70Q100 56 122 70" pathLength="1"/></g>
+        <path class="pz pz--anno" style="--i:27" d="M196 392V60M190 392H202M190 60H202" pathLength="1"/>
+        <text class="pz-t" x="204" y="230">56,67 m</text>
+        <text class="pz-t" x="114" y="44">3,97°</text>
+        <text class="pz-t pz-t--lg" x="-30" y="414">TORRE DI PISA</text>
+        <text class="pz-t" x="120" y="414">43.7230° N  10.3966° E</text>
+      </svg>
+  </div>
+  <div class="loader__hud loader__hud--tl"><span>SYS://PROVADELLI</span><span>v2026.10</span></div>
+  <div class="loader__hud loader__hud--tr"><span class="loader__flag"><i></i><i></i><i></i></span><span>IT / BR</span></div>
+  <div class="loader__core">
+    <div class="loader__mark">
+      <svg class="loader__ring" viewBox="0 0 200 200" focusable="false">
+        <circle class="loader__ring-track" cx="100" cy="100" r="94" />
+        <circle class="loader__ring-line" cx="100" cy="100" r="94" pathLength="100" />
+      </svg>
+      <span class="loader__glow"></span>
+      <span class="loader__letter" id="loaderLetter">
+        <svg class="lp lp--ghost" viewBox="360 270 560 700" aria-hidden="true" focusable="false"><path pathLength="1" fill="#6B3F1F" fill-rule="evenodd" d="M404 298H700C820 298 886 370 886 472C886 578 808 650 690 650H572V898C574 920 592 930 636 934V942H404V934C448 930 466 920 470 898V342C468 316 448 306 404 304ZM572 312H688C742 312 772 382 772 472C772 566 738 638 682 638H572Z"/>
+  
+  <path pathLength="1" fill="#2E7D4F" d="M416 784L452 798C460 838 478 866 506 892C462 874 430 836 416 784Z"/>
+  <path pathLength="1" fill="#F4EFE6" d="M452 798L486 810C492 844 504 868 524 892L506 892C478 866 460 838 452 798Z"/>
+  <path pathLength="1" fill="#C3343A" d="M486 810L522 820C526 850 536 874 552 896L524 892C504 868 492 844 486 810Z"/>
+  
+  <path pathLength="1" fill="#E2C79A" d="M732 452C640 492 466 548 396 630C352 682 368 742 428 772C498 806 590 826 620 866C640 892 638 910 624 922C628 896 604 870 566 852C500 822 440 806 410 768C380 728 398 676 452 622C530 548 650 496 732 452Z"/>
+  
+  <path pathLength="1" fill="#8A5A2E" d="M732 452C650 496 530 550 454 622C402 674 384 724 408 764C392 726 412 680 462 634C536 566 650 506 732 452Z"/>
+  <path pathLength="1" fill="#8A5A2E" d="M624 922C628 896 604 870 566 852C540 840 512 830 486 822C530 840 584 858 606 884C616 896 622 908 624 922Z"/></svg>
+        <span class="loader__fill"><svg class="lp lp--fill" viewBox="360 270 560 700" aria-hidden="true" focusable="false"><path fill="#6B3F1F" fill-rule="evenodd" d="M404 298H700C820 298 886 370 886 472C886 578 808 650 690 650H572V898C574 920 592 930 636 934V942H404V934C448 930 466 920 470 898V342C468 316 448 306 404 304ZM572 312H688C742 312 772 382 772 472C772 566 738 638 682 638H572Z"/>
+  
+  <path fill="#2E7D4F" d="M416 784L452 798C460 838 478 866 506 892C462 874 430 836 416 784Z"/>
+  <path fill="#F4EFE6" d="M452 798L486 810C492 844 504 868 524 892L506 892C478 866 460 838 452 798Z"/>
+  <path fill="#C3343A" d="M486 810L522 820C526 850 536 874 552 896L524 892C504 868 492 844 486 810Z"/>
+  
+  <path fill="#E2C79A" d="M732 452C640 492 466 548 396 630C352 682 368 742 428 772C498 806 590 826 620 866C640 892 638 910 624 922C628 896 604 870 566 852C500 822 440 806 410 768C380 728 398 676 452 622C530 548 650 496 732 452Z"/>
+  
+  <path fill="#8A5A2E" d="M732 452C650 496 530 550 454 622C402 674 384 724 408 764C392 726 412 680 462 634C536 566 650 506 732 452Z"/>
+  <path fill="#8A5A2E" d="M624 922C628 896 604 870 566 852C540 840 512 830 486 822C530 840 584 858 606 884C616 896 622 908 624 922Z"/></svg></span>
+        <span class="loader__scanline"></span>
+      </span>
+    </div>
+    <p class="loader__name"><span>P</span><span>E</span><span>D</span><span>R</span><span>O</span><span class="sp"> </span><span>P</span><span>R</span><span>O</span><span>V</span><span>A</span><span>D</span><span>E</span><span>L</span><span>L</span><span>I</span></p>
+    <p class="loader__role">Software Engineer</p>
+    <div class="loader__status">
+      <span class="loader__cmd"><b>$</b> <span id="loaderMsg">inicializando portfólio</span></span>
+      <span class="loader__pct" id="loaderPct">00%</span>
+    </div>
+    <span class="loader__bar"><span class="loader__bar-fill"></span></span>
+  </div>
+</div>
+
 
 <a href="#main" class="skip-link" data-i18n="skip">Pular para o conteúdo</a>
 
@@ -37,7 +99,7 @@
 
 <header class="header" id="header">
   <div class="header__inner">
-    <a href="#top" class="header__mark">Pedro Provadelli</a>
+    <a href="#top" class="header__mark" aria-label="Pedro Provadelli, voltar ao início" data-i18n-attr="aria-label:home_label"><img src="assets/logo-p.svg" alt="" width="32" height="40" class="header__logo" /></a>
 
     <nav class="header__nav" id="nav" aria-label="Navegação principal" data-i18n-attr="aria-label:nav_main">
       <a href="#sobre" class="header__link"><span>01</span><b data-i18n="nav_about">Sobre</b></a>
@@ -83,55 +145,56 @@
   <div class="hero__bg" aria-hidden="true"><span class="hero__grid"></span><span class="hero__orb hero__orb--1"></span><span class="hero__orb hero__orb--2"></span><span class="hero__orb hero__orb--3"></span></div>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__inner">
-      <p class="hero__status reveal"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero_status">Aberto a novos projetos</span></p>
-
-      <h1 class="hero__title" id="hero-title">
-        <span class="hero__hi reveal reveal--1" data-i18n="hero_hi">Oi, eu sou o</span>
-        <span class="hero__name reveal reveal--2">Pedro <span class="hero__last">Provadelli<svg class="hero__squiggle" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 15 C 30 3, 52 3, 78 13 S 130 23, 158 11 S 214 3, 240 13 S 280 18, 297 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span></span>
+      <h1 class="hero__title reveal reveal--2" id="hero-title">
+        <span class="hero__line" data-i18n="hero_l1">Código que vira</span>
+        <span class="hero__last"><span data-i18n="hero_l2">resultado.</span><svg class="hero__squiggle" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 15 C 30 3, 52 3, 78 13 S 130 23, 158 11 S 214 3, 240 13 S 280 18, 297 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span>
       </h1>
 
-      <p class="hero__typed reveal reveal--3" aria-hidden="true"><span class="typed" id="typed"></span><span class="caret"></span></p>
-      <ul id="typedSrc" hidden>
-        <li data-i18n="ty1">estudante de Engenharia de Software na FIAP.</li>
-        <li data-i18n="ty2">técnico em Eletrônica pela FAETEC.</li>
-        <li data-i18n="ty3">fundador da NP Code Solutions.</li>
-        <li data-i18n="ty4">alguém que aprende construindo.</li>
-      </ul>
+      <p class="hero__lede reveal reveal--3" data-i18n="hero_lede">Engenheiro de software em formação na FIAP. Crio sites, sistemas e automações que funcionam no mundo real.</p>
 
-      <p class="hero__lede reveal reveal--4" data-i18n="hero_lede">Transformando ideias em soluções digitais funcionais, um commit de cada vez.</p>
-
-      <div class="hero__actions reveal reveal--5">
+      <div class="hero__actions reveal reveal--4">
         <a href="#contato" class="btn btn--gold"><span data-i18n="hero_cta1">Iniciar conversa</span></a>
         <a href="#projetos" class="btn btn--ghost"><span data-i18n="hero_cta2">Ver projetos</span></a>
       </div>
+
+      <p class="hero__status reveal reveal--5"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero_status">Aberto a novos projetos</span></p>
     </div>
 
     <div class="hero__scene">
+      <svg class="hero__pisa" viewBox="-40 20 300 400" aria-hidden="true" focusable="false">
+        <path class="hz hz--ground" style="--i:24" d="M-30 392H240" pathLength="1"/>
+        <path class="hz hz--plumb" style="--i:25" d="M100 400V35" pathLength="1"/>
+        <g class="hero__tower"><path class="hz " style="--i:0" d="M58 392V330H142V392" pathLength="1"/><path class="hz " style="--i:1" d="M64 392V344.33A4.33 4.33 0 0 1 72.67 344.33V392M76.67 392V344.33A4.33 4.33 0 0 1 85.33 344.33V392M89.33 392V344.33A4.33 4.33 0 0 1 98 344.33V392M102 392V344.33A4.33 4.33 0 0 1 110.67 344.33V392M114.67 392V344.33A4.33 4.33 0 0 1 123.33 344.33V392M127.33 392V344.33A4.33 4.33 0 0 1 136 344.33V392" pathLength="1"/><path class="hz " style="--i:2" d="M55 330H145M55 326H145" pathLength="1"/><path class="hz " style="--i:3" d="M58 326V290H142V326" pathLength="1"/><path class="hz " style="--i:4" d="M61.6 323V300.4A3.4 3.4 0 0 1 68.4 300.4V323M71.6 323V300.4A3.4 3.4 0 0 1 78.4 300.4V323M81.6 323V300.4A3.4 3.4 0 0 1 88.4 300.4V323M91.6 323V300.4A3.4 3.4 0 0 1 98.4 300.4V323M101.6 323V300.4A3.4 3.4 0 0 1 108.4 300.4V323M111.6 323V300.4A3.4 3.4 0 0 1 118.4 300.4V323M121.6 323V300.4A3.4 3.4 0 0 1 128.4 300.4V323M131.6 323V300.4A3.4 3.4 0 0 1 138.4 300.4V323" pathLength="1"/><path class="hz " style="--i:5" d="M55 290H145" pathLength="1"/><path class="hz " style="--i:6" d="M58 290V254H142V290" pathLength="1"/><path class="hz " style="--i:7" d="M61.6 287V264.4A3.4 3.4 0 0 1 68.4 264.4V287M71.6 287V264.4A3.4 3.4 0 0 1 78.4 264.4V287M81.6 287V264.4A3.4 3.4 0 0 1 88.4 264.4V287M91.6 287V264.4A3.4 3.4 0 0 1 98.4 264.4V287M101.6 287V264.4A3.4 3.4 0 0 1 108.4 264.4V287M111.6 287V264.4A3.4 3.4 0 0 1 118.4 264.4V287M121.6 287V264.4A3.4 3.4 0 0 1 128.4 264.4V287M131.6 287V264.4A3.4 3.4 0 0 1 138.4 264.4V287" pathLength="1"/><path class="hz " style="--i:8" d="M55 254H145" pathLength="1"/><path class="hz " style="--i:9" d="M58 254V218H142V254" pathLength="1"/><path class="hz " style="--i:10" d="M61.6 251V228.4A3.4 3.4 0 0 1 68.4 228.4V251M71.6 251V228.4A3.4 3.4 0 0 1 78.4 228.4V251M81.6 251V228.4A3.4 3.4 0 0 1 88.4 228.4V251M91.6 251V228.4A3.4 3.4 0 0 1 98.4 228.4V251M101.6 251V228.4A3.4 3.4 0 0 1 108.4 228.4V251M111.6 251V228.4A3.4 3.4 0 0 1 118.4 228.4V251M121.6 251V228.4A3.4 3.4 0 0 1 128.4 228.4V251M131.6 251V228.4A3.4 3.4 0 0 1 138.4 228.4V251" pathLength="1"/><path class="hz " style="--i:11" d="M55 218H145" pathLength="1"/><path class="hz " style="--i:12" d="M58 218V182H142V218" pathLength="1"/><path class="hz " style="--i:13" d="M61.6 215V192.4A3.4 3.4 0 0 1 68.4 192.4V215M71.6 215V192.4A3.4 3.4 0 0 1 78.4 192.4V215M81.6 215V192.4A3.4 3.4 0 0 1 88.4 192.4V215M91.6 215V192.4A3.4 3.4 0 0 1 98.4 192.4V215M101.6 215V192.4A3.4 3.4 0 0 1 108.4 192.4V215M111.6 215V192.4A3.4 3.4 0 0 1 118.4 192.4V215M121.6 215V192.4A3.4 3.4 0 0 1 128.4 192.4V215M131.6 215V192.4A3.4 3.4 0 0 1 138.4 192.4V215" pathLength="1"/><path class="hz " style="--i:14" d="M55 182H145" pathLength="1"/><path class="hz " style="--i:15" d="M58 182V146H142V182" pathLength="1"/><path class="hz " style="--i:16" d="M61.6 179V156.4A3.4 3.4 0 0 1 68.4 156.4V179M71.6 179V156.4A3.4 3.4 0 0 1 78.4 156.4V179M81.6 179V156.4A3.4 3.4 0 0 1 88.4 156.4V179M91.6 179V156.4A3.4 3.4 0 0 1 98.4 156.4V179M101.6 179V156.4A3.4 3.4 0 0 1 108.4 156.4V179M111.6 179V156.4A3.4 3.4 0 0 1 118.4 156.4V179M121.6 179V156.4A3.4 3.4 0 0 1 128.4 156.4V179M131.6 179V156.4A3.4 3.4 0 0 1 138.4 156.4V179" pathLength="1"/><path class="hz " style="--i:17" d="M55 146H145" pathLength="1"/><path class="hz " style="--i:18" d="M58 146V110H142V146" pathLength="1"/><path class="hz " style="--i:19" d="M61.6 143V120.4A3.4 3.4 0 0 1 68.4 120.4V143M71.6 143V120.4A3.4 3.4 0 0 1 78.4 120.4V143M81.6 143V120.4A3.4 3.4 0 0 1 88.4 120.4V143M91.6 143V120.4A3.4 3.4 0 0 1 98.4 120.4V143M101.6 143V120.4A3.4 3.4 0 0 1 108.4 120.4V143M111.6 143V120.4A3.4 3.4 0 0 1 118.4 120.4V143M121.6 143V120.4A3.4 3.4 0 0 1 128.4 120.4V143M131.6 143V120.4A3.4 3.4 0 0 1 138.4 120.4V143" pathLength="1"/><path class="hz " style="--i:20" d="M55 110H145" pathLength="1"/><path class="hz " style="--i:21" d="M70 110V70H130V110" pathLength="1"/><path class="hz " style="--i:22" d="M74.6 106V79.8A3.8 3.8 0 0 1 82.2 79.8V106M85.4 106V79.8A3.8 3.8 0 0 1 93 79.8V106M96.2 106V79.8A3.8 3.8 0 0 1 103.8 79.8V106M107 106V79.8A3.8 3.8 0 0 1 114.6 79.8V106M117.8 106V79.8A3.8 3.8 0 0 1 125.4 79.8V106" pathLength="1"/><path class="hz " style="--i:23" d="M67 70H133M78 70Q100 56 122 70" pathLength="1"/></g>
+        <path class="hz hz--anno" style="--i:26" d="M200 392V61M193 392H207M193 61H207" pathLength="1"/>
+        <text class="hz-t" x="210" y="232">56,67 m</text>
+        <text class="hz-t" x="106" y="31" id="pisaAngle">3,97°</text>
+        <text class="hz-t hz-t--soft" x="-30" y="412">scala 1:400</text>
+      </svg>
       <div class="hero__slot" id="heroSlot">
         <figure class="founder" id="founder">
           <div class="founder__photo">
             <img src="assets/pedro.png" alt="Retrato de Pedro Lucas Provadelli" data-i18n-attr="alt:photo_alt" width="595" height="744" fetchpriority="high" />
-            <span class="founder__badge">Founder</span>
-            <span class="founder__no" aria-hidden="true">NP / 001</span>
+            <svg class="postmark" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+              <defs><path id="pmCircle" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1 -148 0"/></defs>
+              <circle cx="100" cy="100" r="88"/><circle cx="100" cy="100" r="58"/>
+              <text><textPath href="#pmCircle">ENGENHARIA DE SOFTWARE ✦ FIAP ✦ ELETRÔNICA ✦ FAETEC ✦</textPath></text>
+              <text class="postmark__mid" x="100" y="96" text-anchor="middle">BRASIL</text>
+              <text class="postmark__mid" x="100" y="120" text-anchor="middle">2026</text>
+              <path class="postmark__waves" d="M-90 70c14-8 28 8 42 0s28 8 42 0M-90 100c14-8 28 8 42 0s28 8 42 0M-90 130c14-8 28 8 42 0s28 8 42 0"/>
+            </svg>
           </div>
           <figcaption class="founder__info">
-            <strong class="founder__name" data-i18n="founder_role">Fundador · NP Code Solutions</strong>
+            <strong class="founder__name">Pedro Provadelli</strong>
             <span class="founder__role" data-i18n="founder_sub">Engenharia de Software · FIAP</span>
-            <blockquote class="founder__quote">
-              <p data-i18n="quote">“O começo é a parte mais importante do trabalho.”</p>
-              <footer data-i18n="quote_by">— Platão</footer>
-            </blockquote>
+            <ul class="founder__stack" aria-label="Stack principal" data-i18n-attr="aria-label:stack_label">
+              <li>Web</li><li>Python</li><li>C++</li><li>IoT</li>
+            </ul>
+            <span class="founder__flag" aria-hidden="true"><i></i><i></i><i></i></span>
           </figcaption>
         </figure>
       </div>
     </div>
 
-    <ol class="gitlog reveal reveal--6" aria-label="Histórico resumido" data-i18n-attr="aria-label:log_label">
-      <li><span class="gitlog__tag">feat</span><span data-i18n="g1">técnico em Eletrônica (FAETEC)</span></li>
-      <li><span class="gitlog__tag">feat</span><span data-i18n="g2">primeiros sites no ar</span></li>
-      <li><span class="gitlog__tag">feat</span><span data-i18n="g3">fundou a NP Code Solutions</span></li>
-      <li><span class="gitlog__tag gitlog__tag--wip">wip</span><span data-i18n="g4">Engenharia de Software (FIAP)</span></li>
-    </ol>
   </section>
   </div>
 
@@ -141,7 +204,7 @@
       <div class="about__aside" aria-hidden="true"><div class="about__slot" id="aboutSlot"></div></div>
 
       <div class="about__content">
-        <p class="eyebrow reveal" data-i18n="about_eyebrow">01 — Sobre · Quem está por trás</p>
+        <p class="eyebrow reveal" data-i18n="about_eyebrow">01 Sobre</p>
         <h2 class="about__name reveal" id="sobre-title" data-i18n="about_title">Um pouco <em>sobre mim.</em></h2>
 
         <div class="about__text reveal">
@@ -169,7 +232,7 @@
         <h3 class="about__label reveal" data-i18n="lbl_facts">Resumo rápido</h3>
         <dl class="facts reveal">
           <div><dt data-i18n="f1_t">Formação</dt><dd data-i18n="f1_d">Engenharia de Software (FIAP, em andamento) e Técnico em Eletrônica (FAETEC)</dd></div>
-          <div><dt data-i18n="f2_t">Atuação</dt><dd data-i18n="f2_d">Founder e desenvolvedor na NP Code Solutions</dd></div>
+          <div><dt data-i18n="f2_t">Atuação</dt><dd data-i18n="f2_d">Desenvolvedor de software: web, automação e sistemas embarcados</dd></div>
           <div><dt data-i18n="f3_t">Foco</dt><dd data-i18n="f3_d">Web, automação com Python e sistemas embarcados</dd></div>
           <div><dt data-i18n="f4_t">Projetos</dt><dd data-i18n="f4_d">5 projetos publicados neste portfólio</dd></div>
           <div><dt data-i18n="f5_t">Contato</dt><dd><a href="mailto:pedroprovadelli@gmail.com">pedroprovadelli@gmail.com</a></dd></div>
@@ -182,7 +245,7 @@
   <section class="section section--mid" id="projetos" aria-labelledby="projetos-title">
     <div class="section__inner">
       <div class="section__head">
-        <p class="eyebrow reveal" data-i18n="proj_eyebrow">02 — Projetos selecionados</p>
+        <p class="eyebrow reveal" data-i18n="proj_eyebrow">02 Projetos</p>
         <h2 class="section__title reveal" id="projetos-title" data-i18n="proj_title">Do repositório<br><em>para o mundo real.</em></h2>
       </div>
     </div>
@@ -287,7 +350,7 @@
   <section class="section section--white section--light" id="servicos" aria-labelledby="serv-title">
     <div class="section__inner">
       <div class="section__head">
-        <p class="eyebrow reveal" data-i18n="serv_eyebrow">03 — O que eu faço</p>
+        <p class="eyebrow reveal" data-i18n="serv_eyebrow">03 Serviços</p>
         <h2 class="section__title reveal" id="serv-title" data-i18n="serv_title">Da ideia ao <em>deploy.</em></h2>
         <p class="section__lede reveal" data-i18n="serv_lede">Cuido de todo o ciclo: entender o problema, desenhar, programar, publicar e evoluir. Estas são as frentes em que atuo hoje.</p>
       </div>
@@ -323,7 +386,7 @@
   <section class="section section--light" id="tecnologias" aria-labelledby="tec-title">
     <div class="section__inner">
       <div class="section__head">
-        <p class="eyebrow reveal" data-i18n="tech_eyebrow">04 — Tecnologias</p>
+        <p class="eyebrow reveal" data-i18n="tech_eyebrow">04 Tecnologias</p>
         <h2 class="section__title reveal" id="tec-title" data-i18n="tech_title">Ferramentas do <em>ofício.</em></h2>
       </div>
 
@@ -367,7 +430,7 @@
   <section class="section section--mid" id="trajetoria" aria-labelledby="traj-title">
     <div class="section__inner">
       <div class="section__head">
-        <p class="eyebrow reveal" data-i18n="path_eyebrow">05 — Trajetória</p>
+        <p class="eyebrow reveal" data-i18n="path_eyebrow">05 Trajetória</p>
         <h2 class="section__title reveal" id="traj-title" data-i18n="path_title">Um caminho <em>em construção.</em></h2>
       </div>
 
@@ -388,8 +451,8 @@
         </div>
         <div class="timeline__item reveal">
           <span class="timeline__dot" aria-hidden="true"></span>
-          <h3 class="timeline__title">NP Code Solutions</h3>
-          <p class="timeline__desc" data-i18n="t3">Founder e desenvolvedor. Sites e soluções digitais sob medida para empresas, do briefing ao ar.</p>
+          <h3 class="timeline__title" data-i18n="t3_t">Projetos em produção</h3>
+          <p class="timeline__desc" data-i18n="t3">Sites e plataformas reais publicados, como Pelé Next Gen, Atelier Residences e Shinatal, do levantamento de requisitos ao deploy.</p>
         </div>
         <div class="timeline__item reveal">
           <span class="timeline__dot" aria-hidden="true"></span>
@@ -404,11 +467,11 @@
   <section class="section section--white section--light" id="faq" aria-labelledby="faq-title">
     <div class="section__inner section__inner--narrow">
       <div class="section__head">
-        <p class="eyebrow reveal" data-i18n="faq_eyebrow">06 — Perguntas frequentes</p>
+        <p class="eyebrow reveal" data-i18n="faq_eyebrow">06 Perguntas frequentes</p>
         <h2 class="section__title reveal" id="faq-title" data-i18n="faq_title">Ficou com <em>alguma dúvida?</em></h2>
       </div>
       <div class="faq reveal">
-        <details><summary data-i18n="q1">Quem é Pedro Provadelli?</summary><p data-i18n="a1">Estudante de Engenharia de Software na FIAP, Técnico em Eletrônica pela FAETEC e founder da NP Code Solutions, onde desenvolve sites e soluções digitais.</p></details>
+        <details><summary data-i18n="q1">Quem é Pedro Provadelli?</summary><p data-i18n="a1">Engenheiro de software em formação na FIAP e Técnico em Eletrônica pela FAETEC. Desenvolve sites, aplicações web, automações e sistemas embarcados.</p></details>
         <details><summary data-i18n="q2">Com o que você trabalha?</summary><p data-i18n="a2">Desenvolvimento web (HTML, CSS, JavaScript e TypeScript), Python para automação e C++ com Arduino para sistemas embarcados.</p></details>
         <details><summary data-i18n="q3">Que tipo de projeto você aceita?</summary><p data-i18n="a3">Sites institucionais, landing pages, aplicações web e automações. Conte sua ideia pelo formulário e eu respondo com os próximos passos.</p></details>
         <details><summary data-i18n="q4">Já tem projetos publicados?</summary><p data-i18n="a4">Sim. Na seção Projetos há cinco trabalhos, entre sites no ar (Pelé Next Gen, Atelier Residences, NP Code Solutions e Shinatal) e um projeto acadêmico de sistemas embarcados (Space Guardian).</p></details>
@@ -421,7 +484,7 @@
   <!-- CONTATO -->
   <section class="section contact" id="contato" aria-labelledby="contato-title">
     <div class="section__inner">
-      <p class="eyebrow reveal" data-i18n="contact_eyebrow">07 — Contato</p>
+      <p class="eyebrow reveal" data-i18n="contact_eyebrow">07 Contato</p>
       <h2 class="contact__title reveal" id="contato-title" data-i18n="contact_title">Tem uma ideia, projeto<br>ou oportunidade? <em>Vamos conversar.</em></h2>
 
       <div class="contact__grid">
@@ -497,11 +560,12 @@
 </main>
 
 <footer class="footer">
+  <span class="footer__flag" aria-hidden="true"><i></i><i></i><i></i></span>
   <div class="footer__inner">
     <div class="footer__top">
       <div class="footer__brand">
         <span class="footer__name">Pedro Provadelli</span>
-        <p class="footer__bio" data-i18n="foot_bio">Estudante de Engenharia de Software na FIAP, construindo soluções digitais do primeiro commit ao deploy.</p>
+        <p class="footer__bio" data-i18n="foot_bio">Código que vira resultado. Engenharia de software do primeiro commit ao deploy.</p>
       </div>
 
       <nav class="footer__col" aria-label="Rodapé: navegação" data-i18n-attr="aria-label:foot_nav_l">

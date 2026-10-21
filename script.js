@@ -5,15 +5,79 @@
   const T = (k, d) => (window.i18n ? window.i18n.t(k, d) : d);
 
   /* ---------------------------------------------
+     TELA DE CARREGAMENTO
+     o progresso (carregamento real, mín. 2.6s, máx. 5s) preenche o P
+     de baixo para cima; em 100% ele brilha e dá zoom, abrindo o site
+  --------------------------------------------- */
+  (function loader(){
+    const root = document.documentElement;
+    const el = document.getElementById("loader");
+    if (!el){ root.classList.remove("is-loading"); return; }
+    const pctEl = document.getElementById("loaderPct");
+    const msg = document.getElementById("loaderMsg");
+    const steps = [[0, "ld_init", "inicializando portfólio"], [30, "ld_assets", "carregando assets"], [65, "ld_build", "compilando interface"], [100, "ld_ready", "pronto"]];
+    const MIN = reduceMotion ? 300 : 2600, MAX = 5000;
+    const t0 = performance.now();
+    let loaded = document.readyState === "complete", shown = 0, finished = false;
+    window.addEventListener("load", () => { loaded = true; });
+
+    function render(v){
+      const n = Math.round(v);
+      pctEl.textContent = String(n).padStart(2, "0") + "%";
+      el.style.setProperty("--p", v.toFixed(2));
+      let label = steps[0];
+      steps.forEach(s => { if (n >= s[0]) label = s; });
+      msg.textContent = T(label[1], label[2]);
+    }
+    function finish(){
+      if (finished) return;
+      finished = true;
+      render(100);
+      el.classList.add("is-full");
+      setTimeout(() => {
+        el.classList.add("is-done");
+        // o hero entra enquanto o P atravessa a tela
+        setTimeout(() => {
+          root.classList.remove("is-loading");
+          document.dispatchEvent(new CustomEvent("loader:done"));
+        }, reduceMotion ? 0 : 450);
+        setTimeout(() => el.remove(), 1600);
+      }, reduceMotion ? 0 : 420);
+    }
+    function frame(now){
+      if (finished) return;
+      const elapsed = now - t0;
+      const target = loaded && elapsed >= MIN ? 100 : Math.min(88, (elapsed / MIN) * 88);
+      shown += (target - shown) * (loaded ? 0.12 : 0.08);
+      if (target === 100 && shown > 99.4) return finish();
+      if (elapsed > MAX) return finish();
+      render(shown);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    setTimeout(finish, MAX + 800);   // segurança: rAF pausa em abas em segundo plano
+  })();
+
+
+  /* ---------------------------------------------
      HEADER: blur + shrink on scroll, progress thread
   --------------------------------------------- */
   const header = document.getElementById("header");
   const progressFill = document.querySelector(".progress-thread__fill");
   let ticking = false;
+  // Torre de Pisa: endireita conforme a rolagem do topo
+  const tower = document.querySelector(".hero__tower");
+  const angleEl = document.getElementById("pisaAngle");
+  const TILT = 3.97;
 
   function update(){
     ticking = false;
     const y = window.scrollY;
+    if (tower){
+      const a = TILT * (1 - Math.min(y / (window.innerHeight * 0.75), 1));
+      tower.setAttribute("transform", `rotate(${a.toFixed(3)} 100 392)`);
+      if (angleEl) angleEl.textContent = a.toFixed(2).replace(".", document.documentElement.dataset.lang === "en" ? "." : ",") + "°";
+    }
     header.classList.toggle("is-scrolled", y > 40);
 
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
