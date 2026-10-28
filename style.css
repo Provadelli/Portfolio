@@ -658,6 +658,7 @@ html:not(.is-loading) .hz-t{ opacity: 1; }
    no fim, dá zoom atravessando a tela
 ========================================================= */
 .is-loading, .is-loading body{ overflow: hidden; }
+.no-loader .loader{ display: none; }
 .loader{
   position: fixed; inset: 0; z-index: 1000; display:grid; place-items:center; overflow: hidden;
   background: radial-gradient(70% 60% at 50% 50%, #2C231D 0%, #15110E 80%); color: var(--carta);

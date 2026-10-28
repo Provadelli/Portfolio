@@ -355,6 +355,7 @@
 ========================================================= */
 @layer components {
   .is-loading, .is-loading body{ overflow: hidden; }
+  .no-loader .loader{ display: none; }
   .loader{
     @apply fixed inset-0 z-1000 grid place-items-center overflow-hidden text-cream;
     background: radial-gradient(70% 60% at 50% 50%, #2C231D 0%, #15110E 80%);

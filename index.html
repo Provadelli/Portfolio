@@ -31,7 +31,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
-<script>document.documentElement.classList.add("is-loading");</script>
+<script>/* tela de carregamento só na primeira visita da sessão */(function(r){var seen=false;try{seen=sessionStorage.getItem("loaderSeen")==="1"}catch(e){}r.classList.add(seen?"no-loader":"is-loading")})(document.documentElement);</script>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}.loader{display:none!important}</style></noscript>
 </head>
 <body>
