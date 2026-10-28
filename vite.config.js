@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = import.meta.dirname;
@@ -33,7 +33,9 @@ const partials = () => ({
   }
 });
 
-const pages = ["index", "privacidade", "termos", "acessibilidade", "404"];
+// only builds the pages that exist (termos.html is still being created)
+const pages = ["index", "privacidade", "termos", "acessibilidade", "404"]
+  .filter(p => existsSync(resolve(root, `${p}.html`)));
 
 export default defineConfig({
   plugins: [partials(), tailwindcss()],
