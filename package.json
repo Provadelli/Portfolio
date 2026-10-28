@@ -1,0 +1,39 @@
+{
+  "name": "portfolio-provadelli",
+  "version": "1.0.0",
+  "description": "Portfólio de Pedro Lucas Provadelli",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "images": "node scripts/optimize-images.mjs",
+    "audit:a11y": "axe http://localhost:4173/ http://localhost:4173/privacidade.html http://localhost:4173/termos.html http://localhost:4173/acessibilidade.html http://localhost:4173/404.html --exit",
+    "audit:lh": "lighthouse http://localhost:4173/ --only-categories=accessibility,best-practices,seo,performance --view"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Provadelli/Portifolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Provadelli/Portifolio/issues"
+  },
+  "homepage": "https://github.com/Provadelli/Portifolio#readme",
+  "devDependencies": {
+    "@axe-core/cli": "^4.14.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "lighthouse": "^13.6.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0"
+  },
+  "private": true
+}
