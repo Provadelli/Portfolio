@@ -7,9 +7,9 @@
 
 /* =========================================================
    TOKENS
-   The theme variables become utilities (bg-bg, text-ink, border-line...).
-   Since the utilities read the variables, each section can redefine
-   its palette (theme-light, theme-mid...) and the same classes adapt.
+   As variáveis do tema viram utilitários (bg-bg, text-ink, border-line...).
+   Como os utilitários leem as variáveis, cada seção pode redefinir
+   sua paleta (theme-light, theme-mid...) e as mesmas classes se adaptam.
 ========================================================= */
 @theme {
   --breakpoint-*: initial;
@@ -35,7 +35,7 @@
   --color-field: #A58F77;
   --color-danger: #FF9F8E;
   --color-success: #7BDCA3;
-  /* fixed colors (do not change per section) */
+  /* cores fixas (não mudam por seção) */
   --color-espresso: #1A120C;
   --color-night: #120C07;
   --color-cream: #FFFDF8;
@@ -52,16 +52,19 @@
   --container-text: 620px;
 }
 
-/* cards, chips and the form share the same "surface" */
+/* cards, chips e o formulário compartilham a mesma "superfície" */
 @utility surface { background-color: var(--color-surface); border: 1px solid var(--color-line); }
 @utility lift {
   transition: transform .4s var(--ease-brand), border-color .4s ease, box-shadow .4s ease;
   &:hover{ transform: translateY(-3px); border-color: var(--color-gold); box-shadow: 0 18px 30px -22px rgba(122,95,44,.55); }
 }
 
-/* Section palettes ------------------------------------------ */
+/* rótulo pequeno em caixa alta (resumo, contato, formulário) */
+@utility label { @apply text-xs font-bold tracking-[.12em] uppercase text-ink-faint; }
+
+/* Paletas por seção ------------------------------------------ */
 @utility theme-mid { --color-bg: #231710; --color-surface: #2F2016; --color-line: #54402D; }
-@utility theme-stage { --color-bg: #120C07; --color-ink-soft: #CFC1AC; }
+@utility theme-stage { --color-bg: #120C07; --color-ink-soft: #CFC1AC; background: radial-gradient(60% 50% at 50% 55%, #1E140D 0%, #120C07 75%); }
 @utility theme-light {
   color-scheme: light;
   --color-bg: #F6F1E6; --color-surface: #FFFDF8;
@@ -69,7 +72,8 @@
   --color-gold: #B08D4F; --color-gold-btn: #D8B66E; --color-gold-deep: #7A5A12; --color-gold-light: #E7D6AC;
   --color-line: #DBCBB0; --color-field: #86705A; --color-danger: #A61B1B; --color-success: #1E6B3A;
 }
-@utility theme-white { --color-bg: #FFFDF8; --color-surface: #F6F1E6; --color-line: #E4D8BF; }
+/* branco = bege com fundo mais claro (uma classe só, sem disputa de ordem) */
+@utility theme-white { @apply theme-light; --color-bg: #FFFDF8; --color-surface: #F6F1E6; --color-line: #E4D8BF; }
 
 /* =========================================================
    BASE
@@ -86,7 +90,7 @@
 }
 
 /* =========================================================
-   REUSABLE COMPONENTS
+   COMPONENTES REUTILIZÁVEIS
 ========================================================= */
 @layer components {
   .wrap{ @apply mx-auto w-full max-w-site px-5 sm:px-6 lg:px-8; }
@@ -101,11 +105,10 @@
   .heading{ @apply m-0 font-display font-medium text-[clamp(32px,4.4vw,54px)] leading-[1.08] tracking-[-.01em] text-ink; }
   .heading em{ @apply italic font-normal text-gold-deep; }
   .lede{ @apply mt-4.5 max-w-text text-[17px] leading-[1.7] text-ink-soft; }
-  .label{ @apply text-xs font-bold tracking-[.12em] uppercase text-ink-faint; }
 
   .chip{ @apply surface lift rounded-full px-4 py-2.25 text-[13px] font-bold; }
 
-  /* underlined links in body text (facts, FAQ, legal pages, form) */
+  /* links sublinhados no texto corrido (resumo, FAQ, páginas legais, formulário) */
   .link, .prose-links a{ @apply font-bold text-gold-deep underline underline-offset-3; }
 
   .btn{
@@ -123,14 +126,14 @@
   .btn-ghost{ @apply border-[1.5px] border-ink-faint text-ink hover:border-gold-deep hover:text-gold-deep; }
   .btn[disabled]{ @apply cursor-wait opacity-60 translate-y-0; }
 
-  /* round icon button (GitHub, carousel) */
+  /* botão redondo de ícone (carrossel) */
   .icon-btn{
     @apply inline-flex size-12 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-gold-deep text-ink;
     transition: background .3s, color .3s, transform .3s var(--ease-brand);
   }
   .icon-btn:hover{ @apply -translate-y-0.5 border-gold-btn bg-gold-btn text-espresso; }
 
-  /* Italian tricolor flag (stamp, footer, loader) */
+  /* bandeira tricolor italiana (selo, rodapé, tela de carregamento) */
   .flag{ @apply flex overflow-hidden; }
   .flag i{ @apply flex-1; }
   .flag i:nth-child(1){ @apply bg-it-green; }
@@ -142,12 +145,12 @@
   }
   .skip-link:focus{ @apply translate-y-0; }
 
-  /* scroll reveal */
+  /* surgimento ao rolar */
   .reveal{ opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease-soft), transform .9s var(--ease-soft); transition-delay: calc(var(--rd, 0) * 1s); }
   .reveal.is-visible{ opacity: 1; transform: none; }
   .is-loading .reveal.is-visible{ opacity: 0; transform: translateY(26px); transition: none; }
 
-  /* ---------------- HEADER ---------------- */
+  /* ---------------- CABEÇALHO ---------------- */
   .header{ @apply fixed inset-x-0 top-0 z-500 py-5; transition: padding .4s var(--ease-brand), background .4s var(--ease-brand), box-shadow .4s var(--ease-brand); }
   .header.is-scrolled{
     @apply py-3; background: rgba(26,18,12,.92);
@@ -215,7 +218,7 @@
   }
   .status-dot{ @apply size-2 rounded-full bg-success; animation: pulse 2.4s ease-out infinite; }
 
-  /* Pisa tower drawing (hero = .hz, loader = .pz): same stroke, different timing */
+  /* desenho da Torre de Pisa (hero = .hz, loader = .pz): mesmo traço, tempos diferentes */
   .hz, .pz{ fill: none; stroke: var(--color-gold); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
   .hz--ground{ stroke-width: 1.5; }
   .hz--plumb{ stroke: rgba(240,221,168,.4); stroke-width: .7; }
@@ -225,7 +228,7 @@
   .hz-t--soft{ fill: rgba(240,221,168,.55); }
   html:not(.is-loading) .hz-t{ @apply opacity-100; }
 
-  /* ---------------- FOUNDER CARD (postage stamp) ---------------- */
+  /* ---------------- CARTÃO DO FUNDADOR (selo postal) ---------------- */
   .founder{
     --r: 6px;
     @apply m-0 w-[min(340px,100%)] overflow-hidden text-cream;
@@ -250,7 +253,7 @@
   .float-on .about{ @apply lg:grid-cols-[340px_1fr] lg:gap-20; }
   .float-on .about__aside{ @apply lg:sticky lg:top-27.5 lg:block; }
 
-  /* ---------------- PROJECT CAROUSEL ---------------- */
+  /* ---------------- CARROSSEL DE PROJETOS ---------------- */
   .carousel{ --car-gutter: max(20px, calc((100vw - var(--container-site)) / 2 + 32px)); }
   .carousel__track{
     @apply relative flex cursor-grab gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain pt-5 pb-9 sm:gap-7;
@@ -281,13 +284,13 @@
            text-xs font-extrabold tracking-[.08em] whitespace-nowrap text-gold-deep uppercase;
     transition: background .35s, color .35s, border-color .35s;
   }
-  .project__cta::after{ content:""; @apply absolute inset-0 z-2 rounded-[20px]; } /* whole card is clickable */
+  .project__cta::after{ content:""; @apply absolute inset-0 z-2 rounded-[20px]; } /* o card inteiro é clicável */
   .project__cta:focus-visible{ outline: none; }
   .project:hover .project__cta{ @apply border-gold-btn bg-gold-btn text-espresso; }
   .project__cta [aria-hidden]{ transition: transform .35s var(--ease-brand); }
   .project:hover .project__cta [aria-hidden]{ transform: translate(3px,-3px); }
 
-  /* ---------------- SERVICES / TECHNOLOGIES ---------------- */
+  /* ---------------- SERVIÇOS / TECNOLOGIAS ---------------- */
   .service::after{
     content:""; @apply absolute -top-10 -right-10 size-30 rounded-full opacity-0;
     background: radial-gradient(circle, rgba(212,175,90,.28), transparent 70%); transition: opacity .5s;
@@ -295,7 +298,7 @@
   .service:hover::after{ @apply opacity-100; }
   .tech-icon{ @apply flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#2B1B10] font-display text-[15px] font-semibold text-[#F0DDA8]; }
 
-  /* ---------------- JOURNEY ---------------- */
+  /* ---------------- TRAJETÓRIA ---------------- */
   .timeline__dot{
     @apply absolute top-1 -left-6 size-3.5 rounded-full border-2 border-gold-deep bg-bg sm:-left-10;
     transition: transform .4s var(--ease-brand), background .4s var(--ease-brand);
@@ -309,7 +312,7 @@
   .faq summary::after{ content:"+"; @apply shrink-0 font-sans text-[26px] text-gold-deep; transition: transform .35s var(--ease-brand); }
   .faq details[open] summary::after{ @apply rotate-45; }
 
-  /* ---------------- FORM ---------------- */
+  /* ---------------- FORMULÁRIO ---------------- */
   .field{ @apply mb-5; }
   .field > label{ @apply mb-2 block text-[13px] font-bold; }
   .input{
@@ -322,17 +325,21 @@
 
   .captcha-box{ @apply rounded-2xl border border-line bg-bg px-4 pt-3.5 pb-4; }
   .captcha-slot{ @apply grid min-h-[78px] place-items-center; }
-  .captcha-slot:empty::before, .captcha-slot[data-state="loading"]::before{
+  /* texto "carregando" e iframe ocupam a mesma célula, sem empurrar o layout */
+  .captcha-slot::before, .captcha-slot > *{ grid-area: 1 / 1; }
+  .captcha-slot:empty::before, .captcha-slot[data-state="loading"]::before, .captcha-slot[data-state="error"]::before{
     content: attr(data-loading); @apply flex h-[78px] w-full max-w-[303px] items-center justify-center rounded-md border border-dashed border-line text-[13px] text-ink-faint;
   }
   .captcha-slot[data-state="ready"]::before{ display: none; }
+  .captcha-slot[data-state="error"]::before{ @apply border-danger text-danger; }
+  .captcha-slot[data-state="error"] > *{ display: none; }
   .captcha-slot iframe{ @apply max-w-full; }
 
   .confirm{ @apply m-auto w-[calc(100%-32px)] max-w-105 rounded-3xl border border-gold bg-surface px-8 py-10 text-center text-ink; }
   .confirm::backdrop{ background: rgba(0,0,0,.6); }
   .confirm[open]{ animation: confirmIn .4s var(--ease-brand) both; }
 
-  /* ---------------- LEGAL PAGES ---------------- */
+  /* ---------------- PÁGINAS LEGAIS ---------------- */
   .doc h1{ @apply mb-3 font-display text-[clamp(34px,5vw,52px)] leading-[1.1] font-medium; }
   .doc h2{ @apply mt-11 mb-3 font-display text-[26px] font-medium text-gold-light; }
   .doc h3{ @apply mt-7 mb-2 text-lg font-bold; }
@@ -349,9 +356,76 @@
 }
 
 /* =========================================================
-   LOADING SCREEN
-   the vector P draws itself, fills with the progress and, at the end,
-   zooms through the screen
+   BLOCOS DAS SEÇÕES (uma definição, usada várias vezes no HTML)
+========================================================= */
+@layer components {
+  .section-head{ @apply mb-10 sm:mb-14; }
+
+  .hero__last svg{ -webkit-text-fill-color: initial; }
+  @media (max-width: 980px){
+    .hero__pisa{ height: 620px; opacity: .4; transform: translate(-46.7%, -50%); }
+    .hero__bg::after{ background: linear-gradient(0deg, #1A120C 0%, transparent 18%), linear-gradient(180deg, rgba(26,18,12,.5), rgba(26,18,12,.25)); }
+  }
+  @media (max-width: 620px){ .hero__grid{ animation: none; } }
+
+  .facts{ @apply m-0 max-w-text border-t border-line; }
+  .facts > div{ @apply grid gap-1 border-b border-line py-4 sm:grid-cols-[110px_1fr] sm:gap-4; }
+  .facts dt{ @apply label pt-0.75; }
+  .facts dd{ @apply m-0 text-[15px] leading-[1.6]; }
+
+  .project__body{ @apply grid items-center gap-x-5 gap-y-1.5 px-1 sm:grid-cols-[1fr_auto]; }
+  .project__head{ @apply flex min-w-0 flex-wrap items-baseline gap-3.5; }
+  .project__title{ @apply m-0 font-display text-2xl leading-[1.15] font-medium; }
+  .project__host{ @apply font-mono text-xs text-ink-faint; overflow-wrap: anywhere; }
+  .project__desc{ @apply m-0 line-clamp-2 max-w-130 text-sm leading-[1.6] text-ink-soft; }
+  .project__cta{ @apply max-sm:mt-2 sm:col-start-2 sm:row-span-2 sm:row-start-1; }
+
+  .service{ @apply surface lift relative overflow-hidden rounded-[22px] px-6 pt-7.5 pb-8; }
+  .service > span{ @apply font-display text-base text-gold-deep italic; }
+  .service h3{ @apply mt-3.5 mb-2.5 font-display text-[22px] font-medium; }
+  .service p{ @apply m-0 text-[14.5px] leading-[1.65] text-ink-soft; }
+
+  .tech-heading{ @apply mb-5 border-b border-line pb-3.5 font-display text-[22px] font-normal italic; }
+  .tech-card{ @apply surface lift grid grid-cols-[48px_1fr_auto] items-center gap-3.5 rounded-2xl px-4.5 py-3.5; }
+  .tech-card b{ @apply text-[15px] font-bold; }
+  .tech-card small{ @apply text-xs font-semibold text-ink-soft; }
+  .tech-card--gold{ @apply grid-cols-[48px_1fr] border-gold-light bg-[rgba(216,182,110,.22)]; }
+  .tech-card--gold .tech-icon{ @apply bg-gold-deep text-cream; }
+
+  .timeline__item{ @apply relative pb-14 pl-7.5 last:pb-0; }
+  .timeline__item h3{ @apply mb-1.5 font-display text-[22px] font-medium; }
+  .timeline__item p{ @apply m-0 max-w-110 text-[15px] leading-[1.7] text-ink-soft; }
+  .timeline line{ stroke: var(--color-gold); stroke-opacity: .5; stroke-width: 2; vector-effect: non-scaling-stroke; }
+
+  .faq p{ @apply m-0 max-w-170 px-1 pb-6 text-base leading-[1.75] text-ink-soft; }
+
+  .contact{ background: radial-gradient(60% 70% at 100% 0%, rgba(212,175,90,.14), transparent 70%), var(--color-bg); }
+  .contact-row{
+    @apply flex min-h-16 flex-wrap items-center gap-x-3.5 gap-y-1.5 border-b border-line px-1 py-6.5 sm:flex-nowrap sm:gap-5;
+    transition: padding-left .4s var(--ease-brand), color .4s;
+  }
+  .contact-row:hover{ @apply pl-4.5 text-gold-deep; }
+  .contact-row > span:first-child{ @apply label shrink-0 sm:w-22.5; }
+  .contact-row > span:nth-child(2){ @apply flex-1 font-display text-[clamp(17px,2vw,22px)]; overflow-wrap: anywhere; }
+  .contact-row > span:nth-child(3){ @apply text-xl; transition: transform .4s var(--ease-brand); }
+  .contact-row:hover > span:nth-child(3){ @apply rotate-45; }
+
+  .check{ @apply grid grid-cols-[24px_1fr] items-start gap-3; }
+  .check input{ @apply mt-0.5 size-6 accent-gold-deep; }
+  .check label{ @apply m-0 text-[13px] leading-[1.55] font-medium text-ink-soft; }
+  .check .field__error{ @apply col-span-full; }
+  /* campo anti-robô: fora da tela e escondido dos leitores de tela */
+  .honeypot{ @apply absolute -left-[9999px] size-px overflow-hidden; }
+
+  .footer-col{ @apply flex flex-col gap-0.5; }
+  .footer-col h2{ @apply mb-3 text-xs font-bold tracking-[.16em] text-gold-light uppercase; }
+  .footer-col a{ @apply min-h-9 py-2 text-sm transition-colors hover:text-gold-light hover:underline hover:underline-offset-4; overflow-wrap: anywhere; }
+}
+
+/* =========================================================
+   TELA DE CARREGAMENTO
+   o P vetorial se desenha, se preenche com o progresso e, no fim,
+   dá zoom atravessando a tela
 ========================================================= */
 @layer components {
   .is-loading, .is-loading body{ overflow: hidden; }
@@ -426,7 +500,7 @@
 }
 
 /* =========================================================
-   ANIMATIONS
+   ANIMAÇÕES
 ========================================================= */
 @keyframes draw{ to{ stroke-dashoffset: 0; } }
 @keyframes fadeIn{ to{ opacity: 1; } }
@@ -441,7 +515,7 @@
 @keyframes confirmIn{ from{ opacity: 0; transform: translateY(16px) scale(.97); } to{ opacity: 1; transform: none; } }
 
 /* =========================================================
-   ACCESSIBILITY AND PREFERENCES
+   ACESSIBILIDADE E PREFERÊNCIAS
 ========================================================= */
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior: auto; }

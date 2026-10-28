@@ -1,10 +1,10 @@
-/* Generates optimized WebP versions of the original images (npm run images).
-   Originals (kept): assets/  ->  Generated for the site: src/assets/img/ and public/og-pedro.jpg */
+/* Gera as versões WebP otimizadas das imagens originais (npm run images).
+   Originais (mantidas): assets/  ->  Geradas para o site: src/assets/img/ e public/og-pedro.jpg */
 import sharp from "sharp";
 import { mkdir, stat } from "node:fs/promises";
 
 const SRC = "assets", OUT = "src/assets/img";
-const CARD_W = 1360; // 2x the 680px card width
+const CARD_W = 1360; // 2x a largura do card (680px)
 
 const jobs = [
   ["pelenextgen.png", "pelenextgen.webp", CARD_W],
@@ -28,7 +28,7 @@ for (const [from, to, width] of jobs){
   console.log(`${from} (${await kb(src)}) -> ${to} ${info.width}x${info.height} (${await kb(dst)})`);
 }
 
-// Image for social sharing (og:image / twitter): 1200x630 JPEG, portrait centered on the brand background
+// imagem para compartilhamento (og:image / twitter): JPEG 1200x630, retrato centralizado no fundo da marca
 const portrait = await sharp(`${SRC}/pedro.png`).resize({ height: 630 }).toBuffer();
 await sharp({ create: { width: 1200, height: 630, channels: 3, background: "#1A120C" } })
   .composite([{ input: portrait, gravity: "center" }])

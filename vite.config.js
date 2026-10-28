@@ -1,14 +1,14 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = import.meta.dirname;
 const PARTIALS = resolve(root, "partials");
 
-/* HTML partials, so shared code is written only once.
-   Syntax:  <!-- @include name key="value" -->  ->  contents of partials/name.html,
-   with every {{key}} replaced by "value". Partials can include other partials. */
+/* Partials de HTML: o código repetido entre as páginas fica escrito uma vez só.
+   Sintaxe:  <!-- @include nome chave="valor" -->  ->  conteúdo de partials/nome.html,
+   com cada {{chave}} trocada por "valor". Um partial pode incluir outro. */
 const INCLUDE = /<!--\s*@include\s+([\w-]+)((?:\s+[\w-]+="[^"]*")*)\s*-->/g;
 const ATTR = /([\w-]+)="([^"]*)"/g;
 
@@ -33,9 +33,7 @@ const partials = () => ({
   }
 });
 
-// only builds the pages that exist (termos.html is still being created)
-const pages = ["index", "privacidade", "termos", "acessibilidade", "404"]
-  .filter(p => existsSync(resolve(root, `${p}.html`)));
+const pages = ["index", "privacidade", "termos", "acessibilidade", "404"];
 
 export default defineConfig({
   plugins: [partials(), tailwindcss()],
