@@ -5,7 +5,8 @@ import lighthouse from "lighthouse";
 import * as chromeLauncher from "chrome-launcher";
 
 const BASE = process.env.AUDIT_URL || "http://localhost:4173";
-const PAGES = ["/", "/privacidade.html", "/termos.html", "/acessibilidade.html", "/404.html"];
+const PAGES = ["/", "/privacidade", "/termos", "/acessibilidade", "/en", "/en/privacidade", "/pagina-inexistente"];
+const NOT_FOUND = "/pagina-inexistente";
 const REQUIRED = ["accessibility", "best-practices", "seo"];
 
 const chrome = await chromeLauncher.launch({ chromeFlags: ["--headless=new"] });
@@ -16,10 +17,12 @@ try {
       port: chrome.port, output: "json", logLevel: "error",
       onlyCategories: ["performance", ...REQUIRED]
     });
+    // o Lighthouse não audita respostas com status 404 (a página de erro devolve 404 de verdade)
+    if (lhr.runtimeError && page === NOT_FOUND){ console.log(`${page.padEnd(22)} status 404 (esperado, não auditável)`); continue; }
     const scores = Object.values(lhr.categories).map(c => `${c.title}: ${Math.round(c.score * 100)}`).join(" | ");
     console.log(`${page.padEnd(22)} ${scores}`);
     // a 404 tem "noindex" de propósito: não cobra SEO dela
-    for (const id of REQUIRED.filter(id => !(page === "/404.html" && id === "seo"))){
+    for (const id of REQUIRED.filter(id => !(page === NOT_FOUND && id === "seo"))){
       const cat = lhr.categories[id];
       if (cat.score < 1){
         failed = true;
