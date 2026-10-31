@@ -178,6 +178,19 @@ const en: Dictionary = {
   tech_tools: "Tools",
   terms: "Terms of Use",
   to_top: "Back to top ↑",
+  nav_cta: "Let's talk",
+  hero_scroll: "Scroll",
+  term_file: "summary.sh",
+  proj_note: "Five projects, from websites to embedded systems. Drag, use the arrows or the keyboard to explore.",
+  s1_x: "Responsive design · Technical SEO · Performance and accessibility (WCAG)",
+  s2_x: "React and TypeScript interfaces · API integration · Deploy on Vercel",
+  s3_x: "Python scripts · Automated reports · Spreadsheet and system integration",
+  s4_x: "Arduino and C++ · Sensors and monitoring · Working prototypes",
+  t1_k: "Technical base",
+  t2_k: "First projects",
+  t3_k: "Live",
+  t4_k: "Now",
+  faq_side: "Quick answers about how I work. Didn't find yours? Send me a message.",
 };
 
 export default en;

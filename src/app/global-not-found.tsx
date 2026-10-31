@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Esta página não existe no portfólio de Pedro Provadelli. Volte ao início, veja os projetos ou entre em contato.",
   robots: { index: false }
 };
-export const viewport: Viewport = { themeColor: "#1A120C", colorScheme: "dark light" };
+export const viewport: Viewport = { themeColor: "#0B0806", colorScheme: "dark light" };
 
 export default function GlobalNotFound(){
   return (

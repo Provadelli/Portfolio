@@ -177,6 +177,19 @@ const pt = {
   tech_tools: "Ferramentas",
   terms: "Termos de Uso",
   to_top: "Voltar ao topo ↑",
+  nav_cta: "Vamos conversar",
+  hero_scroll: "Role",
+  term_file: "resumo.sh",
+  proj_note: "Cinco projetos, do site ao sistema embarcado. Arraste, use as setas ou o teclado para explorar.",
+  s1_x: "Design responsivo · SEO técnico · Performance e acessibilidade (WCAG)",
+  s2_x: "Interfaces em React e TypeScript · Integração com APIs · Deploy na Vercel",
+  s3_x: "Scripts em Python · Relatórios automáticos · Integração entre planilhas e sistemas",
+  s4_x: "Arduino e C++ · Sensores e monitoramento · Protótipos funcionais",
+  t1_k: "Base técnica",
+  t2_k: "Primeiros projetos",
+  t3_k: "No ar",
+  t4_k: "Agora",
+  faq_side: "Respostas rápidas sobre como eu trabalho. Não encontrou a sua? Me mande uma mensagem.",
 };
 
 export default pt;

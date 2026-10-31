@@ -43,14 +43,18 @@ assets/                imagens originais
 public/                arquivos servidos como estão (favicons, imagem de compartilhamento)
 ```
 
-## Animações
+## Design e animações
 
-- `Reveal` / `Stagger` (`src/components/motion`): entrada ao rolar; esperam a tela de carregamento terminar.
-- Hero: título com desfoque → nítido, traço dourado desenhado, fundo com parallax do mouse, botões magnéticos.
-- Torre de Pisa endireita e cartão do fundador "viaja" do hero ao Sobre conforme a rolagem.
-- Trajetória: a linha cresce com a rolagem. FAQ abre com altura animada (CSS).
-- Tudo respeita "reduzir movimento" (`MotionConfig reducedMotion="user"` + CSS) e, sem JavaScript,
-  o conteúdo aparece completo.
+- **Visual:** base preto-café com dourado/âmbar, seções claras com grade técnica, tricolor italiano em detalhes.
+  Fontes: Space Grotesk (títulos), Manrope (texto), JetBrains Mono (rótulos) e Fraunces itálico nos destaques.
+- **Hero:** fundo WebGL2 próprio (`src/components/hero`) com ondas vítreas nas laterais. Ajusta a resolução ao
+  custo medido na GPU, pausa fora da tela e congela num quadro estático em aparelhos fracos ou com "reduzir movimento".
+- **Header:** pílula flutuante com o logo, some ao descer e volta ao subir. Rolagem suave com Lenis.
+- **Projetos:** carrossel-lupa (`LensCarousel.tsx`): centro plano, bordas curvadas sob "lentes" de vidro.
+- **Serviços:** cards largos; com mouse, um painel com visual animado (SVG) segue o cursor.
+- **Trajetória:** seção presa com rolagem horizontal e Torre de Pisa que endireita com o progresso.
+- Primitivas em `src/components/motion` (Reveal, Stagger, SplitText, Magnetic, Spotlight, SmoothScroll).
+  Tudo respeita "reduzir movimento" e, sem JavaScript, o conteúdo aparece completo.
 
 ## Notas
 

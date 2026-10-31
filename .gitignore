@@ -6,3 +6,6 @@ next-env.d.ts
 *.tsbuildinfo
 .vercel
 .env*.local
+
+# referências de design (locais)
+refs/

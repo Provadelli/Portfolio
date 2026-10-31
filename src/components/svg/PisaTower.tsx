@@ -1,4 +1,4 @@
-/* Torre de Pisa em traço (hero = "hz", tela de carregamento = "pz"): mesmo desenho, tempos diferentes */
+/* Torre de Pisa em traço técnico; `c` é a classe aplicada a cada traço */
 import type { CSSProperties } from "react";
 
 const PATHS = [
@@ -28,6 +28,6 @@ const PATHS = [
   "M67 70H133M78 70Q100 56 122 70"
 ];
 
-export function PisaTower({ c }: { c: "hz" | "pz" }){
+export function PisaTower({ c }: { c: string }){
   return <>{PATHS.map((d, i) => <path key={i} className={c} style={{ "--i": i } as CSSProperties} d={d} pathLength={1} />)}</>;
 }

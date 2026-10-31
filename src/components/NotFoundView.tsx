@@ -41,15 +41,15 @@ export function NotFoundView(){
         <main id="main" className="flex min-h-svh items-center px-5 pt-30 pb-20 sm:px-8">
           <div className="mx-auto w-full max-w-190">
             <p className="mb-7 font-mono text-sm text-ink-soft"><b className="text-gold-deep">HTTP</b> 404 · <span>{t.nf_code}</span></p>
-            <p className="m-0 font-display text-[clamp(110px,24vw,260px)] leading-[.85] font-medium tracking-[-.04em] [&_em]:font-normal [&_em]:text-gold-deep" aria-hidden="true">
+            <p className="m-0 font-display text-[clamp(110px,24vw,260px)] leading-[.85] font-medium tracking-[-.04em] [&_em]:font-serif [&_em]:font-normal [&_em]:text-gold-deep" aria-hidden="true">
               {digit("4", 0)}{digit("0", 1, true)}{digit("4", 2)}
             </p>
             <h1 className="mt-8 mb-3.5 font-display text-[clamp(28px,4vw,44px)] leading-[1.15] font-medium">{t.nf_title}</h1>
             <p className="mb-9 max-w-135 text-lg leading-[1.7] text-ink-soft">{t.nf_text}</p>
             <div className="flex flex-wrap gap-3.5">
-              <Link href={href(lang)} className="btn btn-gold"><span>{t.nf_home}</span></Link>
-              <Link href={href(lang, "/#projetos")} className="btn btn-ghost"><span>{t.nf_projects}</span></Link>
-              <Link href={href(lang, "/#contato")} className="btn btn-ghost"><span>{t.nf_contact}</span></Link>
+              <Link href={href(lang)} className="btn btn-solid"><span>{t.nf_home}</span></Link>
+              <Link href={href(lang, "/#projetos")} className="btn"><span>{t.nf_projects}</span></Link>
+              <Link href={href(lang, "/#contato")} className="btn"><span>{t.nf_contact}</span></Link>
             </div>
           </div>
         </main>

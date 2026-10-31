@@ -8,12 +8,12 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
   const legal = [["/termos", t.terms], ["/privacidade", t.privacy], ["/acessibilidade", t.a11y]];
 
   return (
-    <footer className="relative bg-night pt-19.5 pb-8 text-[#E9E1CF]">
-      <Flag className="absolute inset-x-0 top-0 h-1.5" />
+    <footer className="relative overflow-hidden bg-night pt-20 text-[#E9E1CF]">
+      <Flag className="absolute inset-x-0 top-0 h-px" />
       <div className="wrap">
-        <div className="grid gap-10 border-b border-[rgba(231,214,172,.25)] pb-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.2fr_1fr]">
+        <div className="grid gap-10 pb-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.2fr_1fr]">
           <div>
-            <span className="font-display text-2xl text-[#FFFEFB]">Pedro Provadelli</span>
+            <span className="font-display text-2xl font-semibold tracking-[-.03em] text-[#FFFEFB]">Pedro Provadelli</span>
             <p className="mt-3 max-w-85 text-sm leading-[1.7] text-[#CFC6B1]">{t.foot_bio}</p>
           </div>
 
@@ -35,11 +35,12 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
           </nav>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3.5 pt-7">
-          <span className="text-[13px] text-[#CFC6B1]">{t.copy}</span>
-          <a href="#top" className="inline-flex min-h-11 items-center text-[13px] font-bold text-gold-light">{t.to_top}</a>
+        <div className="flex flex-wrap items-center justify-between gap-3.5 border-t border-[rgba(231,214,172,.14)] py-6 font-mono text-xs text-[#B9AE98]">
+          <span>{t.copy}</span>
+          <a href="#top" className="inline-flex min-h-11 items-center font-bold text-gold-light">{t.to_top}</a>
         </div>
       </div>
+      <span className="wordmark -mb-[4vw] text-center" aria-hidden="true">PROVADELLI</span>
     </footer>
   );
 }

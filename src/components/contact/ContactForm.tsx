@@ -106,8 +106,8 @@ export function ContactForm(){
 
   return (
     <>
-      <form className="surface rounded-3xl p-6 sm:p-9" ref={form} action={ENDPOINT} method="POST" noValidate aria-labelledby="form-title" onSubmit={submit}>
-        <h3 className="mb-6 font-display text-[26px] font-medium" id="form-title">{t.form_title}</h3>
+      <form className="glass p-6 sm:p-10" ref={form} action={ENDPOINT} method="POST" noValidate aria-labelledby="form-title" onSubmit={submit}>
+        <h3 className="mb-8 font-display text-[28px] font-semibold tracking-[-.03em]" id="form-title">{t.form_title}</h3>
         <input type="hidden" name="access_key" value={ACCESS_KEY} />
         <input type="hidden" name="subject" value="Contato pelo portfólio" />
         {/* registro do consentimento, enviado junto com a mensagem (LGPD, art. 8º) */}
@@ -139,17 +139,17 @@ export function ContactForm(){
 
         <Captcha ref={captcha} error={errors.captcha ?? ""} onSolved={clearCaptcha} />
 
-        <button type="submit" className="btn btn-gold mt-1.5" disabled={sending}><span>{t.f_send}</span></button>
+        <button type="submit" className="btn btn-solid mt-1.5" disabled={sending}><span>{t.f_send}</span></button>
         <p className="mt-4 text-sm font-bold empty:hidden data-[state=error]:text-danger data-[state=ok]:text-success" data-state={status.state || undefined} role="status">{status.msg}</p>
         <Html as="p" className="prose-links mt-2.5 text-xs leading-normal text-ink-soft" html={t.f_note} />
       </form>
 
       <dialog className="confirm" ref={dialog} aria-labelledby="confirm-title" aria-describedby="confirm-text" onClick={e => { if (e.target === dialog.current) dialog.current?.close(); }}>
-        <div className="mx-auto mb-4.5 grid size-16 place-items-center rounded-full bg-gold-btn text-[32px] font-extrabold text-espresso" aria-hidden="true">✓</div>
+        <div className="mx-auto mb-4.5 grid size-16 place-items-center rounded-full bg-gold-fill text-[32px] font-extrabold text-espresso" aria-hidden="true">✓</div>
         <h3 className="mb-2.5 font-display text-[26px] font-medium" id="confirm-title">{t.cf_title}</h3>
         <p className="mb-3 text-[15px] leading-[1.6] text-ink-soft" id="confirm-text">{t.cf_text}</p>
         <Html as="p" className="prose-links mb-6 text-[13px] leading-[1.6] text-ink-soft" html={t.cf_rights} />
-        <button type="button" className="btn btn-gold" onClick={() => dialog.current?.close()}><span>{t.cf_close}</span></button>
+        <button type="button" className="btn btn-solid" onClick={() => dialog.current?.close()}><span>{t.cf_close}</span></button>
       </dialog>
     </>
   );
