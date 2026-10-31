@@ -50,7 +50,7 @@ public/                arquivos servidos como estão (favicons, imagem de compar
 - **Hero:** fundo WebGL2 próprio (`src/components/hero`) com ondas vítreas nas laterais. Ajusta a resolução ao
   custo medido na GPU, pausa fora da tela e congela num quadro estático em aparelhos fracos ou com "reduzir movimento".
 - **Header:** pílula flutuante com o logo, some ao descer e volta ao subir. Rolagem suave com Lenis.
-- **Projetos:** carrossel-lupa (`LensCarousel.tsx`): centro plano, bordas curvadas sob "lentes" de vidro.
+- **Projetos:** carrossel-lupa em WebGL (`LensCarousel.tsx` + `lens.glsl.ts`): faixa contínua plana no centro que se curva e estica ao passar pelas bordas da lente, com refração. Sem WebGL, vira lista rolável.
 - **Serviços:** cards largos; com mouse, um painel com visual animado (SVG) segue o cursor.
 - **Trajetória:** seção presa com rolagem horizontal e Torre de Pisa que endireita com o progresso.
 - Primitivas em `src/components/motion` (Reveal, Stagger, SplitText, Magnetic, Spotlight, SmoothScroll).

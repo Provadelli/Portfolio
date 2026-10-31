@@ -162,17 +162,17 @@
   .burger[aria-expanded="true"] span:nth-child(2){ transform: translateY(-3px) rotate(-45deg); }
 
   /* ---------------- HERO ---------------- */
-  .hero__title{ @apply m-0 font-display text-[clamp(44px,8.4vw,128px)] leading-[.92] font-bold tracking-[-.055em] uppercase; }
+  .hero__title{ @apply m-0 font-display text-[clamp(40px,7vw,108px)] leading-[.95] font-semibold tracking-[-.045em] uppercase; text-shadow: 0 2px 30px rgba(6,4,3,.65); }
   .hero__accent{
-    background: linear-gradient(100deg, #F3E1B0 0%, #F2A93B 55%, #C97A1C 100%);
+    background: linear-gradient(100deg, #F6E7BF 0%, #E9C27A 50%, #D49B45 100%);
     background-clip: text; -webkit-background-clip: text; color: transparent;
   }
-  .hero__dot{ @apply inline-block size-[.16em] translate-y-[-.02em] rounded-full bg-amber align-baseline; box-shadow: 0 0 24px rgba(242,169,59,.8); }
+  .hero__dot{ @apply inline-block size-[.15em] translate-y-[-.02em] rounded-full bg-[#E9C27A] align-baseline; box-shadow: 0 0 18px rgba(233,194,122,.55); }
   .hero__fallback{
     background:
-      radial-gradient(40% 70% at 0% 40%, rgba(242,169,59,.28), transparent 70%),
-      radial-gradient(40% 70% at 100% 60%, rgba(224,190,114,.24), transparent 70%),
-      #0B0806;
+      radial-gradient(40% 70% at 0% 40%, rgba(242,169,59,.14), transparent 70%),
+      radial-gradient(40% 70% at 100% 60%, rgba(224,190,114,.12), transparent 70%),
+      #060403;
   }
   .status-dot{ @apply size-2 rounded-full bg-success; animation: pulse 2.4s ease-out infinite; }
   .scroll-cue{ @apply relative block h-12 w-px overflow-hidden bg-[rgba(246,241,230,.15)]; }
@@ -199,21 +199,6 @@
   .terminal dd{ @apply m-0 mb-2 pl-4 leading-[1.6] text-ink-soft; }
 
   /* ---------------- PROJETOS: carrossel-lupa ---------------- */
-  .lens{ @apply relative select-none; perspective: 1300px; touch-action: pan-y; }
-  .lens__stage{ @apply relative mx-auto overflow-hidden; transform-style: preserve-3d; }
-  .lens__card{ @apply absolute top-1/2 left-1/2 will-change-transform; transform-style: preserve-3d; backface-visibility: hidden; }
-  .lens__glass{
-    @apply pointer-events-none absolute inset-y-0 z-[300] w-[14%] max-sm:w-[10%];
-    backdrop-filter: blur(5px) saturate(1.7) brightness(1.12); -webkit-backdrop-filter: blur(5px) saturate(1.7) brightness(1.12);
-  }
-  .lens__glass--l{ @apply left-0; mask: linear-gradient(90deg, #000 40%, transparent); background: linear-gradient(90deg, rgba(11,8,6,.85), transparent); }
-  .lens__glass--r{ @apply right-0; mask: linear-gradient(-90deg, #000 40%, transparent); background: linear-gradient(-90deg, rgba(11,8,6,.85), transparent); }
-  /* aro luminoso das lentes: dourado/âmbar com um toque de verde e vermelho */
-  .lens__rim{ @apply pointer-events-none absolute inset-y-[6%] z-[301] w-[3px] rounded-full; filter: blur(.6px); }
-  .lens__rim--l{ left: 13%; background: linear-gradient(180deg, transparent, #2E7D4F 18%, #F3E1B0 45%, #F2A93B 70%, transparent); box-shadow: 0 0 22px 4px rgba(242,169,59,.35); }
-  .lens__rim--r{ right: 13%; background: linear-gradient(180deg, transparent, #F2A93B 30%, #F3E1B0 55%, #C3343A 82%, transparent); box-shadow: 0 0 22px 4px rgba(242,169,59,.35); }
-  @media (max-width: 620px){ .lens__rim--l{ left: 9%; } .lens__rim--r{ right: 9%; } }
-
   .pcard{ @apply relative flex size-full flex-col overflow-hidden rounded-[22px] border border-[rgba(246,241,230,.1)] bg-surface; box-shadow: 0 40px 70px -40px rgba(0,0,0,.95); }
   .pcard__media{ @apply relative aspect-[16/10] shrink-0 overflow-hidden bg-[#1d150d]; }
   .pcard__media img{ @apply pointer-events-none size-full object-cover object-top select-none; transition: transform 1.2s var(--ease-soft); }
@@ -263,10 +248,6 @@
   .bento:hover::before, .bento:hover::after{ @apply opacity-100; }
   .tech-row{ @apply flex items-center gap-3.5 border-b border-line py-3 last:border-0; }
   .tech-icon{ @apply flex size-10 shrink-0 items-center justify-center rounded-xl border border-line bg-bg font-mono text-[12px] font-bold text-gold-deep; }
-  .marquee{ @apply flex overflow-hidden; mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-  .marquee__track{ @apply flex shrink-0 items-center gap-10 pr-10; animation: marquee var(--dur, 40s) linear infinite; }
-  .marquee:hover .marquee__track{ animation-play-state: paused; }
-  .marquee--rev .marquee__track{ animation-direction: reverse; }
 
   /* ---------------- TRAJETÓRIA ---------------- */
   .milestone__num{ @apply font-display text-[clamp(80px,12vw,180px)] leading-none font-bold tracking-[-.06em] text-transparent; -webkit-text-stroke: 1px rgba(224,190,114,.45); }
@@ -337,7 +318,7 @@
   .footer-col h2{ @apply mb-3 font-mono text-[11px] font-bold tracking-[.18em] text-gold-light uppercase; }
   .footer-col a{ @apply min-h-9 py-2 text-sm text-[#CFC6B1] transition-colors hover:text-gold-light; overflow-wrap: anywhere; }
   .wordmark{
-    @apply block font-display text-[19vw] leading-[.78] font-bold tracking-[-.07em] whitespace-nowrap select-none;
+    @apply block w-full overflow-hidden text-center font-display text-[15.2vw] leading-[.9] font-bold tracking-[-.06em] whitespace-nowrap select-none;
     background: linear-gradient(180deg, rgba(224,190,114,.55), rgba(224,190,114,0) 85%);
     background-clip: text; -webkit-background-clip: text; color: transparent;
   }
@@ -404,7 +385,6 @@
 @keyframes cue{ from{ transform: translateY(-100%); } to{ transform: translateY(200%); } }
 @keyframes scan{ from{ transform: translateY(-100%); } to{ transform: translateY(600%); } }
 @keyframes spin{ to{ transform: rotate(360deg); } }
-@keyframes marquee{ to{ transform: translateX(-100%); } }
 @keyframes grow{ 0%{ transform: scaleX(0); } 45%,85%{ transform: scaleX(1); } 100%{ transform: scaleX(0); } }
 @keyframes rise{ from{ transform: scaleY(.25); } to{ transform: scaleY(1); } }
 @keyframes drawLoop{ 0%{ stroke-dashoffset: 1; } 60%,85%{ stroke-dashoffset: 0; } 100%{ stroke-dashoffset: -1; } }

@@ -6,26 +6,12 @@ import { SectionHead } from "./SectionHead";
 type Row = [icon: string, name: string, level?: string];
 const NL = String.fromCharCode(10);   // quebra de linha dentro do <pre>
 
-function Marquee({ words, reverse = false, dur = "45s" }: { words: string[]; reverse?: boolean; dur?: string }){
-  const track = (hidden: boolean) => (
-    <ul className="marquee__track m-0 list-none p-0" aria-hidden={hidden || undefined} style={{ "--dur": dur } as React.CSSProperties}>
-      {words.map(w => (
-        <li key={w} className="flex items-center gap-10 font-display text-[clamp(28px,4.4vw,64px)] font-semibold tracking-[-.04em] whitespace-nowrap text-[rgba(246,241,230,.85)]">
-          {w}<span className="text-[.5em] text-gold" aria-hidden="true">✦</span>
-        </li>
-      ))}
-    </ul>
-  );
-  return <div className={`marquee ${reverse ? "marquee--rev" : ""}`} aria-hidden="true">{track(false)}{track(true)}</div>;
-}
-
 export function Tech({ t }: { t: Dictionary }){
   const groups: [title: string, tag: string, rows: Row[], wide: boolean][] = [
     [t.tech_dev, "01", [["</>", "HTML", t.lv_daily], ["{ }", "CSS", t.lv_daily], ["JS", "JavaScript", t.lv_daily], ["TS", "TypeScript", t.lv_mid], ["Py", "Python", t.lv_mid], ["C++", "C++", t.lv_acad]], true],
     [t.tech_tools, "02", [["⎇", "Git", t.lv_git], ["◐", "GitHub", t.lv_gh], ["▤", "VS Code", t.lv_ed], ["▲", "Vercel", t.lv_dep]], false],
     [t.tech_learning, "03", [["◇", t.l1], ["▦", t.l2], ["△", t.l3], ["⇄", "APIs"], ["✦", t.l5]], false]
   ];
-  const all = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Python", "C++", "Arduino", "Git", "Vercel", "Tailwind"];
 
   return (
     <section className="section overflow-hidden" id="tecnologias" aria-labelledby="tec-title">
@@ -63,11 +49,6 @@ export function Tech({ t }: { t: Dictionary }){
             </Reveal>
           ))}
         </div>
-      </div>
-
-      <div className="mt-20 grid gap-4 sm:mt-28">
-        <Marquee words={all} />
-        <Marquee words={[...all].reverse()} reverse dur="55s" />
       </div>
     </section>
   );

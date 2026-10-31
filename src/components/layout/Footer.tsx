@@ -40,7 +40,7 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
           <a href="#top" className="inline-flex min-h-11 items-center font-bold text-gold-light">{t.to_top}</a>
         </div>
       </div>
-      <span className="wordmark -mb-[4vw] text-center" aria-hidden="true">PROVADELLI</span>
+      <div className="px-4 pb-6 sm:pb-10"><span className="wordmark" aria-hidden="true">PROVADELLI</span></div>
     </footer>
   );
 }
