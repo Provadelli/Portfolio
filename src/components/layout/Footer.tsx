@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Flag } from "@/components/svg/Flag";
 import { href, type Dictionary, type Lang } from "@/lib/i18n";
-import { EMAIL, GITHUB, LINKEDIN } from "@/lib/site";
+import { CV_URL, EMAIL, GITHUB, LINKEDIN } from "@/lib/site";
 
 export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
-  const nav = [["sobre", t.nav_about], ["projetos", t.nav_projects], ["servicos", t.nav_services], ["tecnologias", t.nav_tech], ["trajetoria", t.nav_path], ["faq", t.foot_faq], ["contato", t.nav_contact]];
+  const nav = [["sobre", t.nav_about], ["projetos", t.nav_projects], ["servicos", t.nav_services], ["trajetoria", t.nav_path], ["faq", t.foot_faq], ["contato", t.nav_contact]];
   const legal = [["/termos", t.terms], ["/privacidade", t.privacy], ["/acessibilidade", t.a11y]];
 
   return (
@@ -27,6 +27,7 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
             <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub<span className="sr-only">{t.newtab_p}</span></a>
             <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn<span className="sr-only">{t.newtab_p}</span></a>
+            <a href={CV_URL} download>{t.cv_dl}<span className="sr-only"> {t.cv_file}</span></a>
           </div>
 
           <nav className="footer-col" aria-label={t.foot_legal_l}>
@@ -40,7 +41,6 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
           <a href="#top" className="inline-flex min-h-11 items-center font-bold text-gold-light">{t.to_top}</a>
         </div>
       </div>
-      <div className="px-4 pb-6 sm:pb-10"><span className="wordmark" aria-hidden="true">PROVADELLI</span></div>
     </footer>
   );
 }

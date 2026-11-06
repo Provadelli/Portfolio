@@ -4,7 +4,6 @@
    para controlar tema escuro, tamanho e idioma. */
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import { useI18n } from "@/components/I18nProvider";
-import { Html } from "@/components/Html";
 
 const SITEKEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";   // chave pública que o Web3Forms valida
 const API = "https://js.hcaptcha.com/1/api.js?render=explicit&recaptchacompat=off&onload=__hcaptchaReady";
@@ -88,11 +87,9 @@ export function Captcha({ error, onSolved, ref }: { error: string; onSolved(): v
   }, [near, lang]);
 
   return (
-    <div className="field captcha-box" ref={box} data-invalid={error ? "true" : "false"} role="group" aria-labelledby="captcha-label" aria-describedby="captcha-help">
-      <p className="mb-1 text-[13px] font-bold" id="captcha-label">{t.cap_label}</p>
-      <Html as="p" className="prose-links mb-3 text-xs leading-normal text-ink-soft" id="captcha-help" html={t.cap_help} />
+    <div className="captcha-box" ref={box} data-invalid={error ? "true" : "false"} role="group" aria-label={t.cap_label} aria-describedby="e-captcha">
       <div className="captcha-slot" ref={slot} data-state={state === "idle" ? undefined : state} data-loading={state === "error" ? t.cap_fail : t.cap_loading} />
-      <p className="field__error text-center" id="e-captcha">{error}</p>
+      <p className="field__error" id="e-captcha">{error}</p>
     </div>
   );
 }
