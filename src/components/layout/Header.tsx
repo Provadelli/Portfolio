@@ -1,32 +1,60 @@
 "use client";
-/* Header flutuante: pílula pequena e centralizada com o logo do "P", navegação,
-   idioma e CTA. Some ao descer a página e volta ao subir. Barra de progresso tricolor na base. */
+/* Header flutuante e fixo: pílula centralizada com o logo do "P", navegação, idioma e CTA.
+   Enquanto a página rola, encolhe e fica só com o logo e o "Vamos conversar" (no celular,
+   mais o menu); com a página parada (ou perto do topo) volta ao normal. O logo leva de volta ao topo. Barra de progresso tricolor na base. */
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useI18n } from "@/components/I18nProvider";
 import { LogoP } from "@/components/svg/LogoP";
 import { href } from "@/lib/i18n";
 import { EASE_BRAND } from "@/lib/motion";
-import { lockScroll } from "@/lib/scroll";
+import { lockScroll, scrollToTop } from "@/lib/scroll";
+import { useMedia } from "@/lib/useMedia";
 import { LangSwitch } from "./LangSwitch";
 
-const NAV = [["sobre", "nav_about"], ["projetos", "nav_projects"], ["servicos", "nav_services"], ["tecnologias", "nav_tech"], ["trajetoria", "nav_path"]] as const;
+const NAV = [["sobre", "nav_about"], ["projetos", "nav_projects"], ["servicos", "nav_services"], ["trajetoria", "nav_path"]] as const;
+const FOLD = { duration: 0.55, ease: EASE_BRAND };
+const IDLE_MS = 700;   // tempo sem rolar para o header voltar ao normal
+
+/* parte do header que recolhe na horizontal (fica fora do foco do teclado quando fechada) */
+function Fold({ show, className = "", children }: { show: boolean; className?: string; children: ReactNode }){
+  return (
+    <motion.div
+      className={`flex shrink-0 items-center overflow-hidden ${className}`}
+      initial={false}
+      animate={{ width: show ? "auto" : 0, opacity: show ? 1 : 0 }}
+      transition={FOLD}
+      inert={!show}
+      aria-hidden={!show || undefined}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function Header(){
   const { lang, t } = useI18n();
   const { scrollY, scrollYProgress } = useScroll();
-  const [hidden, setHidden] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const desktop = useMedia("(min-width: 981px)");
+  const [animReady, setAnimReady] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
 
-  // esconde ao descer, mostra ao subir (e sempre perto do topo)
+  // encolhe enquanto a página rola (longe do topo); volta ao normal quando ela para
+  const idle = useRef(0);
   useMotionValueEvent(scrollY, "change", y => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setHidden(y > 240 && y > prev + 2);
-    if (y < prev - 2 || y < 240) setHidden(false);
+    window.clearTimeout(idle.current);
+    if (y <= 80){ setCompact(false); return; }
+    setCompact(true);
+    idle.current = window.setTimeout(() => setCompact(false), IDLE_MS);
   });
+  useEffect(() => () => window.clearTimeout(idle.current), []);
+  // só anima a largura depois da primeira pintura (evita "encolher" ao carregar a página)
+  useEffect(() => { const id = requestAnimationFrame(() => setAnimReady(true)); return () => cancelAnimationFrame(id); }, []);
+  const small = compact && !open;
 
   // seção visível no momento (destaque na navegação)
   useEffect(() => {
@@ -51,31 +79,46 @@ export function Header(){
 
   const lit = hover ?? active;
 
+  // logo: este header só existe na home, então o clique volta ao topo em vez de recarregar a rota
+  const toTop = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    if (window.location.hash) history.replaceState(null, "", window.location.pathname);
+    if (open){ setOpen(false); requestAnimationFrame(() => scrollToTop()); }
+    else scrollToTop();
+  };
+
   return (
     <>
       <div className="pointer-events-none fixed inset-x-0 top-4 z-500 flex justify-center px-4">
         <motion.header
-          className="pill pointer-events-auto max-lg:w-full max-lg:max-w-[440px] max-lg:justify-between"
+          className="pill pointer-events-auto max-lg:max-w-[440px]"
           initial={false}
-          animate={{ y: hidden && !open ? -110 : 0, opacity: hidden && !open ? 0 : 1 }}
-          transition={{ duration: 0.5, ease: EASE_BRAND }}
+          animate={{ width: desktop || small ? "auto" : "100%" }}
+          transition={animReady ? FOLD : { duration: 0 }}
         >
-          <Link href={href(lang)} className="pill-logo" aria-label={t.home_label}>
+          <Link href={href(lang)} className="pill-logo" aria-label={t.home_label} onClick={toTop}>
             <svg viewBox="360 270 560 700" aria-hidden="true" focusable="false"><LogoP /></svg>
           </Link>
 
-          <nav className="hidden items-center lg:flex" aria-label={t.nav_main} onMouseLeave={() => setHover(null)}>
-            {NAV.map(([id, key]) => (
-              <a key={id} href={`#${id}`} className="pill-link" aria-current={active === id ? "true" : undefined} onMouseEnter={() => setHover(id)}>
-                {lit === id && <motion.span layoutId="pill-hl" className="absolute inset-0 -z-1 rounded-full bg-[rgba(246,241,230,.08)]" transition={{ type: "spring", stiffness: 380, damping: 32 }} />}
-                {t[key]}
-              </a>
-            ))}
-          </nav>
+          <Fold show={!small} className="max-lg:hidden">
+            <nav className="flex items-center whitespace-nowrap" aria-label={t.nav_main} onMouseLeave={() => setHover(null)}>
+              {NAV.map(([id, key]) => (
+                <a key={id} href={`#${id}`} className="pill-link" aria-current={active === id ? "true" : undefined} onMouseEnter={() => setHover(id)}>
+                  {lit === id && <motion.span layoutId="pill-hl" className="absolute inset-0 -z-1 rounded-full bg-[rgba(246,241,230,.08)]" transition={{ type: "spring", stiffness: 380, damping: 32 }} />}
+                  {t[key]}
+                </a>
+              ))}
+            </nav>
+          </Fold>
 
-          <div className="flex items-center gap-1.5">
-            <LangSwitch />
-            <a href="#contato" className="btn btn-solid btn-sm hidden lg:inline-flex">{t.nav_cta}</a>
+          <div className="ml-auto flex items-center gap-1.5">
+            <Fold show={!small}><LangSwitch /></Fold>
+            {/* "Vamos conversar": sempre no desktop; no celular aparece quando o header encolhe */}
+            <a href="#contato" className="btn btn-solid btn-sm whitespace-nowrap max-lg:hidden">{t.nav_cta}</a>
+            <Fold show={small} className="lg:hidden">
+              <a href="#contato" className="btn btn-solid btn-sm whitespace-nowrap">{t.nav_cta}</a>
+            </Fold>
             <button
               type="button" id="burger"
               className="burger flex size-9 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full lg:hidden"

@@ -91,25 +91,46 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string){
   return sh;
 }
 
-/* modo simples (fallback): cards DOM roláveis */
+/* modo simples (fallback): trilho de cards com rolagem, setas e fade nas bordas */
 function FlatList({ projects }: { projects: Project[] }){
   const { t } = useI18n();
+  const rail = useRef<HTMLUListElement>(null);
+  const n = projects.length;
+  const go = (dir: number) => {
+    const el = rail.current;
+    const card = el?.querySelector("li");
+    if (!el || !card) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollBy({ left: dir * (card.getBoundingClientRect().width + 20), behavior: reduce ? "auto" : "smooth" });
+  };
+  const arrow = (dir: number) => (
+    <button type="button" className="icon-btn" aria-label={dir < 0 ? t.car_prev : t.car_next} onClick={() => go(dir)}>
+      <svg className="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={dir < 0 ? "M19 12H5M11 18l-6-6 6-6" : "M5 12h14M13 6l6 6-6 6"} /></svg>
+    </button>
+  );
   return (
-    <ul className="wrap flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4" aria-label={t.proj_list}>
-      {projects.map(p => (
-        <li key={p.id} className="w-[min(78vw,320px)] shrink-0 snap-center">
-          <article className="pcard" aria-labelledby={p.id}>
-            <div className="pcard__media"><Image src={p.imgs[0].src} alt={p.imgs[0].alt} sizes="320px" /></div>
-            <div className="pcard__body">
-              <h3 className="pcard__title" id={p.id}>{p.title}</h3>
-              <span className="pcard__host">{p.host}</span>
-              <p className="pcard__desc">{p.desc}</p>
-              <a href={p.url} target="_blank" rel="noopener noreferrer" className="pcard__cta">{p.cta} <span aria-hidden="true">↗</span><span className="sr-only"> {p.title}{t.newtab_p}</span></a>
-            </div>
-          </article>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul ref={rail} className="flat-rail" aria-label={t.proj_list}>
+        {projects.map((p, i) => (
+          <li key={p.id} className="w-[min(80vw,360px)] shrink-0 snap-center">
+            <article className="pcard" aria-labelledby={p.id}>
+              <div className="pcard__media">
+                <Image src={p.imgs[0].src} alt={p.imgs[0].alt} sizes="360px" />
+                {p.imgs[1] && <Image src={p.imgs[1].src} alt="" sizes="360px" className="pcard__alt" />}
+                <span className="pcard__num" aria-hidden="true">{String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}</span>
+              </div>
+              <div className="pcard__body">
+                <span className="pcard__host">{p.host}</span>
+                <h3 className="pcard__title" id={p.id}>{p.title}</h3>
+                <p className="pcard__desc">{p.desc}</p>
+                <a href={p.url} target="_blank" rel="noopener noreferrer" className="pcard__cta">{p.cta} <span className="btn__arrow" aria-hidden="true">↗</span><span className="sr-only"> {p.title}{t.newtab_p}</span></a>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+      <div className="wrap mt-6 flex justify-end gap-2">{arrow(-1)}{arrow(1)}</div>
+    </div>
   );
 }
 
@@ -167,11 +188,15 @@ export function LensCarousel({ projects }: { projects: Project[] }){
     let shownCenter = -1;
     const touched = () => { lastUser = performance.now(); };
 
+    let cssW = cv.clientWidth, cssH = cv.clientHeight, stageH = "";
     const resize = () => {
       size = cardSize(window.innerWidth);
       step = size.w + size.gap;
-      st.style.height = `${Math.round(size.h * 1.34 + 24)}px`;
-      const w = Math.max(1, Math.round(cv.clientWidth * scale)), h = Math.max(1, Math.round(cv.clientHeight * scale));
+      // só escreve a altura quando muda, e o tamanho do canvas vem do ResizeObserver:
+      // ler/escrever layout a cada quadro forçava o navegador a recalcular a página
+      const sh = `${Math.round(size.h * 1.34 + 24)}px`;
+      if (sh !== stageH){ st.style.height = sh; stageH = sh; }
+      const w = Math.max(1, Math.round(cssW * scale)), h = Math.max(1, Math.round(cssH * scale));
       if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
     };
 
@@ -179,8 +204,8 @@ export function LensCarousel({ projects }: { projects: Project[] }){
       if (!ready) return;
       resize();
       gl!.clearColor(0, 0, 0, 0); gl!.clear(gl!.COLOR_BUFFER_BIT);
-      gl!.uniform2f(u.view, cv!.clientWidth, cv!.clientHeight);
-      gl!.uniform1f(u.px, cv!.width / Math.max(cv!.clientWidth, 1));
+      gl!.uniform2f(u.view, cssW, cssH);
+      gl!.uniform1f(u.px, cv!.width / Math.max(cssW, 1));
       gl!.uniform1f(u.pos, pos);
       gl!.uniform2f(u.card, size.w, size.h);
       gl!.uniform1f(u.gap, size.gap);
@@ -298,20 +323,25 @@ export function LensCarousel({ projects }: { projects: Project[] }){
 
     const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (onScreen) kick(); }, { rootMargin: "200px 0px" });
     io.observe(st);
-    const ro = new ResizeObserver(() => { if (ready) draw(); });
+    const ro = new ResizeObserver(() => {
+      cssW = cv.clientWidth; cssH = cv.clientHeight;
+      if (ready) draw();
+    });
+    ro.observe(cv);
     ro.observe(st);
     const onVis = () => { if (!document.hidden) kick(); };
     document.addEventListener("visibilitychange", onVis);
     resize();
 
     /* texturas: carregadas quando a seção se aproxima da tela */
+    let tex: WebGLTexture | null = null;
     const load = async () => {
       const css = getComputedStyle(document.documentElement);
       const fonts = { display: css.getPropertyValue("--font-grotesk").trim() || "sans-serif", mono: css.getPropertyValue("--font-jetbrains").trim() || "monospace" };
       try { await document.fonts.ready; } catch { /* segue */ }
       const layers = await Promise.all(projects.map(p => paintCard(p, fonts)));
       if (!alive) return;
-      const tex = gl.createTexture();
+      tex = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D_ARRAY, tex);
       gl.texImage3D(gl.TEXTURE_2D_ARRAY, 0, gl.RGBA8, TEX_W, TEX_H, layers.length, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
@@ -354,7 +384,8 @@ export function LensCarousel({ projects }: { projects: Project[] }){
       region.removeEventListener("focusin", fin);
       region.removeEventListener("focusout", fout);
       api.current = null;
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      // libera os recursos sem perder o contexto (o React remonta o efeito no mesmo canvas no modo dev)
+      gl.deleteTexture(tex); gl.deleteBuffer(buf); gl.deleteProgram(prog);
     };
   }, [mode, n, projects]);
 

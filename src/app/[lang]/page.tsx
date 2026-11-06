@@ -4,10 +4,10 @@ import { Hero } from "@/components/home/Hero";
 import { About } from "@/components/home/About";
 import { Projects } from "@/components/home/Projects";
 import { Services } from "@/components/home/Services";
-import { Tech } from "@/components/home/Tech";
 import { Journey } from "@/components/home/Journey";
 import { Faq } from "@/components/home/Faq";
 import { Contact } from "@/components/home/Contact";
+import { TravelingPhoto } from "@/components/home/TravelingPhoto";
 import { getDictionary, href, type Lang } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { EMAIL, GITHUB, LINKEDIN, SITE_URL } from "@/lib/site";
@@ -43,12 +43,12 @@ export default async function Home({ params }: PageProps<"/[lang]">){
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
       <Loader />
       <Header />
-      <main id="main">
+      <main id="main" className="relative">
+        <TravelingPhoto />
         <Hero t={t} />
         <About t={t} />
         <Projects t={t} />
         <Services t={t} />
-        <Tech t={t} />
         <Journey />
         <Faq t={t} />
         <Contact t={t} />

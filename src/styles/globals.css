@@ -162,7 +162,23 @@
   .burger[aria-expanded="true"] span:nth-child(2){ transform: translateY(-3px) rotate(-45deg); }
 
   /* ---------------- HERO ---------------- */
-  .hero__title{ @apply m-0 font-display text-[clamp(40px,7vw,108px)] leading-[.95] font-semibold tracking-[-.045em] uppercase; text-shadow: 0 2px 30px rgba(6,4,3,.65); }
+  .hero__title{ @apply m-0 font-display text-[clamp(30px,4.9vw,68px)] leading-[1] font-bold tracking-[-.04em] uppercase; text-shadow: 0 2px 30px rgba(6,4,3,.65); }
+
+  /* botão principal com brilho (pegada da referência) */
+  .btn-glow{
+    @apply border-transparent font-semibold text-espresso;
+    background: linear-gradient(180deg, #F6E3B2 0%, #E9C77C 45%, #DCAA55 100%);
+    box-shadow: inset 0 1px 0 rgba(255,250,232,.85), inset 0 -2px 6px rgba(150,95,20,.35),
+                0 0 0 1px rgba(255,226,160,.25), 0 8px 26px -8px rgba(242,169,59,.42), 0 0 14px rgba(240,200,120,.16);
+    transition: box-shadow .45s var(--ease-brand), transform .45s var(--ease-brand), filter .45s ease;
+  }
+  .btn-glow:hover, .btn-glow:focus-visible{
+    color: var(--color-espresso); filter: brightness(1.06);
+    background: linear-gradient(180deg, #FFF3D2 0%, #F4D58C 45%, #E8B65C 100%);
+    box-shadow: inset 0 1px 0 rgba(255,250,232,.95), inset 0 -2px 6px rgba(150,95,20,.3),
+                0 0 0 1px rgba(255,226,160,.4), 0 12px 34px -8px rgba(242,169,59,.58), 0 0 24px rgba(240,200,120,.26);
+  }
+
   .hero__accent{
     background: linear-gradient(100deg, #F6E7BF 0%, #E9C27A 50%, #D49B45 100%);
     background-clip: text; -webkit-background-clip: text; color: transparent;
@@ -178,40 +194,57 @@
   .scroll-cue{ @apply relative block h-12 w-px overflow-hidden bg-[rgba(246,241,230,.15)]; }
   .scroll-cue::after{ content:""; @apply absolute inset-x-0 top-0 h-1/2 bg-gold; animation: cue 2s var(--ease-soft) infinite; }
 
-  /* ---------------- SOBRE: card "ID" ---------------- */
-  .idcard{ @apply relative rounded-[28px] border border-[rgba(224,190,114,.22)] bg-surface p-3; transform-style: preserve-3d; }
-  .idcard__corner{ @apply pointer-events-none absolute size-5 border-gold; }
+  /* ---------------- SOBRE: card da foto (minimalista) ---------------- */
+  .idcard{ @apply relative rounded-[28px] border border-[rgba(224,190,114,.18)] bg-surface p-2.5; box-shadow: 0 40px 80px -48px rgba(0,0,0,.9); }
   .idcard__photo{ @apply relative aspect-[4/5] overflow-hidden rounded-[20px] bg-[#1d150d]; }
-  .idcard__photo img{ filter: grayscale(1) sepia(.35) contrast(1.05) brightness(.95); transition: filter .8s var(--ease-soft), transform 1.2s var(--ease-soft); }
-  .idcard:hover .idcard__photo img{ filter: grayscale(.2) sepia(.2); transform: scale(1.03); }
-  .idcard__photo::after{ content:""; @apply pointer-events-none absolute inset-0; background: linear-gradient(180deg, transparent 55%, rgba(11,8,6,.85)), linear-gradient(120deg, rgba(242,169,59,.18), transparent 50%); mix-blend-mode: normal; }
-  .idcard__scan{ @apply pointer-events-none absolute inset-x-0 top-0 z-2 h-16 opacity-0; background: linear-gradient(180deg, transparent, rgba(242,169,59,.25), transparent); }
-  .idcard:hover .idcard__scan{ animation: scan 2.4s linear infinite; opacity: 1; }
-  .idcard__stamp{ @apply pointer-events-none absolute top-4 right-4 z-3 size-24 text-[rgba(246,241,230,.85)]; animation: spin 26s linear infinite; }
-
-  .terminal{ @apply overflow-hidden rounded-2xl border border-line bg-[#0F0B08] font-mono text-[13px]; }
-  .terminal__bar{ @apply flex items-center gap-2 border-b border-line px-4 py-3 text-[11px] text-ink-faint; }
-  .terminal__bar i{ @apply size-2.5 rounded-full; }
-  .terminal dl{ @apply m-0 grid gap-2 p-5; }
-  .terminal dt{ @apply text-gold-deep; }
-  .terminal dt::before{ content:"$ "; @apply text-ink-faint; }
+  .idcard__photo img{ transition: transform 1.2s var(--ease-soft); }
+  .idcard:hover .idcard__photo img{ transform: scale(1.03); }
+  /* com a foto viajante ativa (rolando), as fotos estáticas dos lugares só reservam espaço */
+  .photo-travel [data-photo-slot] > *{ visibility: hidden; }
+  /* brilho dourado atrás da foto estática do hero (a viajante tem o seu) */
+  .photo-slot-hero::before{ content:""; @apply pointer-events-none absolute -inset-10 -z-1 rounded-[48px]; background: radial-gradient(closest-side, rgba(242,169,59,.28), transparent); }
+  .photo-travel .photo-slot-hero::before{ opacity: 0; }
+  .idcard__photo::after{ content:""; @apply pointer-events-none absolute inset-0; background: linear-gradient(180deg, transparent 62%, rgba(11,8,6,.82)); }
+  .edu-card{
+    @apply relative overflow-hidden rounded-2xl border border-line bg-surface px-5 py-5;
+    transition: border-color .4s ease, transform .4s var(--ease-brand);
+  }
+  .edu-card::before{ content:""; @apply absolute inset-y-4 left-0 w-0.5 rounded-full bg-gold-deep; }
+  .edu-card:hover{ @apply border-gold; transform: translateY(-2px); }
   .blink{ animation: blink 1s steps(1) infinite; }
-  .terminal dd{ @apply m-0 mb-2 pl-4 leading-[1.6] text-ink-soft; }
 
   /* ---------------- PROJETOS: carrossel-lupa ---------------- */
-  .pcard{ @apply relative flex size-full flex-col overflow-hidden rounded-[22px] border border-[rgba(246,241,230,.1)] bg-surface; box-shadow: 0 40px 70px -40px rgba(0,0,0,.95); }
-  .pcard__media{ @apply relative aspect-[16/10] shrink-0 overflow-hidden bg-[#1d150d]; }
-  .pcard__media img{ @apply pointer-events-none size-full object-cover object-top select-none; transition: transform 1.2s var(--ease-soft); }
+  /* card da versão leve (sem WebGL ou com movimento reduzido) */
+  .flat-rail{
+    @apply flex snap-x snap-mandatory gap-5 overflow-x-auto pt-2 pb-6;
+    padding-inline: max(20px, calc((100vw - 1240px) / 2 + 32px));
+    scroll-padding-inline: max(20px, calc((100vw - 1240px) / 2 + 32px)); scrollbar-width: none;
+    mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 64px), transparent);
+  }
+  .flat-rail::-webkit-scrollbar{ display: none; }
+  .pcard{
+    @apply relative flex size-full flex-col overflow-hidden rounded-[24px] border border-[rgba(246,241,230,.1)];
+    background: linear-gradient(180deg, #19130C, #110D08);
+    box-shadow: 0 40px 70px -40px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.04);
+    transition: border-color .5s ease, transform .6s var(--ease-brand), box-shadow .6s ease;
+  }
+  .pcard__media{ @apply relative m-2 mb-0 aspect-[16/11] shrink-0 overflow-hidden rounded-[18px] bg-[#1d150d]; }
+  .pcard__media img{ @apply pointer-events-none absolute inset-0 size-full object-cover object-top select-none; transition: transform 1.2s var(--ease-soft), opacity .7s ease; }
+  .pcard__media::after{ content:""; @apply pointer-events-none absolute inset-0; background: linear-gradient(180deg, transparent 60%, rgba(11,8,6,.55)); }
+  .pcard__alt{ opacity: 0; }
   .pcard:hover .pcard__media img, .pcard:focus-within .pcard__media img{ transform: scale(1.05); }
-  .pcard__body{ @apply flex flex-1 flex-col gap-2 p-5; }
-  .pcard__title{ @apply m-0 font-display text-[22px] leading-tight font-semibold tracking-[-.02em]; }
-  .pcard__host{ @apply font-mono text-[11px] text-ink-faint; overflow-wrap: anywhere; }
-  .pcard__desc{ @apply m-0 line-clamp-3 text-[13.5px] leading-[1.6] text-ink-soft; }
-  .pcard__cta{ @apply mt-auto inline-flex items-center gap-2 self-start font-mono text-[11px] font-bold tracking-[.12em] text-gold-deep uppercase; }
-  .pcard__cta::after{ content:""; @apply absolute inset-0 z-2 rounded-[22px]; }
+  .pcard:hover .pcard__alt, .pcard:focus-within .pcard__alt{ opacity: 1; }
+  .pcard__num{ @apply absolute top-3 left-3 z-1 rounded-full border border-[rgba(246,241,230,.18)] bg-[rgba(11,8,6,.6)] px-2.5 py-1 font-mono text-[10px] tracking-[.16em] text-cream backdrop-blur-md; }
+  .pcard__body{ @apply flex flex-1 flex-col gap-2 p-6 pt-5; }
+  .pcard__title{ @apply m-0 font-display text-[24px] leading-tight font-semibold tracking-[-.025em]; }
+  .pcard__host{ @apply self-start rounded-full border border-line px-2.5 py-0.5 font-mono text-[10.5px] text-gold-deep; overflow-wrap: anywhere; }
+  .pcard__desc{ @apply m-0 line-clamp-3 text-[14px] leading-[1.6] text-ink-soft; }
+  .pcard__cta{ @apply mt-auto inline-flex items-center gap-2 self-start pt-3 font-mono text-[11px] font-bold tracking-[.12em] text-gold-deep uppercase; }
+  .pcard__cta::after{ content:""; @apply absolute inset-0 z-2 rounded-[24px]; }
   .pcard__cta:focus-visible{ outline: none; }
   .pcard:has(.pcard__cta:focus-visible){ outline: 2px solid var(--color-gold-deep); outline-offset: 4px; }
-  .pcard:hover{ border-color: rgba(224,190,114,.5); }
+  .pcard:hover{ border-color: rgba(224,190,114,.45); transform: translateY(-4px); box-shadow: 0 40px 70px -40px rgba(0,0,0,.95), 0 0 0 1px rgba(224,190,114,.12), 0 20px 60px -30px rgba(242,169,59,.35); }
+  .pcard:hover .btn__arrow{ transform: translate(3px,-3px); }
 
   /* ---------------- SERVIÇOS ---------------- */
   .service{
@@ -233,21 +266,6 @@
   .viz .type{ clip-path: inset(0 100% 0 0); animation: type 3.2s steps(24) infinite; }
   .viz .pulse{ stroke-dasharray: .06 .94; animation: pulseRun 2.2s linear infinite; }
   .viz .blink{ animation: blink 1s steps(1) infinite; }
-
-  /* ---------------- TECNOLOGIAS ---------------- */
-  .bento{ @apply relative overflow-hidden rounded-[26px] border border-line bg-surface p-6 sm:p-8; }
-  .bento::before{
-    content:""; @apply pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(242,169,59,.14), transparent 60%);
-  }
-  .bento::after{
-    content:""; @apply pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500;
-    padding: 1px; background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(242,169,59,.8), transparent 60%);
-    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  }
-  .bento:hover::before, .bento:hover::after{ @apply opacity-100; }
-  .tech-row{ @apply flex items-center gap-3.5 border-b border-line py-3 last:border-0; }
-  .tech-icon{ @apply flex size-10 shrink-0 items-center justify-center rounded-xl border border-line bg-bg font-mono text-[12px] font-bold text-gold-deep; }
 
   /* ---------------- TRAJETÓRIA ---------------- */
   .milestone__num{ @apply font-display text-[clamp(80px,12vw,180px)] leading-none font-bold tracking-[-.06em] text-transparent; -webkit-text-stroke: 1px rgba(224,190,114,.45); }
@@ -289,11 +307,11 @@
   }
   .input:focus{ outline: 2px solid var(--color-gold-deep); outline-offset: 4px; border-radius: 4px; @apply border-gold-deep; }
   [data-invalid="true"] .input{ @apply border-danger; }
-  [data-invalid="true"].captcha-box{ @apply border-danger; }
+  [data-invalid="true"].captcha-box .captcha-slot iframe{ @apply rounded-md outline-2 outline-offset-2 outline-danger; }
   .field__error{ @apply mt-1.5 text-[13px] font-bold text-danger empty:hidden; }
 
-  .captcha-box{ @apply rounded-2xl border border-line bg-bg px-4 pt-3.5 pb-4; }
-  .captcha-slot{ @apply grid min-h-[78px] place-items-center; }
+  .captcha-box{ @apply mb-7; }
+  .captcha-slot{ @apply grid min-h-[78px] place-items-start; }
   .captcha-slot::before, .captcha-slot > *{ grid-area: 1 / 1; }
   .captcha-slot:empty::before, .captcha-slot[data-state="loading"]::before, .captcha-slot[data-state="error"]::before{
     content: attr(data-loading); @apply flex h-[78px] w-full max-w-[303px] items-center justify-center rounded-md border border-dashed border-line text-[13px] text-ink-faint;
@@ -303,9 +321,9 @@
   .captcha-slot[data-state="error"] > *{ display: none; }
   .captcha-slot iframe{ @apply max-w-full; }
 
-  .check{ @apply grid grid-cols-[22px_1fr] items-start gap-3; }
+  .check{ @apply mb-5 grid grid-cols-[22px_1fr] items-start gap-3 border-t border-line pt-6; }
   .check input{ @apply mt-0.5 size-5.5 accent-gold-deep; }
-  .check label{ @apply m-0 text-[13px] leading-[1.55] font-medium text-ink-soft; }
+  .check label{ @apply m-0 font-sans text-[13px] leading-[1.55] font-medium tracking-normal text-ink-soft normal-case; }
   .check .field__error{ @apply col-span-full; }
   .honeypot{ @apply absolute -left-[9999px] size-px overflow-hidden; }
 
@@ -317,11 +335,6 @@
   .footer-col{ @apply flex flex-col gap-0.5; }
   .footer-col h2{ @apply mb-3 font-mono text-[11px] font-bold tracking-[.18em] text-gold-light uppercase; }
   .footer-col a{ @apply min-h-9 py-2 text-sm text-[#CFC6B1] transition-colors hover:text-gold-light; overflow-wrap: anywhere; }
-  .wordmark{
-    @apply block w-full overflow-hidden text-center font-display text-[15.2vw] leading-[.9] font-bold tracking-[-.06em] whitespace-nowrap select-none;
-    background: linear-gradient(180deg, rgba(224,190,114,.55), rgba(224,190,114,0) 85%);
-    background-clip: text; -webkit-background-clip: text; color: transparent;
-  }
 
   /* ---------------- PÁGINAS LEGAIS ---------------- */
   .doc h1{ @apply mb-3 font-display text-[clamp(34px,5vw,56px)] leading-[1.05] font-semibold tracking-[-.035em]; }
@@ -383,8 +396,6 @@
 @keyframes pulse{ 0%{ box-shadow: 0 0 0 0 rgba(123,220,163,.6); } 70%,100%{ box-shadow: 0 0 0 9px rgba(123,220,163,0); } }
 @keyframes confirmIn{ from{ opacity: 0; transform: translateY(16px) scale(.97); } to{ opacity: 1; transform: none; } }
 @keyframes cue{ from{ transform: translateY(-100%); } to{ transform: translateY(200%); } }
-@keyframes scan{ from{ transform: translateY(-100%); } to{ transform: translateY(600%); } }
-@keyframes spin{ to{ transform: rotate(360deg); } }
 @keyframes grow{ 0%{ transform: scaleX(0); } 45%,85%{ transform: scaleX(1); } 100%{ transform: scaleX(0); } }
 @keyframes rise{ from{ transform: scaleY(.25); } to{ transform: scaleY(1); } }
 @keyframes drawLoop{ 0%{ stroke-dashoffset: 1; } 60%,85%{ stroke-dashoffset: 0; } 100%{ stroke-dashoffset: -1; } }
@@ -409,8 +420,8 @@
 }
 @media (forced-colors: active){
   .btn, .icon-btn, .pill{ border: 2px solid ButtonText; }
-  .surface, .pcard, .captcha-box, .service, .bento{ border: 1px solid CanvasText; }
-  .hero__accent, .wordmark{ -webkit-text-fill-color: currentColor; color: CanvasText; background: none; }
+  .surface, .pcard, .service, .edu-card, .idcard{ border: 1px solid CanvasText; }
+  .hero__accent{ -webkit-text-fill-color: currentColor; color: CanvasText; background: none; }
 }
 @media print{
   .pill, .loader, canvas{ display: none !important; }

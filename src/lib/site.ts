@@ -3,6 +3,8 @@ export const SITE_URL = "https://pedroprovadelli.vercel.app";
 export const EMAIL = "pedroprovadelli@gmail.com";
 export const GITHUB = "https://github.com/Provadelli";
 export const LINKEDIN = "https://linkedin.com/in/pedroprovadellidev/";
+/* currículo em PDF (public/), baixado pelo botão "Download CV" */
+export const CV_URL = "/Curriculo-Pedro-Provadelli.pdf";
 
 /* versões dos documentos legais enviadas junto com cada mensagem (LGPD, art. 8º).
    Ao mudar os Termos ou a Política, atualize aqui e a data no topo da página. */
