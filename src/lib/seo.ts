@@ -13,7 +13,9 @@ export function pageMetadata({ lang, path, title, description, ogAlt }: {
     description,
     alternates: {
       canonical: href(lang, path),
-      languages: { "pt-BR": href("pt", path), en: href("en", path), "x-default": href("pt", path) }
+      languages: { "pt-BR": href("pt", path), en: href("en", path), "x-default": href("pt", path) },
+      // versão em Markdown para assistentes de IA
+      types: { "text/markdown": "/llms.txt" }
     },
     openGraph: {
       type: "website",
@@ -31,6 +33,18 @@ export function pageMetadata({ lang, path, title, description, ogAlt }: {
 
 export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: "Pedro Provadelli",
+  authors: [{ name: "Pedro Lucas Provadelli", url: SITE_URL }],
+  creator: "Pedro Lucas Provadelli",
+  publisher: "Pedro Lucas Provadelli",
+  category: "technology",
+  keywords: ["Pedro Provadelli", "Pedro Lucas Provadelli", "software engineer", "engenheiro de software", "desenvolvedor web", "web developer", "FIAP", "portfólio", "portfolio", "Python", "automação", "sistemas embarcados", "embedded systems"],
+  // snippets completos e imagem grande nos resultados (Google, Discover e AI Overviews)
+  robots: {
+    index: true, follow: true,
+    googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 }
+  },
+  formatDetection: { telephone: false, address: false, email: false },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon-32.png", type: "image/png", sizes: "32x32" }],
     apple: "/apple-touch-icon.png"

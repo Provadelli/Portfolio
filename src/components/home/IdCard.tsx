@@ -8,9 +8,12 @@ import { motion, type MotionValue } from "motion/react";
 import { useI18n } from "@/components/I18nProvider";
 import pedro from "@/assets/img/pedro.webp";
 
+/* mesmo "sizes" nos três lugares da foto (hero, foto que viaja e Sobre): um único download */
+const PHOTO_SIZES = "(min-width: 981px) 400px, min(400px, 90vw)";
+
 type Props = { caption?: MotionValue<number>; decorative?: boolean; priority?: boolean; sizes?: string };
 
-export function IdCard({ caption, decorative = false, priority = false, sizes = "(min-width: 981px) 400px, 90vw" }: Props){
+export function IdCard({ caption, decorative = false, priority = false, sizes = PHOTO_SIZES }: Props){
   const { t } = useI18n();
   return (
     <figure className="idcard m-0" aria-hidden={decorative || undefined}>

@@ -5,22 +5,16 @@
    atravessa o desnível. Laço infinito, rotação lenta, arrastar (mouse e toque) com inércia,
    setas, teclado ← →, pausa; hover e foco pausam. Clique num card abre o projeto.
    Sem WebGL, GPU fraca ou "reduzir movimento": lista de cards com rolagem horizontal. */
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useI18n } from "@/components/I18nProvider";
+import type { Project } from "@/content/projects";
+import { hasFastGL } from "@/lib/gl";
 import { EASE_BRAND } from "@/lib/motion";
 import { LENS_FRAG, LENS_VERT } from "./lens.glsl";
 
-export type Project = {
-  id: string;
-  title: string;
-  host: string;
-  url: string;
-  desc: string;
-  cta: string;
-  imgs: { src: StaticImageData; alt: string }[];
-};
+export type { Project };
 
 const SPEED = 34;            // px/s na rotação automática
 const RESUME_MS = 2600;      // retoma depois de uma interação
@@ -28,14 +22,8 @@ const FLAT = 0.56;           // parte plana (fração da meia-largura)
 const BEND = 1.6;            // compressão nas bordas
 const TEX_W = 720, TEX_H = 950;
 
-/* suporte a WebGL2 (memorizado) */
-let glSupport: boolean | null = null;
-const hasGL = () => {
-  if (glSupport === null){
-    try { glSupport = !!document.createElement("canvas").getContext("webgl2"); } catch { glSupport = false; }
-  }
-  return glSupport;
-};
+/* checagem barata na hidratação; o teste real da GPU (hasFastGL) só roda quando a seção se aproxima */
+const hasGL = () => typeof window.WebGL2RenderingContext === "function";
 const noop = () => () => {};
 
 /* tamanho do card conforme a largura da tela */
@@ -152,241 +140,250 @@ export function LensCarousel({ projects }: { projects: Project[] }){
 
   useEffect(() => {
     if (mode !== "gl") return;
-    const st = stage.current, cv = canvas.current;
-    if (!st || !cv) return;
-    const gl = cv.getContext("webgl2", { antialias: false, premultipliedAlpha: true, alpha: true });
-    if (!gl){ queueMicrotask(() => setFailed(true)); return; }
+    const stEl = stage.current, cvEl = canvas.current;
+    if (!stEl || !cvEl) return;
 
-    let prog: WebGLProgram;
-    try {
-      prog = gl.createProgram()!;
-      gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, LENS_VERT));
-      gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, LENS_FRAG));
-      gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog) ?? "link");
-    } catch (err){
-      console.warn("[projetos] WebGL indisponível, usando a lista simples", err);
-      queueMicrotask(() => setFailed(true));
-      return;
-    }
-    gl.useProgram(prog);
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const loc = gl.getAttribLocation(prog, "aPos");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    const U = (k: string) => gl.getUniformLocation(prog, k);
-    const u = { view: U("uView"), px: U("uPx"), pos: U("uPos"), card: U("uCard"), gap: U("uGap"), count: U("uCount"), flat: U("uFlat"), bend: U("uBend"), tex: U("uTex") };
-
-    let size = cardSize(window.innerWidth);
-    let step = size.w + size.gap;
-    let scale = Math.min(window.devicePixelRatio || 1, 2);
-    let pos = size.w / 2, velocity = 0, lastUser = -Infinity, lastFrame = 0, raf = 0;
-    let hovering = false, focusing = false, onScreen = false, dragging = false, pressing = false, ready = false, alive = true;
-    let glide: { from: number; to: number; t0: number; dur: number } | null = null;
-    let shownCenter = -1;
-    const touched = () => { lastUser = performance.now(); };
-
-    let cssW = cv.clientWidth, cssH = cv.clientHeight, stageH = "";
-    const resize = () => {
-      size = cardSize(window.innerWidth);
-      step = size.w + size.gap;
-      // só escreve a altura quando muda, e o tamanho do canvas vem do ResizeObserver:
-      // ler/escrever layout a cada quadro forçava o navegador a recalcular a página
-      const sh = `${Math.round(size.h * 1.34 + 24)}px`;
-      if (sh !== stageH){ st.style.height = sh; stageH = sh; }
-      const w = Math.max(1, Math.round(cssW * scale)), h = Math.max(1, Math.round(cssH * scale));
-      if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
-    };
-
-    function draw(){
-      if (!ready) return;
-      resize();
-      gl!.clearColor(0, 0, 0, 0); gl!.clear(gl!.COLOR_BUFFER_BIT);
-      gl!.uniform2f(u.view, cssW, cssH);
-      gl!.uniform1f(u.px, cv!.width / Math.max(cssW, 1));
-      gl!.uniform1f(u.pos, pos);
-      gl!.uniform2f(u.card, size.w, size.h);
-      gl!.uniform1f(u.gap, size.gap);
-      gl!.uniform1f(u.count, n);
-      gl!.uniform1f(u.flat, FLAT);
-      gl!.uniform1f(u.bend, BEND);
-      gl!.drawArrays(gl!.TRIANGLES, 0, 3);
-      // projeto no centro (atualiza o bloco de texto só quando muda)
-      const c = ((Math.round((pos - size.w / 2) / step) % n) + n) % n;
-      if (c !== shownCenter){ shownCenter = c; setCenter(c); }
-    }
-
-    const snap = (p: number) => Math.round((p - size.w / 2) / step) * step + size.w / 2;
-    function glideTo(to: number, dur = 750){ glide = { from: pos, to, t0: performance.now(), dur }; kick(); }
-    function stepBy(dir: number){ touched(); velocity = 0; glideTo((glide ? glide.to : snap(pos)) + dir * step); }
-    api.current = { step: stepBy };
-
-    const canPlay = () => !pausedRef.current && !hovering && !focusing && !dragging && performance.now() - lastUser > RESUME_MS;
-
-    function frame(now: number){
-      raf = 0;
-      const dt = Math.min((now - (lastFrame || now)) / 1000, 0.05);
-      lastFrame = now;
-      if (glide && !dragging){
-        const k = Math.min((now - glide.t0) / glide.dur, 1);
-        pos = glide.from + (glide.to - glide.from) * (1 - Math.pow(1 - k, 4));
-        if (k === 1) glide = null;
-      } else if (!dragging && Math.abs(velocity) > 6){
-        pos += velocity * dt;
-        velocity *= Math.pow(0.004, dt);                    // inércia
-        if (Math.abs(velocity) <= 6){ velocity = 0; glideTo(snap(pos), 550); }
-      } else if (canPlay()){
-        pos += SPEED * dt;
-      }
-      draw();
-      if (onScreen && !document.hidden) raf = requestAnimationFrame(frame);
-    }
-    function kick(){ if (!raf && onScreen){ lastFrame = 0; raf = requestAnimationFrame(frame); } }
-
-    /* o que está sob o ponteiro: índice do projeto ou -1 */
-    const hit = (clientX: number, clientY: number) => {
-      const r = cv.getBoundingClientRect();
-      const half = r.width / 2;
-      const { u: uu, t: tt } = lens((clientX - r.left - half) / half);
-      const sy = 1 + 0.3 * (tt * tt * (3 - 2 * tt));
-      const yy = (r.top + r.height / 2 - clientY) / sy;
-      if (Math.abs(yy) > size.h / 2 || Math.abs((clientX - r.left - half) / half) > 0.9) return -1;
-      const s = pos + uu * half;
-      const k = Math.floor(s / step);
-      if (s - k * step > size.w) return -1;
-      return ((k % n) + n) % n;
-    };
-
-    /* ---- arrastar (mouse e toque; a rolagem vertical da página continua livre) ---- */
-    let sx = 0, sy0 = 0, lx = 0, lt = 0, moved = false;
-    const down = (e: PointerEvent) => {
-      if (e.button !== 0) return;
-      pressing = true; dragging = false; moved = false; glide = null; velocity = 0;
-      sx = lx = e.clientX; sy0 = e.clientY; lt = e.timeStamp;
-    };
-    const move = (e: PointerEvent) => {
-      if (!pressing){
-        if (e.pointerType === "mouse") st.style.cursor = hit(e.clientX, e.clientY) >= 0 ? "pointer" : "grab";
-        return;
-      }
-      if (!dragging){
-        const dx = e.clientX - sx, dy = e.clientY - sy0;
-        if (Math.abs(dx) < 6 || Math.abs(dx) < Math.abs(dy)) return;
-        dragging = true; moved = true;
-        st.style.cursor = "grabbing";
-        try { st.setPointerCapture(e.pointerId); } catch { /* ignora */ }
-        kick();
-      }
-      const d = e.clientX - lx;
-      velocity = -d / Math.max(e.timeStamp - lt, 1) * 1000;
-      lx = e.clientX; lt = e.timeStamp;
-      pos -= d; touched();
-    };
-    const up = (e: PointerEvent) => {
-      if (!pressing) return;
-      pressing = false;
-      if (dragging){
-        dragging = false;
-        st.style.cursor = "grab";
-        try { st.releasePointerCapture(e.pointerId); } catch { /* ignora */ }
-        if (performance.now() - lt > 90 || Math.abs(velocity) < 60){ velocity = 0; glideTo(snap(pos), 550); }
-        touched(); kick();
-        return;
-      }
-      // toque/clique sem arrasto: abre o projeto sob o ponteiro
-      if (!moved){
-        const i = hit(e.clientX, e.clientY);
-        if (i >= 0) window.open(projects[i].url, "_blank", "noopener,noreferrer");
-      }
-    };
-    const key = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight"){ e.preventDefault(); stepBy(1); }
-      else if (e.key === "ArrowLeft"){ e.preventDefault(); stepBy(-1); }
-    };
-    const region = st.closest<HTMLElement>("[data-lens]") ?? st;
-    const fin = () => { focusing = true; };
-    const fout = () => { focusing = false; kick(); };
-    const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") hovering = true; };
-    const leave = (e: PointerEvent) => { if (e.pointerType === "mouse"){ hovering = false; kick(); } };
-
-    st.addEventListener("pointerdown", down);
-    st.addEventListener("pointermove", move);
-    st.addEventListener("pointerup", up);
-    st.addEventListener("pointercancel", up);
-    st.addEventListener("keydown", key);
-    st.addEventListener("pointerenter", enter);
-    st.addEventListener("pointerleave", leave);
-    region.addEventListener("focusin", fin);
-    region.addEventListener("focusout", fout);
-
-    const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (onScreen) kick(); }, { rootMargin: "200px 0px" });
-    io.observe(st);
-    const ro = new ResizeObserver(() => {
-      cssW = cv.clientWidth; cssH = cv.clientHeight;
-      if (ready) draw();
-    });
-    ro.observe(cv);
-    ro.observe(st);
-    const onVis = () => { if (!document.hidden) kick(); };
-    document.addEventListener("visibilitychange", onVis);
-    resize();
-
-    /* texturas: carregadas quando a seção se aproxima da tela */
-    let tex: WebGLTexture | null = null;
-    const load = async () => {
-      const css = getComputedStyle(document.documentElement);
-      const fonts = { display: css.getPropertyValue("--font-grotesk").trim() || "sans-serif", mono: css.getPropertyValue("--font-jetbrains").trim() || "monospace" };
-      try { await document.fonts.ready; } catch { /* segue */ }
-      const layers = await Promise.all(projects.map(p => paintCard(p, fonts)));
-      if (!alive) return;
-      tex = gl.createTexture();
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D_ARRAY, tex);
-      gl.texImage3D(gl.TEXTURE_2D_ARRAY, 0, gl.RGBA8, TEX_W, TEX_H, layers.length, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-      layers.forEach((c, i) => gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0, 0, 0, i, TEX_W, TEX_H, 1, gl.RGBA, gl.UNSIGNED_BYTE, c));
-      gl.generateMipmap(gl.TEXTURE_2D_ARRAY);
-      gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.uniform1i(u.tex, 0);
-      ready = true;
-
-      // custo real de um quadro na GPU: reduz a resolução; se nem assim couber, volta para a lista simples
-      const probe = () => { const a = performance.now(); draw(); gl.finish(); return performance.now() - a; };
-      probe();
-      while (probe() > 16 && scale > 0.6) scale = Math.max(0.55, scale * 0.7);
-      if (probe() > 22){ setFailed(true); return; }
-      cv.style.opacity = "1";
-      kick();
-    };
+    // nada de WebGL na carga da página: contexto, shader e texturas só quando a seção se aproxima
+    let dispose: (() => void) | void;
     const near = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       near.disconnect();
-      load().catch(err => { console.warn("[projetos] falha ao montar as texturas", err); setFailed(true); });
+      if (!hasFastGL()){ setFailed(true); return; }
+      dispose = setup(stEl, cvEl);
     }, { rootMargin: "600px 0px" });
-    near.observe(st);
+    near.observe(stEl);
+    return () => { near.disconnect(); dispose?.(); };
 
-    return () => {
-      alive = false;
-      cancelAnimationFrame(raf);
-      io.disconnect(); ro.disconnect(); near.disconnect();
-      document.removeEventListener("visibilitychange", onVis);
-      st.removeEventListener("pointerdown", down);
-      st.removeEventListener("pointermove", move);
-      st.removeEventListener("pointerup", up);
-      st.removeEventListener("pointercancel", up);
-      st.removeEventListener("keydown", key);
-      st.removeEventListener("pointerenter", enter);
-      st.removeEventListener("pointerleave", leave);
-      region.removeEventListener("focusin", fin);
-      region.removeEventListener("focusout", fout);
-      api.current = null;
-      // libera os recursos sem perder o contexto (o React remonta o efeito no mesmo canvas no modo dev)
-      gl.deleteTexture(tex); gl.deleteBuffer(buf); gl.deleteProgram(prog);
-    };
+    function setup(st: HTMLDivElement, cv: HTMLCanvasElement){
+      const gl = cv.getContext("webgl2", { antialias: false, premultipliedAlpha: true, alpha: true });
+      if (!gl){ queueMicrotask(() => setFailed(true)); return; }
+
+      let prog: WebGLProgram;
+      try {
+        prog = gl.createProgram()!;
+        gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, LENS_VERT));
+        gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, LENS_FRAG));
+        gl.linkProgram(prog);
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog) ?? "link");
+      } catch (err){
+        console.warn("[projetos] WebGL indisponível, usando a lista simples", err);
+        queueMicrotask(() => setFailed(true));
+        return;
+      }
+      gl.useProgram(prog);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, "aPos");
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const U = (k: string) => gl.getUniformLocation(prog, k);
+      const u = { view: U("uView"), px: U("uPx"), pos: U("uPos"), card: U("uCard"), gap: U("uGap"), count: U("uCount"), flat: U("uFlat"), bend: U("uBend"), tex: U("uTex") };
+
+      let size = cardSize(window.innerWidth);
+      let step = size.w + size.gap;
+      let scale = Math.min(window.devicePixelRatio || 1, 2);
+      let pos = size.w / 2, velocity = 0, lastUser = -Infinity, lastFrame = 0, raf = 0;
+      let hovering = false, focusing = false, onScreen = false, dragging = false, pressing = false, ready = false, alive = true;
+      let glide: { from: number; to: number; t0: number; dur: number } | null = null;
+      let shownCenter = -1;
+      const touched = () => { lastUser = performance.now(); };
+
+      let cssW = cv.clientWidth, cssH = cv.clientHeight, stageH = "";
+      const resize = () => {
+        size = cardSize(window.innerWidth);
+        step = size.w + size.gap;
+        // só escreve a altura quando muda, e o tamanho do canvas vem do ResizeObserver:
+        // ler/escrever layout a cada quadro forçava o navegador a recalcular a página
+        const sh = `${Math.round(size.h * 1.34 + 24)}px`;
+        if (sh !== stageH){ st.style.height = sh; stageH = sh; }
+        const w = Math.max(1, Math.round(cssW * scale)), h = Math.max(1, Math.round(cssH * scale));
+        if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
+      };
+
+      function draw(){
+        if (!ready) return;
+        resize();
+        gl!.clearColor(0, 0, 0, 0); gl!.clear(gl!.COLOR_BUFFER_BIT);
+        gl!.uniform2f(u.view, cssW, cssH);
+        gl!.uniform1f(u.px, cv!.width / Math.max(cssW, 1));
+        gl!.uniform1f(u.pos, pos);
+        gl!.uniform2f(u.card, size.w, size.h);
+        gl!.uniform1f(u.gap, size.gap);
+        gl!.uniform1f(u.count, n);
+        gl!.uniform1f(u.flat, FLAT);
+        gl!.uniform1f(u.bend, BEND);
+        gl!.drawArrays(gl!.TRIANGLES, 0, 3);
+        // projeto no centro (atualiza o bloco de texto só quando muda)
+        const c = ((Math.round((pos - size.w / 2) / step) % n) + n) % n;
+        if (c !== shownCenter){ shownCenter = c; setCenter(c); }
+      }
+
+      const snap = (p: number) => Math.round((p - size.w / 2) / step) * step + size.w / 2;
+      function glideTo(to: number, dur = 750){ glide = { from: pos, to, t0: performance.now(), dur }; kick(); }
+      function stepBy(dir: number){ touched(); velocity = 0; glideTo((glide ? glide.to : snap(pos)) + dir * step); }
+      api.current = { step: stepBy };
+
+      const canPlay = () => !pausedRef.current && !hovering && !focusing && !dragging && performance.now() - lastUser > RESUME_MS;
+
+      function frame(now: number){
+        raf = 0;
+        const dt = Math.min((now - (lastFrame || now)) / 1000, 0.05);
+        lastFrame = now;
+        if (glide && !dragging){
+          const k = Math.min((now - glide.t0) / glide.dur, 1);
+          pos = glide.from + (glide.to - glide.from) * (1 - Math.pow(1 - k, 4));
+          if (k === 1) glide = null;
+        } else if (!dragging && Math.abs(velocity) > 6){
+          pos += velocity * dt;
+          velocity *= Math.pow(0.004, dt);                    // inércia
+          if (Math.abs(velocity) <= 6){ velocity = 0; glideTo(snap(pos), 550); }
+        } else if (canPlay()){
+          pos += SPEED * dt;
+        }
+        draw();
+        if (onScreen && !document.hidden) raf = requestAnimationFrame(frame);
+      }
+      function kick(){ if (!raf && onScreen){ lastFrame = 0; raf = requestAnimationFrame(frame); } }
+
+      /* o que está sob o ponteiro: índice do projeto ou -1 */
+      const hit = (clientX: number, clientY: number) => {
+        const r = cv.getBoundingClientRect();
+        const half = r.width / 2;
+        const { u: uu, t: tt } = lens((clientX - r.left - half) / half);
+        const sy = 1 + 0.3 * (tt * tt * (3 - 2 * tt));
+        const yy = (r.top + r.height / 2 - clientY) / sy;
+        if (Math.abs(yy) > size.h / 2 || Math.abs((clientX - r.left - half) / half) > 0.9) return -1;
+        const s = pos + uu * half;
+        const k = Math.floor(s / step);
+        if (s - k * step > size.w) return -1;
+        return ((k % n) + n) % n;
+      };
+
+      /* ---- arrastar (mouse e toque; a rolagem vertical da página continua livre) ---- */
+      let sx = 0, sy0 = 0, lx = 0, lt = 0, moved = false;
+      const down = (e: PointerEvent) => {
+        if (e.button !== 0) return;
+        pressing = true; dragging = false; moved = false; glide = null; velocity = 0;
+        sx = lx = e.clientX; sy0 = e.clientY; lt = e.timeStamp;
+      };
+      const move = (e: PointerEvent) => {
+        if (!pressing){
+          if (e.pointerType === "mouse") st.style.cursor = hit(e.clientX, e.clientY) >= 0 ? "pointer" : "grab";
+          return;
+        }
+        if (!dragging){
+          const dx = e.clientX - sx, dy = e.clientY - sy0;
+          if (Math.abs(dx) < 6 || Math.abs(dx) < Math.abs(dy)) return;
+          dragging = true; moved = true;
+          st.style.cursor = "grabbing";
+          try { st.setPointerCapture(e.pointerId); } catch { /* ignora */ }
+          kick();
+        }
+        const d = e.clientX - lx;
+        velocity = -d / Math.max(e.timeStamp - lt, 1) * 1000;
+        lx = e.clientX; lt = e.timeStamp;
+        pos -= d; touched();
+      };
+      const up = (e: PointerEvent) => {
+        if (!pressing) return;
+        pressing = false;
+        if (dragging){
+          dragging = false;
+          st.style.cursor = "grab";
+          try { st.releasePointerCapture(e.pointerId); } catch { /* ignora */ }
+          if (performance.now() - lt > 90 || Math.abs(velocity) < 60){ velocity = 0; glideTo(snap(pos), 550); }
+          touched(); kick();
+          return;
+        }
+        // toque/clique sem arrasto: abre o projeto sob o ponteiro
+        if (!moved){
+          const i = hit(e.clientX, e.clientY);
+          if (i >= 0) window.open(projects[i].url, "_blank", "noopener,noreferrer");
+        }
+      };
+      const key = (e: KeyboardEvent) => {
+        if (e.key === "ArrowRight"){ e.preventDefault(); stepBy(1); }
+        else if (e.key === "ArrowLeft"){ e.preventDefault(); stepBy(-1); }
+      };
+      const region = st.closest<HTMLElement>("[data-lens]") ?? st;
+      const fin = () => { focusing = true; };
+      const fout = () => { focusing = false; kick(); };
+      const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") hovering = true; };
+      const leave = (e: PointerEvent) => { if (e.pointerType === "mouse"){ hovering = false; kick(); } };
+
+      st.addEventListener("pointerdown", down);
+      st.addEventListener("pointermove", move);
+      st.addEventListener("pointerup", up);
+      st.addEventListener("pointercancel", up);
+      st.addEventListener("keydown", key);
+      st.addEventListener("pointerenter", enter);
+      st.addEventListener("pointerleave", leave);
+      region.addEventListener("focusin", fin);
+      region.addEventListener("focusout", fout);
+
+      const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (onScreen) kick(); }, { rootMargin: "200px 0px" });
+      io.observe(st);
+      const ro = new ResizeObserver(() => {
+        cssW = cv.clientWidth; cssH = cv.clientHeight;
+        if (ready) draw();
+      });
+      ro.observe(cv);
+      ro.observe(st);
+      const onVis = () => { if (!document.hidden) kick(); };
+      document.addEventListener("visibilitychange", onVis);
+      resize();
+
+      /* texturas (a seção já está perto da tela) */
+      let tex: WebGLTexture | null = null;
+      const load = async () => {
+        const css = getComputedStyle(document.documentElement);
+        const fonts = { display: css.getPropertyValue("--font-grotesk").trim() || "sans-serif", mono: css.getPropertyValue("--font-jetbrains").trim() || "monospace" };
+        try { await document.fonts.ready; } catch { /* segue */ }
+        const layers = await Promise.all(projects.map(p => paintCard(p, fonts)));
+        if (!alive) return;
+        tex = gl.createTexture();
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D_ARRAY, tex);
+        gl.texImage3D(gl.TEXTURE_2D_ARRAY, 0, gl.RGBA8, TEX_W, TEX_H, layers.length, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        layers.forEach((c, i) => gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0, 0, 0, i, TEX_W, TEX_H, 1, gl.RGBA, gl.UNSIGNED_BYTE, c));
+        gl.generateMipmap(gl.TEXTURE_2D_ARRAY);
+        gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.uniform1i(u.tex, 0);
+        ready = true;
+
+        // custo real de um quadro na GPU: reduz a resolução; se nem assim couber, volta para a lista simples
+        const probe = () => { const a = performance.now(); draw(); gl.finish(); return performance.now() - a; };
+        probe();
+        while (probe() > 16 && scale > 0.6) scale = Math.max(0.55, scale * 0.7);
+        if (probe() > 22){ setFailed(true); return; }
+        cv.style.opacity = "1";
+        kick();
+      };
+      load().catch(err => { console.warn("[projetos] falha ao montar as texturas", err); setFailed(true); });
+
+      return () => {
+        alive = false;
+        cancelAnimationFrame(raf);
+        io.disconnect(); ro.disconnect();
+        document.removeEventListener("visibilitychange", onVis);
+        st.removeEventListener("pointerdown", down);
+        st.removeEventListener("pointermove", move);
+        st.removeEventListener("pointerup", up);
+        st.removeEventListener("pointercancel", up);
+        st.removeEventListener("keydown", key);
+        st.removeEventListener("pointerenter", enter);
+        st.removeEventListener("pointerleave", leave);
+        region.removeEventListener("focusin", fin);
+        region.removeEventListener("focusout", fout);
+        api.current = null;
+        // libera os recursos sem perder o contexto (o React remonta o efeito no mesmo canvas no modo dev)
+        gl.deleteTexture(tex); gl.deleteBuffer(buf); gl.deleteProgram(prog);
+      };
+    }
   }, [mode, n, projects]);
 
   if (mode === "dom") return <FlatList projects={projects} />;

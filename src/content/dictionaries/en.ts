@@ -163,6 +163,8 @@ const en: Dictionary = {
   t3_k: "Live",
   t4_k: "Now",
   faq_side: "Quick answers about how I work. Didn't find yours? Send me a message.",
+  anim_pause: "Pause background animation",
+  anim_play: "Resume background animation",
 };
 
 export default en;

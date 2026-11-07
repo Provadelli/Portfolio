@@ -17,7 +17,7 @@ export function Services({ t }: { t: Dictionary }){
       <div className="wrap">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead id="serv-title" eyebrow={t.serv_eyebrow} title={t.serv_title} lede={t.serv_lede} />
-          <Reveal className="mb-16 max-sm:hidden"><a href="#contato" className="btn">{t.start_project}<span className="btn__arrow" aria-hidden="true">↗</span></a></Reveal>
+          <Reveal className="mb-16 max-lg:hidden"><a href="#contato" className="btn">{t.start_project}<span className="btn__arrow" aria-hidden="true">↗</span></a></Reveal>
         </div>
         <ServiceCards items={items} cta={t.start_project} />
       </div>

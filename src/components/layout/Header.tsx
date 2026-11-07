@@ -69,12 +69,18 @@ export function Header(){
   useEffect(() => {
     lockScroll(open);
     if (!open) return;
+    // conteúdo atrás do menu fica fora do alcance do teclado e de leitores de tela
+    const behind = document.querySelectorAll("main, footer, .skip-link");
+    behind.forEach(n => n.setAttribute("inert", ""));
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape"){ setOpen(false); document.getElementById("burger")?.focus(); } };
     const desktop = window.matchMedia("(min-width: 981px)");
     const onWide = (e: MediaQueryListEvent) => { if (e.matches) setOpen(false); };
     document.addEventListener("keydown", onKey);
     desktop.addEventListener("change", onWide);
-    return () => { document.removeEventListener("keydown", onKey); desktop.removeEventListener("change", onWide); lockScroll(false); };
+    return () => {
+      document.removeEventListener("keydown", onKey); desktop.removeEventListener("change", onWide); lockScroll(false);
+      behind.forEach(n => n.removeAttribute("inert"));
+    };
   }, [open]);
 
   const lit = hover ?? active;
@@ -92,12 +98,12 @@ export function Header(){
     <>
       <div className="pointer-events-none fixed inset-x-0 top-4 z-500 flex justify-center px-4">
         <motion.header
-          className="pill pointer-events-auto max-lg:max-w-[440px]"
+          className="pill pointer-events-auto max-lg:max-w-[440px] lg:w-auto!"
           initial={false}
           animate={{ width: desktop || small ? "auto" : "100%" }}
           transition={animReady ? FOLD : { duration: 0 }}
         >
-          <Link href={href(lang)} className="pill-logo" aria-label={t.home_label} onClick={toTop}>
+          <Link href={href(lang)} prefetch={false} className="pill-logo" aria-label={t.home_label} onClick={toTop}>
             <svg viewBox="360 270 560 700" aria-hidden="true" focusable="false"><LogoP /></svg>
           </Link>
 
