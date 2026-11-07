@@ -1,8 +1,10 @@
 /* Layout raiz: um por idioma (/ = português, /en = inglês), todos gerados estaticamente */
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { RevealObserver } from "@/components/motion/RevealObserver";
 import { I18nProvider } from "@/components/I18nProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Footer } from "@/components/layout/Footer";
@@ -18,7 +20,7 @@ export const metadata: Metadata = baseMetadata;
 export const viewport: Viewport = { themeColor: "#0B0806", colorScheme: "dark light" };
 
 /* sem JavaScript: tudo o que anima na entrada já aparece pronto */
-const NOSCRIPT_CSS = "[data-reveal]{opacity:1!important;transform:none!important;filter:none!important}.loader{display:none!important}";
+const NOSCRIPT_CSS = "[data-reveal],[data-motion]{opacity:1!important;transform:none!important;filter:none!important}.loader{display:none!important}";
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">){
   const { lang } = await params;
@@ -35,9 +37,10 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <I18nProvider lang={lang} t={t}>
           <MotionProvider>
             <SmoothScroll />
+            <RevealObserver />
             <SkipLink t={t} />
             {children}
-            <Footer lang={lang} t={t} />
+            <Suspense><Footer lang={lang} t={t} /></Suspense>
           </MotionProvider>
         </I18nProvider>
       </body>

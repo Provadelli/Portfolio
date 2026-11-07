@@ -16,6 +16,7 @@ export function LangSwitch(){
         <Link
           key={l}
           href={switchPath(pathname, l)}
+          prefetch={false}
           onClick={() => { document.cookie = `lang=${l}; path=/; max-age=31536000; samesite=lax`; }}
           className="lang__btn inline-flex items-center justify-center"
           aria-current={l === lang ? "true" : undefined}

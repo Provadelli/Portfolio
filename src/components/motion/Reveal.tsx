@@ -1,46 +1,27 @@
-"use client";
-/* Surge ao entrar na tela (substitui o antigo .reveal).
-   - espera a tela de carregamento terminar
-   - com movimento reduzido, só aparece (sem deslocamento), via <MotionConfig reducedMotion="user">
-   - sem JavaScript, o CSS em <noscript> mostra tudo ([data-reveal]) */
-import { motion, useInView, type HTMLMotionProps } from "motion/react";
-import { useRef } from "react";
-import { useLoaderDone } from "@/lib/loader-state";
-import { EASE_SOFT } from "@/lib/motion";
+/* Surge ao entrar na tela. HTML puro + transição CSS ([data-reveal] em globals.css):
+   nada para hidratar. Quem marca o elemento como visível (.is-in) é o RevealObserver,
+   um único IntersectionObserver para a página toda, que espera a tela de carregamento.
+   - com movimento reduzido, só aparece (sem deslocamento)
+   - sem JavaScript, o CSS em <noscript> mostra tudo */
+import type { ComponentPropsWithoutRef, CSSProperties } from "react";
 
-const tags = {
-  div: motion.div, p: motion.p, h2: motion.h2, h3: motion.h3,
-  ul: motion.ul, li: motion.li, dl: motion.dl, a: motion.a
-} as const;
+const tags = ["div", "p", "h2", "h3", "ul", "li", "dl", "a"] as const;
+type Tag = (typeof tags)[number];
 
 type Props = {
-  as?: keyof typeof tags;
+  as?: Tag;
   /** atraso em segundos */
   delay?: number;
   /** distância inicial em px */
   y?: number;
-  /** classe aplicada quando estiver visível (ex.: "is-visible" na linha do tempo) */
-  visibleClass?: string;
-  href?: string;
-} & Omit<HTMLMotionProps<"div">, "initial" | "animate" | "transition" | "ref">;
+} & ComponentPropsWithoutRef<"div"> & { href?: string };
 
-export function Reveal({ as = "div", delay = 0, y = 26, visibleClass, className, children, ...rest }: Props){
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.15, margin: "0px 0px -60px 0px" });
-  const ready = useLoaderDone();
-  const show = inView && ready;
-  const Comp = tags[as] as typeof motion.div;
+/* variáveis lidas pelo CSS: atraso e deslocamento */
+export const revealVars = (delay = 0, y = 26) => ({ "--rd": `${delay}s`, "--ry": `${y}px` }) as CSSProperties;
 
+export function Reveal({ as: Comp = "div", delay = 0, y = 26, style, children, ...rest }: Props){
   return (
-    <Comp
-      ref={ref as React.Ref<HTMLDivElement>}
-      data-reveal=""
-      initial={{ opacity: 0, y }}
-      animate={show ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.9, ease: EASE_SOFT, delay }}
-      className={[className, show && visibleClass].filter(Boolean).join(" ") || undefined}
-      {...rest}
-    >
+    <Comp data-reveal="" style={{ ...revealVars(delay, y), ...style }} {...(rest as object)}>
       {children}
     </Comp>
   );

@@ -162,6 +162,8 @@ const pt = {
   t3_k: "No ar",
   t4_k: "Agora",
   faq_side: "Respostas rápidas sobre como eu trabalho. Não encontrou a sua? Me mande uma mensagem.",
+  anim_pause: "Pausar animação de fundo",
+  anim_play: "Retomar animação de fundo",
 };
 
 export default pt;

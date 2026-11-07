@@ -24,7 +24,7 @@ export function NotFoundView(){
   const t = getDictionary(lang);
   const digit = (d: string, i: number, em = false) => (
     <motion.span
-      key={i} className="inline-block" data-reveal=""
+      key={i} className="inline-block" data-motion=""
       initial={{ opacity: 0, y: "0.3em", rotate: em ? -8 : 0 }}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 0.9, ease: EASE_BRAND, delay: 0.1 + i * 0.1 }}

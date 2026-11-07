@@ -14,8 +14,11 @@ export function Hero({ t }: { t: Dictionary }){
     <section className="relative flex min-h-svh items-center overflow-hidden bg-espresso" aria-labelledby="hero-title">
       <LiquidRibbons />
       {/* vinheta extra: escurece as bordas de cima/baixo e o centro, onde fica o conteúdo,
-          e desfoca levemente as faixas (backdrop-blur); textos e foto ficam acima, nítidos */}
-      <div className="pointer-events-none absolute inset-0 z-1 backdrop-blur-[5px] bg-[radial-gradient(50%_46%_at_50%_50%,rgba(6,4,3,.5),transparent_75%),linear-gradient(180deg,rgba(6,4,3,.55),transparent_20%,transparent_80%,rgba(6,4,3,.85))]" aria-hidden="true" />
+          (o desfoque das faixas vem da própria resolução baixa do canvas); textos e foto ficam acima */}
+      <div className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(50%_46%_at_50%_50%,rgba(6,4,3,.5),transparent_75%),linear-gradient(180deg,rgba(6,4,3,.55),transparent_20%,transparent_80%,rgba(6,4,3,.85))]" aria-hidden="true" />
+      {/* celular e tablet: o texto ocupa a largura toda e as faixas passam atrás dele; uma camada
+          escura a mais garante o contraste do texto (WCAG 1.4.3) */}
+      <div className="pointer-events-none absolute inset-0 z-1 bg-[rgba(6,4,3,.5)] lg:hidden" aria-hidden="true" />
 
       <div className="relative z-3 mx-auto grid w-full max-w-[1040px] items-center gap-14 px-5 pt-28 pb-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] lg:gap-16">
         {/* textos à esquerda */}
@@ -43,7 +46,7 @@ export function Hero({ t }: { t: Dictionary }){
 
         {/* foto à direita: a foto "viajante" (TravelingPhoto) parte daqui e desce até o Sobre */}
         <div className="photo-slot-hero relative w-full max-w-[280px] lg:max-w-none" data-photo-slot="hero">
-          <IdCard priority sizes="(min-width: 981px) 360px, 280px" />
+          <IdCard priority />
         </div>
       </div>
 

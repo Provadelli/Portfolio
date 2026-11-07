@@ -3,7 +3,8 @@
    Robôs de busca e prévias de link sempre recebem o português. */
 import { NextResponse, type NextRequest } from "next/server";
 
-const BOT = /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|linkedin|telegram|discord|preview|lighthouse/i;
+/* robôs de busca, prévias de link e agentes de IA (ChatGPT-User, Claude-User, Perplexity-User...) */
+const BOT = /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|linkedin|telegram|discord|preview|lighthouse|chatgpt|openai|claude|anthropic|perplexity|gemini|google|mistral|cohere|bing|duckduck|yandex|baidu|headless/i;
 
 export function proxy(request: NextRequest){
   const saved = request.cookies.get("lang")?.value;

@@ -36,11 +36,11 @@ export function ServiceCards({ items, cta }: { items: Service[]; cta: string }){
 
   return (
     <>
-      <ul className="grid gap-5 lg:grid-cols-2" onPointerMove={track} onPointerLeave={() => setActive(null)}>
+      <ul className="grid gap-5 sm:grid-cols-2" onPointerMove={track} onPointerLeave={() => setActive(null)}>
         {items.map((s, i) => (
           <motion.li
             key={s.title}
-            data-reveal=""
+            data-motion=""
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px 0px -60px 0px" }}

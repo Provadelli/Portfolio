@@ -1,43 +1,64 @@
 "use client";
 /* Fundo do hero em WebGL2: ondas vítreas nas laterais, em movimento contínuo.
-   - nítido (até 2x de densidade) e reduz a resolução sozinho se o FPS cair
+   - resolução baixa (macio, barato na GPU) e reduz ainda mais sozinho se o FPS cair
    - pausa fora da tela e com a aba oculta
    - com "reduzir movimento": um quadro parado
    - sem WebGL: fica o gradiente CSS (.hero__fallback) por baixo
-   - começa depois da primeira pintura (requestIdleCallback): o teste de GPU e a compilação do
-     shader não atrasam o carregamento da página
+   - começa depois do carregamento da página (load + requestIdleCallback): o teste de GPU e a
+     compilação do shader não disputam CPU com a primeira pintura
+   - sem GPU de verdade (renderização por software): nem tenta, fica o fallback
+   - botão de pausa (WCAG 2.2.2: movimento automático com mais de 5s precisa poder parar)
    - o tamanho do canvas vem de um ResizeObserver (nada de ler clientWidth a cada quadro,
      o que forçava o navegador a recalcular o layout) */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/components/I18nProvider";
+import { hasFastGL } from "@/lib/gl";
 import { LOADER_DONE } from "@/lib/loader-state";
 import { FRAG, VERT } from "./ribbons.glsl";
 
+/* compila sem consultar o status (consultar força o navegador a esperar o driver);
+   erros aparecem no link */
 function compile(gl: WebGL2RenderingContext, type: number, src: string){
   const sh = gl.createShader(type)!;
   gl.shaderSource(sh, src);
   gl.compileShader(sh);
-  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) ?? "shader");
   return sh;
 }
 
 export function LiquidRibbons(){
+  const { t } = useI18n();
   const ref = useRef<HTMLCanvasElement>(null);
+  const ctl = useRef<{ pause(on: boolean): void } | null>(null);
+  const [live, setLive] = useState(false);       // animação rodando de fato (mostra o botão de pausa)
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => { ctl.current?.pause(paused); }, [paused]);
 
   useEffect(() => {
     const cv = ref.current;
     if (!cv) return;
     let dispose: (() => void) | undefined;
-    const init = () => {
+    let cancelled = false;
+    const init = async () => {
+      if (!hasFastGL()){ cv.style.display = "none"; return; }
       const gl = cv.getContext("webgl2", { antialias: false, alpha: false, depth: false, powerPreference: "high-performance" });
       if (!gl){ cv.style.display = "none"; return; }
 
       let prog: WebGLProgram;
       try {
         prog = gl.createProgram()!;
-        gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
-        gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
+        const vs = compile(gl, gl.VERTEX_SHADER, VERT), fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+        gl.attachShader(prog, vs);
+        gl.attachShader(prog, fs);
         gl.linkProgram(prog);
-        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog) ?? "link");
+        // compilação em segundo plano no driver: espera sem travar a página (nada de tarefa longa)
+        const par = gl.getExtension("KHR_parallel_shader_compile");
+        if (par) while (!gl.getProgramParameter(prog, par.COMPLETION_STATUS_KHR)){
+          await new Promise(r => setTimeout(r, 32));
+          if (cancelled) return;
+        }
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS))
+          throw new Error(gl.getShaderInfoLog(fs) || gl.getShaderInfoLog(vs) || gl.getProgramInfoLog(prog) || "link");
       } catch (err){
         console.warn("[hero] WebGL indisponível, usando o fundo estático", err);
         cv.style.display = "none";
@@ -58,8 +79,11 @@ export function LiquidRibbons(){
       };
 
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let scale = Math.min(window.devicePixelRatio || 1, 2);
-      let raf = 0, visible = true, lost = false;
+      /* resolução baixa de propósito: ampliado pelo navegador (bilinear), o desenho fica macio
+         como um desfoque leve, sem o custo de um backdrop-filter em tela cheia */
+      const SOFT = 0.35;
+      let scale = SOFT;
+      let raf = 0, visible = true, lost = false, halted = false;
       const t0 = performance.now();
       let introStart = -1;
       const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
@@ -90,7 +114,7 @@ export function LiquidRibbons(){
          (vira imagem de fundo) e libera o WebGL, para não pesar no resto da página */
       const freeze = () => {
         lost = true;
-        scale = Math.min(window.devicePixelRatio || 1, 1.5);   // um único quadro nítido para a imagem
+        scale = SOFT;                                          // um único quadro para a imagem
         draw(6, 1);
         try {
           const fb = cv.previousElementSibling as HTMLElement | null;
@@ -102,14 +126,16 @@ export function LiquidRibbons(){
 
       const frame = (now: number) => {
         raf = 0;
-        if (!visible || lost || document.hidden) return;
-        // a cada ~1s mede o FPS: entre 5 e 40 reduz a resolução. Abaixo de 5 é o navegador
-        // segurando a aba (segundo plano, economia de bateria) — isso não diz nada sobre a GPU
+        if (!visible || lost || halted || document.hidden) return;
+        // a cada ~1s mede o FPS: entre 5 e 40 reduz a resolução; se já está no mínimo e ainda
+        // abaixo de 24, congela num quadro estático. Abaixo de 5 é o navegador segurando a aba
+        // (segundo plano, economia de bateria) — isso não diz nada sobre a GPU
         winFrames++;
         if (now - winStart >= 1000){
           const fps = (winFrames * 1000) / (now - winStart);
           winStart = now; winFrames = 0;
-          if (fps >= 5 && fps < 40 && scale > 0.45) scale = Math.max(0.4, scale * 0.6);
+          if (fps >= 5 && fps < 40 && scale > 0.2) scale = Math.max(0.18, scale * 0.6);
+          else if (fps >= 5 && fps < 24){ freeze(); setLive(false); return; }
         }
         mouse.x += (mouse.tx - mouse.x) * 0.04;
         mouse.y += (mouse.ty - mouse.y) * 0.04;
@@ -117,7 +143,7 @@ export function LiquidRibbons(){
         draw((now - t0) / 1000, 1 - Math.pow(1 - k, 3));
         raf = requestAnimationFrame(frame);
       };
-      const play = () => { if (!raf && !reduce && !lost){ winStart = performance.now(); winFrames = 0; raf = requestAnimationFrame(frame); } };
+      const play = () => { if (!raf && !reduce && !lost && !halted){ winStart = performance.now(); winFrames = 0; raf = requestAnimationFrame(frame); } };
 
       const ro = new ResizeObserver(([e]) => {
         cssW = e.contentRect.width; cssH = e.contentRect.height;
@@ -137,22 +163,14 @@ export function LiquidRibbons(){
       const onLost = (e: Event) => { e.preventDefault(); lost = true; cv.style.display = "none"; };
       cv.addEventListener("webglcontextlost", onLost);
 
-      /* custo real de um quadro na GPU (gl.finish espera a GPU terminar), medido ao abrir,
-         com a tela ainda preta (intro = 0). Reduz a resolução até caber em ~20ms;
-         se nem na mínima couber, congela num quadro estático. */
-      const probe = () => {
-        const costs = [0, 1, 2].map(i => { const a = performance.now(); draw(i * 0.1, 0); gl.finish(); return performance.now() - a; });
-        return costs.sort((a, b) => a - b)[1];
-      };
-      if (!reduce){
-        probe();                                    // aquecimento (compilação do shader no driver)
-        while (probe() > 20 && scale > 0.45) scale = Math.max(0.4, scale * 0.6);
-        if (probe() > 20){ freeze(); }
+      if (reduce) draw(6, 1); else play();
+      if (!reduce && !lost){
+        ctl.current = { pause: on => { halted = on; if (on){ cancelAnimationFrame(raf); raf = 0; } else play(); } };
+        setLive(true);
       }
 
-      if (reduce) draw(6, 1); else play();
-
       dispose = () => {
+        ctl.current = null;
         cancelAnimationFrame(raf);
         ro.disconnect(); io.disconnect();
         document.removeEventListener("visibilitychange", onVis);
@@ -165,19 +183,34 @@ export function LiquidRibbons(){
       };
     };
 
-    // só depois da primeira pintura, quando o navegador estiver livre (no máximo ~1,2s)
+    // só depois do load da página, quando o navegador estiver livre
     const idle = typeof window.requestIdleCallback === "function";
-    const id = idle ? window.requestIdleCallback(init, { timeout: 1200 }) : window.setTimeout(init, 300);
+    let id = 0;
+    const run = () => { init().catch(err => { console.warn("[hero] falha no WebGL", err); cv.style.display = "none"; }); };
+    const schedule = () => { id = idle ? window.requestIdleCallback(run, { timeout: 2000 }) : window.setTimeout(run, 300); };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
     return () => {
+      cancelled = true;
+      window.removeEventListener("load", schedule);
       if (idle) window.cancelIdleCallback(id); else window.clearTimeout(id);
       dispose?.();
     };
   }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-      <div className="hero__fallback absolute inset-0" />
-      <canvas ref={ref} className="absolute inset-0 size-full" />
-    </div>
+    <>
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="hero__fallback absolute inset-0" />
+        <canvas ref={ref} className="absolute inset-0 size-full" />
+      </div>
+      {live && (
+        <button type="button" className="anim-toggle" aria-pressed={paused} aria-label={paused ? t.anim_play : t.anim_pause} onClick={() => setPaused(v => !v)}>
+          {paused
+            ? <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" /></svg>
+            : <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>}
+        </button>
+      )}
+    </>
   );
 }
