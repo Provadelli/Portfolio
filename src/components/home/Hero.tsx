@@ -13,9 +13,9 @@ export function Hero({ t }: { t: Dictionary }){
   return (
     <section className="relative flex min-h-svh items-center overflow-hidden bg-espresso" aria-labelledby="hero-title">
       <LiquidRibbons />
-      {/* vinheta extra: escurece as bordas de cima/baixo e o centro, onde fica o conteúdo,
-          (o desfoque das faixas vem da própria resolução baixa do canvas); textos e foto ficam acima */}
-      <div className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(50%_46%_at_50%_50%,rgba(6,4,3,.5),transparent_75%),linear-gradient(180deg,rgba(6,4,3,.55),transparent_20%,transparent_80%,rgba(6,4,3,.85))]" aria-hidden="true" />
+      {/* vinheta: as faixas ficam nítidas nas laterais e esmaecem atrás do conteúdo (centro),
+          para o foco ser o texto e a foto; textos e foto ficam acima */}
+      <div className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(46%_50%_at_50%_50%,rgba(6,4,3,.46),transparent_78%),linear-gradient(180deg,rgba(6,4,3,.4),transparent_18%,transparent_82%,rgba(6,4,3,.75))]" aria-hidden="true" />
       {/* celular e tablet: o texto ocupa a largura toda e as faixas passam atrás dele; uma camada
           escura a mais garante o contraste do texto (WCAG 1.4.3) */}
       <div className="pointer-events-none absolute inset-0 z-1 bg-[rgba(6,4,3,.5)] lg:hidden" aria-hidden="true" />
