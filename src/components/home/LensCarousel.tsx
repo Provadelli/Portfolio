@@ -352,6 +352,9 @@ export function LensCarousel({ projects }: { projects: Project[] }){
         gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D_ARRAY, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        // a lupa comprime na horizontal e estica na vertical: filtro anisotrópico mantém o texto firme em movimento
+        const aniso = gl.getExtension("EXT_texture_filter_anisotropic");
+        if (aniso) gl.texParameterf(gl.TEXTURE_2D_ARRAY, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT) as number));
         gl.uniform1i(u.tex, 0);
         ready = true;
 

@@ -13,9 +13,9 @@ const jobs = [
   ["atelier2.png", "atelier-2.webp", CARD_W],
   ["shinatal.webp", "shinatal.webp", CARD_W],
   ["shinatal2.png", "shinatal-2.webp", CARD_W],
-  ["npcode.png", "npcode.webp", CARD_W],
-  ["npcode2.png", "npcode-2.webp", CARD_W],
-  ["circuito.jpeg", "circuito.webp", CARD_W],
+  ["vielatech.png", "vielatech.webp", CARD_W],
+  ["vielatech2.png", "vielatech-2.webp", CARD_W],
+  ["ortofortino.png", "ortofortino.webp", CARD_W],
   ["pedro.png", "pedro.webp", 680]
 ];
 

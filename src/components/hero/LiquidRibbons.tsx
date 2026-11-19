@@ -1,6 +1,6 @@
 "use client";
 /* Fundo do hero em WebGL2: ondas vítreas nas laterais, em movimento contínuo.
-   - resolução baixa (macio, barato na GPU) e reduz ainda mais sozinho se o FPS cair
+   - resolução nítida (segue o DPR da tela, com teto de pixels) e reduz sozinho, até um piso, se o FPS cair
    - pausa fora da tela e com a aba oculta
    - com "reduzir movimento": um quadro parado
    - sem WebGL: fica o gradiente CSS (.hero__fallback) por baixo
@@ -79,10 +79,11 @@ export function LiquidRibbons(){
       };
 
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      /* resolução baixa de propósito: ampliado pelo navegador (bilinear), o desenho fica macio
-         como um desfoque leve, sem o custo de um backdrop-filter em tela cheia */
-      const SOFT = 0.35;
-      let scale = SOFT;
+      /* nitidez: a resolução acompanha a densidade de pixels da tela (até 1.5x), limitada a um
+         orçamento de pixels para não pesar na GPU. "quality" só cai se o FPS cair (piso 0.55) */
+      const BASE = Math.min(window.devicePixelRatio || 1, 1.5) * 0.9;
+      const MAX_PX = 1_700_000, Q_FLOOR = 0.55;
+      let quality = 1;
       let raf = 0, visible = true, lost = false, halted = false;
       const t0 = performance.now();
       let introStart = -1;
@@ -91,6 +92,7 @@ export function LiquidRibbons(){
 
       let cssW = cv.clientWidth, cssH = cv.clientHeight;          // atualizados pelo ResizeObserver
       const resize = () => {
+        const scale = Math.min(BASE * quality, Math.sqrt(MAX_PX / Math.max(1, cssW * cssH)));
         const w = Math.max(1, Math.round(cssW * scale));
         const h = Math.max(1, Math.round(cssH * scale));
         if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
@@ -114,11 +116,11 @@ export function LiquidRibbons(){
          (vira imagem de fundo) e libera o WebGL, para não pesar no resto da página */
       const freeze = () => {
         lost = true;
-        scale = SOFT;                                          // um único quadro para a imagem
+        quality = 1;                                           // um único quadro para a imagem, em boa resolução
         draw(6, 1);
         try {
           const fb = cv.previousElementSibling as HTMLElement | null;
-          if (fb) fb.style.background = `url(${cv.toDataURL("image/jpeg", 0.85)}) center / cover`;
+          if (fb) fb.style.background = `url(${cv.toDataURL("image/jpeg", 0.92)}) center / cover`;
         } catch { /* sem captura: fica o gradiente CSS */ }
         cv.style.display = "none";
         gl.getExtension("WEBGL_lose_context")?.loseContext();
@@ -134,7 +136,7 @@ export function LiquidRibbons(){
         if (now - winStart >= 1000){
           const fps = (winFrames * 1000) / (now - winStart);
           winStart = now; winFrames = 0;
-          if (fps >= 5 && fps < 40 && scale > 0.2) scale = Math.max(0.18, scale * 0.6);
+          if (fps >= 5 && fps < 40 && quality > Q_FLOOR + 0.01) quality = Math.max(Q_FLOOR, quality * 0.75);
           else if (fps >= 5 && fps < 24){ freeze(); setLive(false); return; }
         }
         mouse.x += (mouse.tx - mouse.x) * 0.04;

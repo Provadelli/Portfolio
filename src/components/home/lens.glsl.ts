@@ -32,8 +32,12 @@ float lens(float d, out float c){
   return sign(d) * (uFlat + (1.0 - uFlat) * (t + uBend * t * t));
 }
 
-/* cor (pré-multiplicada) do ponto s da faixa, na altura yy */
-vec4 strip(float s, float yy, float aa){
+/* cor (pré-multiplicada) do ponto s da faixa, na altura yy.
+   gx/gy: quanto o uv anda por pixel do dispositivo (derivadas analíticas). A amostragem usa
+   textureGrad e nunca sai da função antes dela: com o "texture" comum o nível de mipmap vinha de
+   derivadas calculadas dentro de um desvio e através do floor() entre cards, e as bordas e o
+   texto cintilavam enquanto a faixa andava */
+vec4 strip(float s, float yy, float aa, vec2 g){
   float stepW = uCard.x + uGap;
   float k = floor(s / stepW);
   float lx = s - k * stepW;
@@ -43,9 +47,8 @@ vec4 strip(float s, float yy, float aa){
   vec2 q = abs(p) - (uCard * 0.5 - r);
   float dist = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r;
   float a = 1.0 - smoothstep(-aa, aa, dist);
-  if (a <= 0.0) return vec4(0.0);
-  vec2 uv = vec2(lx / uCard.x, 0.5 - yy / uCard.y);
-  vec4 c = texture(uTex, vec3(uv, idx));
+  vec2 uv = clamp(vec2(lx / uCard.x, 0.5 - yy / uCard.y), 0.0, 1.0);
+  vec4 c = textureGrad(uTex, vec3(uv, idx), vec2(g.x / uCard.x, 0.0), vec2(0.0, g.y / uCard.y));
   return vec4(c.rgb * a, a);
 }
 
@@ -64,15 +67,19 @@ void main(){
   float s = uPos + u * halfW;
   float aa = 0.9 * c;
 
-  vec4 m = strip(s, yy, aa);
+  vec2 g = vec2(c, 1.0 / sy) / uPx;                             // derivadas de s e yy por pixel do dispositivo
+  vec4 m = strip(s, yy, aa, g);
   vec3 col = m.rgb;
   float ca = (c - 1.0) * 2.4;                                   // refração: R e B escorregam
   if (ca > 0.05){
     float dir = sign(d);
-    col = vec3(strip(s + ca * dir, yy, aa).r, m.g, strip(s - ca * dir, yy, aa).b);
+    col = vec3(strip(s + ca * dir, yy, aa, g).r, m.g, strip(s - ca * dir, yy, aa, g).b);
   }
   float alpha = m.a;
   col *= mix(1.0, 0.6, pow(t, 1.25));                           // a parte curvada recebe menos luz
+  // luz estável: prints claros (fundo branco) não estouram nem brilham mais que os escuros
+  float lum = dot(col, vec3(0.299, 0.587, 0.114));
+  col *= 1.0 - 0.16 * smoothstep(0.55, 0.95, lum);
 
   // traço de luz onde começa o desnível e aro da lente perto da borda
   float band = 1.0 - smoothstep(uCard.y * 0.5, uCard.y * 0.62, abs(yy));
@@ -82,12 +89,12 @@ void main(){
   float rim = exp(-e2 * e2 / 26.0) * band;
   vec3 warm = vec3(1.0, 0.9, 0.72);
   vec3 tint = d < 0.0 ? vec3(0.35, 0.78, 0.5) : vec3(0.95, 0.4, 0.4);   // verde / vermelho, bem sutis
-  float gA = clamp(streak * 0.55 + rim * 0.35, 0.0, 1.0);
+  float gA = clamp(streak * 0.45 + rim * 0.3, 0.0, 1.0) * (1.0 - 0.85 * lum);   // menos brilho sobre o que já é claro
   vec3 gC = mix(warm, mix(warm, tint, 0.45), smoothstep(0.0, 1.0, rim / max(streak + rim, 1e-3)));
 
   // some nas extremidades da tela
   float fade = 1.0 - smoothstep(0.86, 1.0, abs(d));
-  vec3 rgb = (col + gC * gA * (1.0 - alpha * 0.4)) * fade;
+  vec3 rgb = (col + gC * gA * (1.0 - alpha * 0.6)) * fade;
   float outA = clamp(alpha + gA * (1.0 - alpha), 0.0, 1.0) * fade;
   outColor = vec4(min(rgb, vec3(outA)), outA);
 }`;

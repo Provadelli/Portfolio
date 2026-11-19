@@ -372,28 +372,16 @@
   .loader{
     @apply fixed inset-0 z-1000 grid place-items-center overflow-hidden bg-espresso text-cream;
     clip-path: inset(0 0 0 0);
-    transition: clip-path 1s cubic-bezier(.76,0,.24,1);
+    transition: clip-path .6s cubic-bezier(.76,0,.24,1);
   }
   .loader.is-done{ clip-path: inset(0 0 100% 0); }
-  .loader__grid{
-    @apply absolute inset-0;
-    background-image: linear-gradient(rgba(224,190,114,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(224,190,114,.06) 1px, transparent 1px);
-    background-size: 56px 56px; mask: radial-gradient(circle at 50% 50%, #000 0%, transparent 70%);
-  }
-  .loader__hud{ @apply absolute flex items-center gap-3 font-mono text-[10px] tracking-[.18em] text-[#8C7A64] opacity-0 sm:text-[11px]; animation: fadeIn .6s ease .3s forwards; }
   .loader__letter{ @apply relative h-25 w-20 sm:h-30 sm:w-24; }
   .loader__letter svg{ @apply absolute inset-0 size-full overflow-visible; }
-  .lp--ghost path{ fill: none; stroke: #E0BE72; stroke-width: 5; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s cubic-bezier(.5,0,.3,1) .15s forwards; }
+  .lp--ghost path{ fill: none; stroke: #E0BE72; stroke-width: 5; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .7s cubic-bezier(.5,0,.3,1) forwards; }
   .lp--ghost path:not(:first-child){ stroke-width: 3; }
   .lp--ghost path[fill="#E2C79A"], .lp--ghost path[fill="#8A5A2E"]{ stroke: #E8DFCD; }
   .loader__fill{ @apply absolute inset-0; clip-path: inset(calc(100% - var(--p, 0) * 1%) 0 0 0); }
   .lp--fill path:first-child{ fill: #8A5530; }
-  .loader__name{ @apply m-0 flex font-display text-xl font-semibold tracking-[-.02em] sm:text-2xl; }
-  .loader__name span{ @apply inline-block translate-y-3 opacity-0; animation: letterIn .6s var(--ease-brand) forwards; animation-delay: calc(.5s + var(--d) * .035s); }
-  .boot{ @apply m-0 grid list-none gap-1 p-0 font-mono text-xs text-[#8C7A64]; }
-  .boot li{ @apply opacity-25 transition-opacity duration-300; }
-  .boot li.is-on{ @apply text-gold-light opacity-100; }
-  .boot li.is-on::after{ content: " ✓"; @apply text-success; }
   .loader__bar{ @apply block h-px w-full overflow-hidden bg-[rgba(224,190,114,.18)]; }
   .loader__bar > span{ @apply block h-full; width: calc(var(--p, 0) * 1%); background: linear-gradient(90deg, #2E7D4F, #F4EFE6, #C3343A); }
 }
@@ -402,8 +390,6 @@
    ANIMAÇÕES
 ========================================================= */
 @keyframes draw{ to{ stroke-dashoffset: 0; } }
-@keyframes fadeIn{ to{ opacity: 1; } }
-@keyframes letterIn{ to{ opacity: 1; transform: none; } }
 @keyframes pulse{ 0%{ box-shadow: 0 0 0 0 rgba(123,220,163,.6); } 70%,100%{ box-shadow: 0 0 0 9px rgba(123,220,163,0); } }
 @keyframes confirmIn{ from{ opacity: 0; transform: translateY(16px) scale(.97); } to{ opacity: 1; transform: none; } }
 @keyframes cue{ from{ transform: translateY(-100%); } to{ transform: translateY(200%); } }
@@ -419,7 +405,6 @@
 ========================================================= */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
-  .loader__name span, .loader__hud{ opacity: 1 !important; transform: none !important; }
   .lp--ghost path{ stroke-dashoffset: 0; }
   .viz .grow, .viz .rise{ transform: none; }
   .viz .draw{ stroke-dashoffset: 0; }

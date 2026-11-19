@@ -91,10 +91,10 @@ vec4 ribbon(vec2 q, float t, float seed, float halfW, float scale, float front){
   vec3 body = mix(vec3(0.025, 0.017, 0.009), tint * 0.45, (diff * 0.85 + 0.1) * planeL);
   vec3 col = body * (1.0 - shade)
            + tint  * sheen * diff * planeL * (0.45 + 0.25 * pulse)
-           + goldHi * spec * planeL * 0.6
-           + tint2 * fres * (0.22 + 0.5 * lit)
-           + goldHi * crease * 0.3 * front
-           + goldHi * fil1 * mix(0.35, 0.9, front);
+           + goldHi * spec * planeL * 0.45
+           + tint2 * fres * (0.2 + 0.45 * lit)
+           + goldHi * crease * 0.26 * front
+           + goldHi * fil1 * mix(0.3, 0.75, front);
 
   // vidro denso
   float alpha = cov * mix(0.86, 1.0, clamp(fres + fil1, 0.0, 1.0));
@@ -126,7 +126,7 @@ void main(){
     // duas faixas por lado, presas à borda: a de trás é só volume, larga e apagada;
     // a da frente tem a dobra e o filete de luz
     vec4 back = ribbon(q, t - 1.6, seed + 0.9, halfW, scale * 1.32, 0.0);
-    c = c * (1.0 - back.a) + back.rgb * 0.42;
+    c = c * (1.0 - back.a) + back.rgb * 0.36;
     vec4 front = ribbon(q, t, seed, halfW, scale * 0.86, 1.0);
     c = c * (1.0 - front.a) + front.rgb;
   }
