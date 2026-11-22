@@ -34,11 +34,11 @@ export function pageMetadata({ lang, path, title, description, ogAlt }: {
 export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: "Pedro Provadelli",
-  authors: [{ name: "Pedro Lucas Provadelli", url: SITE_URL }],
-  creator: "Pedro Lucas Provadelli",
-  publisher: "Pedro Lucas Provadelli",
+  authors: [{ name: "Pedro Lucas Souza Provadelli", url: SITE_URL }],
+  creator: "Pedro Lucas Souza Provadelli",
+  publisher: "Pedro Lucas Souza Provadelli",
   category: "technology",
-  keywords: ["Pedro Provadelli", "Pedro Lucas Provadelli", "software engineer", "engenheiro de software", "desenvolvedor web", "web developer", "FIAP", "portfólio", "portfolio", "Python", "automação", "sistemas embarcados", "embedded systems"],
+  keywords: ["Pedro Provadelli", "Pedro Lucas Souza Provadelli", "Pedro Lucas Provadelli", "criador de sites", "criação de sites", "desenvolvedor de sites", "desenvolvedor web autônomo", "landing page", "website creator", "software engineer", "engenheiro de software", "desenvolvedor web", "web developer", "FIAP", "portfólio", "portfolio", "Python", "automação", "sistemas embarcados", "embedded systems"],
   // snippets completos e imagem grande nos resultados (Google, Discover e AI Overviews)
   robots: {
     index: true, follow: true,

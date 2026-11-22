@@ -36,13 +36,13 @@ function profile(lang: Lang){
 const header = () => {
   const pt = getDictionary("pt"), en = getDictionary("en");
   return [
-    "# Pedro Provadelli",
+    "# Pedro Provadelli (Pedro Lucas Souza Provadelli)",
     "",
-    `> ${plain(en.meta_desc)}`,
+    `> ${plain(pt.meta_desc)}`,
     "",
-    `${plain(en.a1)} ${plain(en.hero_status)}.`,
+    `${plain(pt.a1)} ${plain(pt.hero_status)}.`,
     "",
-    `(Português) ${plain(pt.meta_desc)}`
+    `(English) ${plain(en.a1)} ${plain(en.hero_status)}.`
   ].join("\n");
 };
 

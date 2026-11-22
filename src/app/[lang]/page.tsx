@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]">){
   const lang = (await params).lang as Lang;
   const t = getDictionary(lang);
   return {
-    ...pageMetadata({ lang, path: "/", title: "Pedro Provadelli | Software Engineer", description: t.meta_desc, ogAlt: t.photo_alt }),
-    title: { absolute: "Pedro Provadelli | Software Engineer" }
+    ...pageMetadata({ lang, path: "/", title: t.meta_title, description: t.meta_desc, ogAlt: t.photo_alt }),
+    title: { absolute: t.meta_title }
   };
 }
 

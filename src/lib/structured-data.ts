@@ -16,6 +16,7 @@ export function homeGraph(lang: Lang){
   const url = SITE_URL + href(lang);
   const inLanguage = htmlLang(lang);
   const projects = getProjects(t);
+  const services = ([1, 2, 3, 4] as const).map(i => ({ name: plain(t[`s${i}_t`]), description: plain(t[`s${i}_d`]) }));
   const faq = [[t.q1, t.a1], [t.q2, t.a2], [t.q3, t.a3], [t.q4, t.a4], [t.q5, t.a5], [t.q6, t.a6]];
 
   return {
@@ -34,7 +35,7 @@ export function homeGraph(lang: Lang){
         "@type": "ProfilePage",
         "@id": `${url}#profile`,
         url,
-        name: "Pedro Provadelli | Software Engineer",
+        name: t.meta_title,
         description: t.meta_desc,
         inLanguage,
         isPartOf: { "@id": WEBSITE_ID },
@@ -45,22 +46,27 @@ export function homeGraph(lang: Lang){
       {
         "@type": "Person",
         "@id": PERSON_ID,
-        name: "Pedro Lucas Provadelli",
-        alternateName: "Pedro Provadelli",
+        name: "Pedro Lucas Souza Provadelli",
+        alternateName: ["Pedro Provadelli", "Pedro Lucas Provadelli"],
         givenName: "Pedro Lucas",
-        familyName: "Provadelli",
+        familyName: "Souza Provadelli",
         url: SITE_URL,
         image: { "@type": "ImageObject", url: `${SITE_URL}/og-pedro.jpg`, width: 1200, height: 630, caption: t.photo_alt },
-        jobTitle: lang === "en" ? "Software Engineer" : "Engenheiro de Software",
+        jobTitle: lang === "en" ? "Website Creator and Web Developer" : "Criador de Sites e Desenvolvedor Web",
         description: plain(t.a1),
         email: `mailto:${EMAIL}`,
         knowsLanguage: ["pt-BR", "en"],
-        knowsAbout: ["Software Engineering", "Web Development", "HTML", "CSS", "JavaScript", "TypeScript", "Python", "C++", "Arduino", "Embedded Systems", "Automation", "Artificial Intelligence", "Electronics"],
+        knowsAbout: ["Website Creation", "Criação de sites", "Landing Pages", "SEO", "Software Engineering", "Web Development", "HTML", "CSS", "JavaScript", "TypeScript", "Python", "C++", "Arduino", "Embedded Systems", "Automation", "Artificial Intelligence", "Electronics"],
         alumniOf: [
           { "@type": "CollegeOrUniversity", name: "FIAP", alternateName: "Faculdade de Informática e Administração Paulista", url: "https://www.fiap.com.br" },
           { "@type": "EducationalOrganization", name: "FAETEC", alternateName: "Fundação de Apoio à Escola Técnica" }
         ],
-        sameAs: [GITHUB, LINKEDIN]
+        sameAs: [GITHUB, LINKEDIN],
+        /* os quatro serviços da seção Serviços, como ofertas da pessoa (autônomo, sem empresa) */
+        makesOffer: services.map(s => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: s.name, description: s.description, provider: { "@id": PERSON_ID } }
+        }))
       },
       {
         "@type": "ItemList",
