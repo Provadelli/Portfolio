@@ -1,7 +1,7 @@
 /* Textos em português (idioma padrão). Gerado a partir do HTML original; edite à vontade.
    Valores com marcação (<em>, <br>, <a>) são renderizados pelo componente <Html>. */
 const pt = {
-  a1: "Pedro Lucas Souza Provadelli (Pedro Provadelli) é criador de sites e desenvolvedor web autônomo, estudante de Engenharia de Software na FIAP e Técnico em Eletrônica pela FAETEC. Desenvolve sites, landing pages, aplicações web, automações e sistemas embarcados.",
+  a1: "Pedro Lucas Souza Provadelli (Pedro Provadelli) é freelancer de sites e desenvolvedor web, estudante de Engenharia de Software na FIAP e Técnico em Eletrônica pela FAETEC. Desenvolve sites, landing pages, aplicações web, automações e sistemas embarcados.",
   a11y: "Acessibilidade",
   a2: "Desenvolvimento web (HTML, CSS, JavaScript e TypeScript), Python para automação e C++ com Arduino para sistemas embarcados.",
   a3: "Sites institucionais, landing pages, aplicações web e automações. Conte sua ideia pelo formulário e eu respondo com um orçamento e os próximos passos.",
@@ -9,7 +9,7 @@ const pt = {
   a5: "Pelo formulário nesta página, pelo e-mail pedroprovadelli@gmail.com ou pelo LinkedIn e GitHub.",
   a6: "São usados apenas para responder à sua mensagem, conforme a LGPD, e você pode pedir a exclusão a qualquer momento. Veja a <a href=\"/privacidade\">Política de Privacidade</a> e os <a href=\"/termos\">Termos de Uso</a>.",
   about_eyebrow: "01 Sobre",
-  about_p1: "Sou <strong>Pedro Lucas Souza Provadelli</strong>, desenvolvedor web autônomo. Crio sites, landing pages e sistemas para negócios e profissionais que precisam de uma presença digital que funcione, e resolvo problemas digitais do briefing ao ar. Estudo Engenharia de Software na <strong>FIAP</strong> e sou Técnico em Eletrônica pela <strong>FAETEC</strong>.",
+  about_p1: "Sou <strong>Pedro Lucas Souza Provadelli</strong>, desenvolvedor web freelancer. Crio sites, landing pages e sistemas para negócios e profissionais que precisam de uma presença digital que funcione, e resolvo problemas digitais do briefing ao ar. Estudo Engenharia de Software na <strong>FIAP</strong> e sou Técnico em Eletrônica pela <strong>FAETEC</strong>.",
   about_p2: "Tenho experiência com tecnologias como HTML, CSS, JavaScript, Python e C++, além de interesse em IA, automação e desenvolvimento de sistemas. Gosto de aprender na prática, explorar novas tecnologias e transformar desafios em oportunidades para criar.",
   about_title: "Um pouco <em>sobre mim.</em>",
   access_system: "Acessar sistema",
@@ -68,7 +68,7 @@ const pt = {
   hero_cta2: "Ver projetos",
   hero_l1: "Sites que viram",
   hero_l2: "resultado.",
-  hero_lede: "Sou Pedro Lucas Souza Provadelli, criador de sites e desenvolvedor web autônomo. Crio sites, landing pages, sistemas e automações que funcionam no mundo real.",
+  hero_lede: "Sou Pedro Lucas Souza Provadelli, freelancer de sites e desenvolvedor web. Crio sites, landing pages, sistemas e automações que funcionam no mundo real.",
   hero_status: "Aberto a novos projetos",
   home_label: "Pedro Provadelli, voltar ao início",
   int1: "Criação de sites",
@@ -82,7 +82,7 @@ const pt = {
   ld_sr: "Carregando portfólio",
   menu_close: "Fechar menu",
   menu_open: "Abrir menu",
-  meta_desc: "Pedro Lucas Souza Provadelli, criador de sites e desenvolvedor web autônomo. Sites, landing pages e sistemas rápidos, com SEO e atendimento online.",
+  meta_desc: "Pedro Lucas Souza Provadelli, freelancer de sites e desenvolvedor web. Sites, landing pages e sistemas rápidos, com SEO e atendimento online.",
   nav_about: "Sobre",
   nav_contact: "Contato",
   nav_main: "Navegação principal",
@@ -160,7 +160,7 @@ const pt = {
   faq_side: "Respostas rápidas sobre como eu trabalho. Não encontrou a sua? Me mande uma mensagem.",
   anim_pause: "Pausar animação de fundo",
   anim_play: "Retomar animação de fundo",
-  meta_title: "Pedro Provadelli | Criação de Sites e Desenvolvedor Web",
+  meta_title: "Pedro Provadelli | Freelancer de Sites e Desenvolvedor Web",
 };
 
 export default pt;

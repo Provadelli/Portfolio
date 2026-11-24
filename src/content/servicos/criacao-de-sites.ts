@@ -32,7 +32,7 @@ const pt: ServiceContent = {
   metaDesc: "Criação de sites profissionais e landing pages no Rio de Janeiro e em todo o Brasil, online. Rápidos no celular, com SEO e feitos para trazer clientes.",
   eyebrow: "Serviço · Criação de sites",
   title: "Criação de sites que <em>trazem clientes.</em>",
-  lede: "Sou Pedro Lucas Souza Provadelli, criador de sites e desenvolvedor web autônomo. Crio sites profissionais e landing pages para pequenos negócios e profissionais do Rio de Janeiro e de todo o Brasil, com atendimento online, do briefing ao site no ar.",
+  lede: "Sou Pedro Lucas Souza Provadelli, criador de sites freelancer e desenvolvedor web. Crio sites profissionais e landing pages para pequenos negócios e profissionais do Rio de Janeiro e de todo o Brasil, com atendimento online, do briefing ao site no ar.",
   cta: "Pedir orçamento",
   breadcrumb: "Criação de sites",
   includedTitle: "O que está incluído",
@@ -68,6 +68,7 @@ const pt: ServiceContent = {
     ["Quanto custa para criar um site?", "Depende do tamanho do site e do que ele precisa ter. Conte o que você precisa pelo formulário e eu respondo com um orçamento e os próximos passos."],
     ["Você atende no Rio de Janeiro?", "Sim. Atendo o Rio de Janeiro e todo o Brasil, online."],
     ["O site vai aparecer no Google?", "O site sai pronto para o Google, com SEO técnico (título, descrição, dados estruturados e sitemap). A posição na busca depende da concorrência e do tempo, então não prometo primeiro lugar: prometo um site bem feito para ser encontrado."],
+    ["Por que contratar um freelancer de sites em vez de uma agência?", "Com um freelancer você fala direto com quem desenvolve o site, do briefing à publicação, sem intermediários. Cada ajuste passa pela mesma pessoa que conhece o projeto inteiro."],
     ["Você faz landing page?", "Sim. Landing pages para campanhas, lançamentos e captação de clientes, com o mesmo cuidado de velocidade e SEO."],
     ["E se eu precisar de mais que um site?", "Também desenvolvo aplicações e sistemas web, como área restrita, cadastro e painel. Veja o Shinatal e o Orto Fortino nos projetos."]
   ],

@@ -6,8 +6,8 @@ import { SITE_URL } from "@/lib/site";
 /* `updated`: data real da última mudança de conteúdo de cada página.
    Atualize ao mudar o texto: o Google usa o lastmod para decidir quando voltar a rastrear. */
 const PAGES = [
-  { path: "/", priority: 1, changeFrequency: "monthly", updated: "2026-11-24" },
-  { path: "/criacao-de-sites", priority: 0.9, changeFrequency: "monthly", updated: "2026-11-24" },
+  { path: "/", priority: 1, changeFrequency: "monthly", updated: "2026-11-23" },
+  { path: "/criacao-de-sites", priority: 0.9, changeFrequency: "monthly", updated: "2026-11-23" },
   { path: "/privacidade", priority: 0.3, changeFrequency: "yearly", updated: "2026-11-07" },
   { path: "/termos", priority: 0.3, changeFrequency: "yearly", updated: "2026-11-07" },
   { path: "/acessibilidade", priority: 0.3, changeFrequency: "yearly", updated: "2026-11-07" }
