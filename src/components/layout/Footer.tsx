@@ -20,6 +20,7 @@ export function Footer({ lang, t }: { lang: Lang; t: Dictionary }){
           <nav className="footer-col" aria-label={t.foot_nav_l}>
             <h2>{t.foot_nav}</h2>
             {nav.map(([id, label]) => <Link key={id} href={href(lang, `/#${id}`)}>{label}</Link>)}
+            <Link href={href(lang, "/criacao-de-sites")}>{lang === "en" ? "Website creation" : "Criação de sites"}</Link>
           </nav>
 
           <div className="footer-col">

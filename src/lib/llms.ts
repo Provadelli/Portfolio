@@ -2,6 +2,7 @@
    (ChatGPT, Gemini, Claude, Perplexity...) lerem sem JavaScript, animações ou WebGL.
    Tudo vem dos dicionários e da lista de projetos: muda o site, muda o arquivo. */
 import { getProjects } from "@/content/projects";
+import { criacaoDeSites } from "@/content/servicos/criacao-de-sites";
 import { getDictionary, href, type Lang } from "./i18n";
 import { CV_URL, EMAIL, GITHUB, LINKEDIN, SITE_URL } from "./site";
 import { plain } from "./structured-data";
@@ -55,6 +56,8 @@ export function llmsTxt(){
     "## Site", "",
     `- [Portfolio (Português)](${abs("pt")}): ${plain(getDictionary("pt").hero_lede)}`,
     `- [Portfolio (English)](${abs("en")}): ${plain(t.hero_lede)}`,
+    `- [Criação de sites no Rio de Janeiro (Português)](${abs("pt", "/criacao-de-sites")}): ${criacaoDeSites.pt.metaDesc}`,
+    `- [Website creation in Rio de Janeiro (English)](${abs("en", "/criacao-de-sites")}): ${criacaoDeSites.en.metaDesc}`,
     `- [Full content in Markdown](${SITE_URL}/llms-full.txt): about, services, projects, journey, FAQ and contact (PT + EN)`,
     `- [Résumé (PDF)](${SITE_URL}${CV_URL})`, "",
     "## Projects", "", ...projects, "",

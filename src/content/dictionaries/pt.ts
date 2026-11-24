@@ -126,6 +126,7 @@ const pt = {
   s4_d: "Protótipos com Arduino e C++ voltados a monitoramento e autonomia, herança da formação técnica em Eletrônica.",
   s4_t: "Sistemas embarcados",
   serv_eyebrow: "03 Serviços",
+  serv_more: "Criação de sites: o que está incluído e como funciona",
   serv_lede: "Cuido de todo o ciclo: entender o problema, desenhar, programar, publicar e evoluir. Estas são as frentes em que atuo hoje.",
   serv_title: "Da ideia ao <em>deploy.</em>",
   shin_alt1: "Tela inicial da experiência digital Shinatal",

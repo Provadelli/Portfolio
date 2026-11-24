@@ -44,7 +44,7 @@ export default async function Home({ params }: PageProps<"/[lang]">){
         <Suspense><TravelingPhoto /></Suspense>
         <Suspense><About t={t} /></Suspense>
         <Suspense><Projects t={t} /></Suspense>
-        <Suspense><Services t={t} /></Suspense>
+        <Suspense><Services t={t} lang={lang} /></Suspense>
         <Suspense><Journey /></Suspense>
         <Suspense><Faq t={t} /></Suspense>
         <Suspense><Contact t={t} /></Suspense>

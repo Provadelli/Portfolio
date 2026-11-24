@@ -11,6 +11,67 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 /* texto puro a partir das frases do dicionário (que têm <em>, <br>, <a>...) */
 export const plain = (html: string) => html.replace(/<br\s*\/?>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
+/* página de serviço: WebPage + Service (oferecido pela pessoa, área RJ + Brasil) + FAQ + trilha */
+export function serviceGraph(lang: Lang, path: string, c: {
+  metaTitle: string; metaDesc: string; breadcrumb: string; included: { t: string }[]; faq: [string, string][];
+}){
+  const url = SITE_URL + href(lang, path);
+  const inLanguage = htmlLang(lang);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: c.metaTitle,
+        description: c.metaDesc,
+        inLanguage,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": `${url}#service` },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        primaryImageOfPage: `${SITE_URL}/og-pedro.jpg`
+      },
+      {
+        "@type": "Service",
+        "@id": `${url}#service`,
+        name: c.breadcrumb,
+        serviceType: c.breadcrumb,
+        description: c.metaDesc,
+        url,
+        provider: { "@id": PERSON_ID },
+        areaServed: [
+          { "@type": "State", name: "Rio de Janeiro", containedInPlace: { "@type": "Country", name: "Brasil" } },
+          { "@type": "Country", name: "Brasil" }
+        ],
+        availableChannel: { "@type": "ServiceChannel", serviceUrl: SITE_URL + href(lang, "/#contato") },
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: c.breadcrumb,
+          itemListElement: c.included.map(i => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: i.t } }))
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        inLanguage,
+        isPartOf: { "@id": `${url}#webpage` },
+        mainEntity: c.faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } }))
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Pedro Provadelli", item: SITE_URL + href(lang) },
+          { "@type": "ListItem", position: 2, name: c.breadcrumb, item: url }
+        ]
+      },
+      /* a pessoa completa já está no grafo da home; aqui só o suficiente para ligar o @id */
+      { "@type": "Person", "@id": PERSON_ID, name: "Pedro Lucas Souza Provadelli", alternateName: "Pedro Provadelli", url: SITE_URL }
+    ]
+  };
+}
+
 export function homeGraph(lang: Lang){
   const t = getDictionary(lang);
   const url = SITE_URL + href(lang);

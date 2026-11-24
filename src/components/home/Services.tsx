@@ -1,9 +1,10 @@
-import type { Dictionary } from "@/lib/i18n";
+import Link from "next/link";
+import { href, type Dictionary, type Lang } from "@/lib/i18n";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHead } from "./SectionHead";
 import { ServiceCards } from "./ServiceCards";
 
-export function Services({ t }: { t: Dictionary }){
+export function Services({ t, lang }: { t: Dictionary; lang: Lang }){
   const split = (s: string) => s.split(" · ");
   const items = [
     { title: t.s1_t, desc: t.s1_d, more: split(t.s1_x) },
@@ -20,6 +21,12 @@ export function Services({ t }: { t: Dictionary }){
           <Reveal className="mb-16 max-lg:hidden"><a href="#contato" className="btn">{t.start_project}<span className="btn__arrow" aria-hidden="true">↗</span></a></Reveal>
         </div>
         <ServiceCards items={items} cta={t.start_project} />
+        {/* link interno para a página de serviço (ajuda o Google a achar e valorizar a página) */}
+        <Reveal as="p" className="mt-10">
+          <Link href={href(lang, "/criacao-de-sites")} className="inline-flex min-h-11 items-center gap-2 font-display text-lg font-semibold text-ink underline decoration-gold-deep decoration-2 underline-offset-6 hover:text-gold-deep">
+            {t.serv_more}<span aria-hidden="true">→</span>
+          </Link>
+        </Reveal>
       </div>
     </section>
   );

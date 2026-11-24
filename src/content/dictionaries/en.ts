@@ -127,6 +127,7 @@ const en: Dictionary = {
   s4_d: "Arduino and C++ prototypes for monitoring and autonomy, a legacy of my technical training in Electronics.",
   s4_t: "Embedded systems",
   serv_eyebrow: "03 Services",
+  serv_more: "Website creation: what is included and how it works",
   serv_lede: "I handle the whole cycle: understanding the problem, designing, coding, publishing and evolving. These are the areas I work in today.",
   serv_title: "From idea to <em>deploy.</em>",
   shin_alt1: "Home screen of the Shinatal digital experience",

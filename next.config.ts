@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const LEGAL = "privacidade|termos|acessibilidade";
+/* páginas em português servidas na raiz (sem /pt): as legais e as de serviço */
+const PT_PAGES = `${LEGAL}|criacao-de-sites`;
 
 const nextConfig: NextConfig = {
   experimental: { globalNotFound: true },
@@ -12,7 +14,7 @@ const nextConfig: NextConfig = {
     return {
       beforeFiles: [
         { source: "/", destination: "/pt" },
-        { source: `/:page(${LEGAL})`, destination: "/pt/:page" }
+        { source: `/:page(${PT_PAGES})`, destination: "/pt/:page" }
       ]
     };
   },
