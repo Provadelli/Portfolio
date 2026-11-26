@@ -1,5 +1,5 @@
 /* Dados fixos do site, usados em metadados, JSON-LD e componentes */
-export const SITE_URL = "https://pedroprovadelli.vercel.app";
+export const SITE_URL = "https://pedroprovadelli.com.br";
 export const EMAIL = "pedroprovadelli@gmail.com";
 export const GITHUB = "https://github.com/Provadelli";
 export const LINKEDIN = "https://linkedin.com/in/pedroprovadellidev/";

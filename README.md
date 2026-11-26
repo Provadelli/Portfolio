@@ -6,13 +6,13 @@
 
 **Engenheiro de software full stack com IA.** Sites, sistemas e automações que funcionam no mundo real.
 
-[![Site no ar](https://img.shields.io/badge/site-no%20ar-E0BE72?style=for-the-badge&logo=vercel&logoColor=black)](https://pedroprovadelli.vercel.app)
+[![Site no ar](https://img.shields.io/badge/site-no%20ar-E0BE72?style=for-the-badge&logo=vercel&logoColor=black)](https://pedroprovadelli.com.br)
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 
-[**Ver o site**](https://pedroprovadelli.vercel.app) · [LinkedIn](https://linkedin.com/in/pedroprovadellidev/) · [GitHub](https://github.com/Provadelli)
+[**Ver o site**](https://pedroprovadelli.com.br) · [LinkedIn](https://linkedin.com/in/pedroprovadellidev/) · [GitHub](https://github.com/Provadelli)
 
 </div>
 
@@ -127,4 +127,4 @@ public/                      favicons e imagem de compartilhamento
 
 **Pedro Lucas Provadelli** · Engenharia de Software na FIAP
 
-[LinkedIn](https://linkedin.com/in/pedroprovadellidev/) · [GitHub](https://github.com/Provadelli) · [Site](https://pedroprovadelli.vercel.app)
+[LinkedIn](https://linkedin.com/in/pedroprovadellidev/) · [GitHub](https://github.com/Provadelli) · [Site](https://pedroprovadelli.com.br)
