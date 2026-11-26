@@ -3,7 +3,7 @@
    Perplexity, Claude) entendem quem é a pessoa, o que faz, onde estudou, os projetos e o FAQ. */
 import { getProjects } from "@/content/projects";
 import { getDictionary, href, htmlLang, type Lang } from "./i18n";
-import { EMAIL, GITHUB, LINKEDIN, SITE_URL } from "./site";
+import { EMAIL, GITHUB, INSTAGRAM, LINKEDIN, SITE_URL } from "./site";
 
 export const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -86,8 +86,9 @@ export function homeGraph(lang: Lang){
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
-        url: SITE_URL,
+        url: `${SITE_URL}/`,
         name: "Pedro Provadelli",
+        alternateName: ["Pedro Lucas Souza Provadelli", "Provadelli"],
         description: t.meta_desc,
         inLanguage: ["pt-BR", "en"],
         publisher: { "@id": PERSON_ID }
@@ -122,7 +123,7 @@ export function homeGraph(lang: Lang){
           { "@type": "CollegeOrUniversity", name: "FIAP", alternateName: "Faculdade de Informática e Administração Paulista", url: "https://www.fiap.com.br" },
           { "@type": "EducationalOrganization", name: "FAETEC", alternateName: "Fundação de Apoio à Escola Técnica" }
         ],
-        sameAs: [GITHUB, LINKEDIN],
+        sameAs: [GITHUB, LINKEDIN, INSTAGRAM],
         /* os quatro serviços da seção Serviços, como ofertas da pessoa (autônomo, sem empresa) */
         makesOffer: services.map(s => ({
           "@type": "Offer",
@@ -138,7 +139,7 @@ export function homeGraph(lang: Lang){
           "@type": "ListItem",
           position: i + 1,
           item: {
-            "@type": p.live ? "WebSite" : "SoftwareSourceCode",
+            "@type": p.live ? "CreativeWork" : "SoftwareSourceCode",
             name: p.title,
             url: p.url,
             description: p.desc,

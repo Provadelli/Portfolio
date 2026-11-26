@@ -4,7 +4,7 @@
 import { getProjects } from "@/content/projects";
 import { criacaoDeSites } from "@/content/servicos/criacao-de-sites";
 import { getDictionary, href, type Lang } from "./i18n";
-import { CV_URL, EMAIL, GITHUB, LINKEDIN, SITE_URL } from "./site";
+import { CV_URL, EMAIL, GITHUB, INSTAGRAM, LINKEDIN, SITE_URL } from "./site";
 import { plain } from "./structured-data";
 
 const abs = (lang: Lang, path = "/") => SITE_URL + href(lang, path);
@@ -28,7 +28,7 @@ function profile(lang: Lang){
     `## ${en ? "Journey" : "Trajetória"}`, "", ...journey, "",
     `## ${en ? "Frequently asked questions" : "Perguntas frequentes"}`, "", ...faq.flatMap(f => [f, ""]),
     `## ${en ? "Contact" : "Contato"}`, "",
-    `- E-mail: ${EMAIL}`, `- LinkedIn: ${LINKEDIN}`, `- GitHub: ${GITHUB}`,
+    `- E-mail: ${EMAIL}`, `- LinkedIn: ${LINKEDIN}`, `- GitHub: ${GITHUB}`, `- Instagram: ${INSTAGRAM}`,
     `- ${en ? "Contact form" : "Formulário de contato"}: ${abs(lang, "/#contato")}`,
     `- ${en ? "Résumé (PDF, Portuguese)" : "Currículo (PDF)"}: ${SITE_URL}${CV_URL}`
   ].join("\n");
@@ -61,7 +61,7 @@ export function llmsTxt(){
     `- [Full content in Markdown](${SITE_URL}/llms-full.txt): about, services, projects, journey, FAQ and contact (PT + EN)`,
     `- [Résumé (PDF)](${SITE_URL}${CV_URL})`, "",
     "## Projects", "", ...projects, "",
-    "## Contact", "", `- E-mail: ${EMAIL}`, `- [LinkedIn](${LINKEDIN})`, `- [GitHub](${GITHUB})`, "",
+    "## Contact", "", `- E-mail: ${EMAIL}`, `- [LinkedIn](${LINKEDIN})`, `- [GitHub](${GITHUB})`, `- [Instagram](${INSTAGRAM})`, "",
     "## Optional", "",
     `- [Privacy Policy](${abs("en", "/privacidade")})`,
     `- [Terms of Use](${abs("en", "/termos")})`,
