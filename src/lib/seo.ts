@@ -49,5 +49,5 @@ export const baseMetadata: Metadata = {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon-32.png", type: "image/png", sizes: "32x32" }],
     apple: "/apple-touch-icon.png"
   },
-  verification: { google: "8B7v2AZ4nAn4hYupG0ftbxG3kS5an6nL5yj6rCqhlgE" }
+  verification: { google: ["8B7v2AZ4nAn4hYupG0ftbxG3kS5an6nL5yj6rCqhlgE", "zPtdKjN_3QuKkqSLUW_EALFVDwlUtGf4m08fvN7W5JA"] }
 };
