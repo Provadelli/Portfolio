@@ -231,6 +231,7 @@
     mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 64px), transparent);
   }
   .flat-rail::-webkit-scrollbar{ display: none; }
+  @media (hover: hover) and (pointer: fine){ .flat-rail{ cursor: grab; } }
   .pcard{
     @apply relative flex size-full flex-col overflow-hidden rounded-[24px] border border-[rgba(246,241,230,.1)];
     background: linear-gradient(180deg, #19130C, #110D08);

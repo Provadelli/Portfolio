@@ -91,6 +91,48 @@ function FlatList({ projects }: { projects: Project[] }){
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.scrollBy({ left: dir * (card.getBoundingClientRect().width + 20), behavior: reduce ? "auto" : "smooth" });
   };
+  /* arrastar com o mouse (toque e trackpad já rolam nativamente) */
+  useEffect(() => {
+    const el = rail.current;
+    if (!el) return;
+    let startX = 0, startLeft = 0, down = false, dragged = false;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true; dragged = false; startX = e.clientX; startLeft = el.scrollLeft;
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!dragged){
+        if (Math.abs(dx) < 5) return;
+        dragged = true;
+        el.style.scrollSnapType = "none"; el.style.cursor = "grabbing"; el.style.userSelect = "none";
+        try { el.setPointerCapture(e.pointerId); } catch { /* ignora */ }
+      }
+      el.scrollLeft = startLeft - dx;
+    };
+    const end = (e: PointerEvent) => {
+      if (!down) return;
+      down = false;
+      if (!dragged) return;
+      try { el.releasePointerCapture(e.pointerId); } catch { /* ignora */ }
+      el.style.cursor = ""; el.style.userSelect = "";
+      el.style.scrollSnapType = "";   // devolve o encaixe no card mais próximo
+    };
+    const noClick = (e: MouseEvent) => { if (dragged){ e.preventDefault(); e.stopPropagation(); dragged = false; } };
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", end);
+    el.addEventListener("pointercancel", end);
+    el.addEventListener("click", noClick, true);
+    return () => {
+      el.removeEventListener("pointerdown", onDown);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerup", end);
+      el.removeEventListener("pointercancel", end);
+      el.removeEventListener("click", noClick, true);
+    };
+  }, []);
   const arrow = (dir: number) => (
     <button type="button" className="icon-btn" aria-label={dir < 0 ? t.car_prev : t.car_next} onClick={() => go(dir)}>
       <svg className="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={dir < 0 ? "M19 12H5M11 18l-6-6 6-6" : "M5 12h14M13 6l6 6-6 6"} /></svg>
@@ -302,6 +344,18 @@ export function LensCarousel({ projects }: { projects: Project[] }){
           if (i >= 0) window.open(projects[i].url, "_blank", "noopener,noreferrer");
         }
       };
+      /* trackpad/mouse com rolagem horizontal (Mac: deslizar com dois dedos; shift+roda) */
+      let wheelTimer = 0;
+      const wheel = (e: WheelEvent) => {
+        const dx = e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX;
+        if (Math.abs(dx) <= Math.abs(e.deltaY) && !(e.shiftKey && !e.deltaX)) return;   // rolagem vertical segue a página
+        e.preventDefault();
+        const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? st.clientWidth : 1;
+        glide = null; velocity = 0;
+        pos += dx * unit; touched(); kick();
+        window.clearTimeout(wheelTimer);
+        wheelTimer = window.setTimeout(() => { if (alive && !dragging) glideTo(snap(pos), 550); }, 140);
+      };
       const key = (e: KeyboardEvent) => {
         if (e.key === "ArrowRight"){ e.preventDefault(); stepBy(1); }
         else if (e.key === "ArrowLeft"){ e.preventDefault(); stepBy(-1); }
@@ -317,6 +371,7 @@ export function LensCarousel({ projects }: { projects: Project[] }){
       st.addEventListener("pointerup", up);
       st.addEventListener("pointercancel", up);
       st.addEventListener("keydown", key);
+      st.addEventListener("wheel", wheel, { passive: false });
       st.addEventListener("pointerenter", enter);
       st.addEventListener("pointerleave", leave);
       region.addEventListener("focusin", fin);
@@ -370,6 +425,8 @@ export function LensCarousel({ projects }: { projects: Project[] }){
 
       return () => {
         alive = false;
+        window.clearTimeout(wheelTimer);
+        st.removeEventListener("wheel", wheel);
         cancelAnimationFrame(raf);
         io.disconnect(); ro.disconnect();
         document.removeEventListener("visibilitychange", onVis);
